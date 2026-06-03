@@ -653,7 +653,7 @@ async function validateCode(code){
       method:'POST',
       headers:{'Content-Type':'application/json','Authorization':'Bearer '+token},
       body:JSON.stringify({
-        filter:{conjunction:'AND',conditions:[{field_name:'权益码',operator:'is',value:[code]}]},
+        filter:{conjunction:'AND',conditions:[{field_name:'权益码',operator:'contains',value:[code]}]},
         page_size:1
       })
     });
