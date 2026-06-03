@@ -611,23 +611,21 @@ async function getFeishuToken(){
 
 // 查询权益码是否有效（存在且未使用）
 async function validateCode(code){
-  // Use CORS proxy to bypass cross-origin restriction
-  const PROXY = 'https://corsproxy.io/?';
-  const BASE = 'https://open.feishu.cn';
+  // Use Vercel API proxy to bypass CORS
 
   async function feishuFetch(path, options){
-    // Try direct first, fall back to proxy
-    const urls = [BASE+path, PROXY+encodeURIComponent(BASE+path)];
-    for(const url of urls){
-      try{
-        const r = await Promise.race([
-          fetch(url, {...options, mode:'cors'}),
-          new Promise((_,rej)=>setTimeout(()=>rej(new Error('timeout')),10000))
-        ]);
-        if(r.ok || r.status < 500) return r;
-      }catch(e){ continue; }
+    // Use our Vercel API proxy to bypass CORS
+    const proxyUrl = '/api/feishu?path=' + encodeURIComponent(path.replace(/^\//, ''));
+    try{
+      const r = await Promise.race([
+        fetch(proxyUrl, {...options, mode:'cors'}),
+        new Promise((_,rej)=>setTimeout(()=>rej(new Error('timeout')),15000))
+      ]);
+      if(r.ok || r.status < 500) return r;
+      throw new Error('HTTP '+r.status);
+    }catch(e){
+      throw new Error('请求失败：'+e.message);
     }
-    throw new Error('所有请求方式均失败');
   }
 
   // Step 1: Get token
