@@ -1,0 +1,2536 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0">
+<title>瑞仕途教育 · 留学专业评估</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--navy:#0d1f3c;--navy2:#1a3258;--gold:#c9a84c;--gold2:#e8c96a;--cream:#f9f6f0;--cream2:#f0ebe0;--muted:#8a8070;--green:#2d6a4f;--green2:#52b788;--red:#c0392b;--border:#d9d0c0;--r:12px;--r2:8px}
+body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--navy);min-height:100vh;font-size:15px;line-height:1.6}
+.app-header{background:var(--navy);padding:14px 18px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100}
+.logo{font-family:'Noto Serif SC',serif;color:#fff;font-size:15px;letter-spacing:.05em}
+.logo span{color:var(--gold);margin-left:4px}
+.header-tag{font-size:11px;color:var(--gold2);background:rgba(201,168,76,.15);padding:3px 10px;border-radius:20px;border:1px solid rgba(201,168,76,.3)}
+.progress-bar{background:var(--navy2);padding:12px 18px}
+.progress-steps{display:flex;align-items:center}
+.p-step{display:flex;align-items:center;gap:5px;flex-shrink:0}
+.p-dot{width:22px;height:22px;border-radius:50%;border:1.5px solid rgba(255,255,255,.3);display:flex;align-items:center;justify-content:center;font-size:10px;color:rgba(255,255,255,.5);font-weight:500;flex-shrink:0;transition:all .3s}
+.p-dot.done{background:var(--green2);border-color:var(--green2);color:#fff}
+.p-dot.active{background:var(--gold);border-color:var(--gold);color:var(--navy);font-weight:700}
+.p-label{font-size:10px;color:rgba(255,255,255,.5);transition:color .3s;white-space:nowrap}
+.p-label.active{color:var(--gold2);font-weight:500}
+.p-label.done{color:rgba(255,255,255,.7)}
+.p-line{height:1px;background:rgba(255,255,255,.15);flex:1;margin:0 4px;min-width:8px}
+.p-line.done{background:var(--green2)}
+.main{padding:16px 14px 40px;max-width:480px;margin:0 auto}
+.sec{background:#fff;border-radius:var(--r);border:1px solid var(--border);margin-bottom:14px;overflow:hidden}
+.sec-head{padding:14px 16px 11px;border-bottom:1px solid var(--cream2)}
+.sec-title{font-family:'Noto Serif SC',serif;font-size:13px;font-weight:600;color:var(--navy);display:flex;align-items:center;gap:7px}
+.sec-icon{width:22px;height:22px;border-radius:5px;background:var(--navy);display:flex;align-items:center;justify-content:center;font-size:11px;flex-shrink:0}
+.sec-body{padding:14px 16px}
+.field{margin-bottom:13px}
+.field:last-child{margin-bottom:0}
+.label{font-size:11px;color:var(--muted);margin-bottom:4px;display:block;font-weight:500}
+.req{color:var(--gold)}
+input[type=text],input[type=tel],select,textarea{width:100%;padding:9px 12px;border:1px solid var(--border);border-radius:var(--r2);font-size:13px;font-family:'DM Sans',sans-serif;color:var(--navy);background:#fff;outline:none;transition:border .2s;-webkit-appearance:none;appearance:none}
+input:focus,select:focus,textarea:focus{border-color:var(--gold);box-shadow:0 0 0 3px rgba(201,168,76,.1)}
+select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='7' viewBox='0 0 10 7'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%238a8070' fill='none' stroke-width='1.5' stroke-linecap='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 10px center;padding-right:28px}
+textarea{resize:none;height:70px;line-height:1.5}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:9px}
+.chips{display:flex;flex-wrap:wrap;gap:5px;margin-top:3px}
+.chip{padding:5px 11px;border:1px solid var(--border);border-radius:20px;font-size:12px;cursor:pointer;color:var(--muted);transition:all .2s;user-select:none;background:#fff}
+.chip:hover{border-color:var(--gold);color:var(--navy)}
+.chip.sel{background:var(--gold);border-color:var(--gold);color:var(--navy);font-weight:500}
+.qual-tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px}
+.qual-tab{padding:6px 13px;border:1px solid var(--border);border-radius:20px;font-size:12px;cursor:pointer;color:var(--muted);transition:all .2s;user-select:none;background:#fff}
+.qual-tab:hover{border-color:var(--gold);color:var(--navy)}
+.qual-tab.active{background:var(--navy);border-color:var(--navy);color:#fff;font-weight:500}
+.qual-panel{display:none;background:var(--cream);border-radius:var(--r2);padding:12px;margin-bottom:4px}
+.qual-panel.show{display:block}
+.subject-rows{display:flex;flex-direction:column;gap:8px;margin-bottom:8px}
+.subject-row{background:#fff;border:1px solid var(--border);border-radius:var(--r2);padding:10px 11px}
+.subject-row-top{display:flex;gap:7px;align-items:center;margin-bottom:7px}
+.subject-row-top select{flex:1;font-size:12px;padding:7px 10px}
+.graded-toggle{display:flex;align-items:center;gap:5px;font-size:11px;color:var(--muted);cursor:pointer;white-space:nowrap}
+.graded-toggle input{width:14px;height:14px;accent-color:var(--gold);flex-shrink:0}
+.del-btn{padding:4px 9px;border:1px solid #fdecea;background:#fff;border-radius:6px;font-size:11px;color:var(--red);cursor:pointer;font-family:'DM Sans',sans-serif;flex-shrink:0}
+.del-btn:hover{background:#fdecea}
+.add-row-btn{display:flex;align-items:center;justify-content:center;gap:5px;padding:8px;border:1px dashed var(--border);border-radius:var(--r2);font-size:12px;color:var(--muted);cursor:pointer;background:transparent;width:100%;transition:all .2s;font-family:'DM Sans',sans-serif}
+.add-row-btn:hover{border-color:var(--gold);color:var(--gold)}
+.score-row{display:flex;gap:7px;align-items:center}
+.score-row input{flex:1}
+.btn-primary{width:100%;padding:13px;background:var(--navy);color:#fff;border:none;border-radius:var(--r);font-size:14px;font-weight:500;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .2s;display:flex;align-items:center;justify-content:center;gap:7px}
+.btn-primary:hover{background:var(--navy2)}
+.btn-primary:active{transform:scale(.98)}
+.btn-primary.gold{background:var(--gold);color:var(--navy)}
+.btn-primary.gold:hover{background:var(--gold2)}
+.btn-outline{width:100%;padding:11px;background:transparent;color:var(--navy);border:1px solid var(--border);border-radius:var(--r);font-size:13px;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .2s}
+.btn-outline:hover{border-color:var(--navy)}
+.gen-screen{text-align:center;padding:36px 20px}
+.gen-icon{width:60px;height:60px;border-radius:50%;background:var(--navy);margin:0 auto 18px;display:flex;align-items:center;justify-content:center;position:relative}
+.spin-ring{position:absolute;inset:-4px;border-radius:50%;border:2px solid transparent;border-top:2px solid var(--gold);animation:spin 1s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.gen-steps{text-align:left;background:var(--cream);border-radius:var(--r2);padding:14px}
+.gen-step{display:flex;align-items:center;gap:9px;padding:6px 0;font-size:12px;color:var(--muted);border-bottom:1px solid var(--cream2)}
+.gen-step:last-child{border-bottom:none}
+.gen-step.done{color:var(--green)}
+.gen-step.active{color:var(--navy);font-weight:500}
+.step-ic{width:17px;height:17px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:9px;background:var(--cream2);color:var(--muted)}
+.step-ic.done{background:var(--green2);color:#fff}
+.step-ic.active{background:var(--gold);color:var(--navy);animation:pulse .8s ease-in-out infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.5}}
+.report-header{background:var(--navy);padding:22px 18px;text-align:center}
+.report-title{font-family:'Noto Serif SC',serif;color:#fff;font-size:17px;margin-bottom:3px}
+.report-sub{font-size:11px;color:rgba(255,255,255,.6)}
+.report-badges{display:flex;justify-content:center;gap:6px;margin-top:10px;flex-wrap:wrap}
+.rbadge{font-size:10px;padding:2px 9px;border-radius:20px;background:rgba(201,168,76,.2);color:var(--gold2);border:1px solid rgba(201,168,76,.3)}
+.score-card{background:linear-gradient(135deg,var(--navy) 0%,var(--navy2) 100%);border-radius:var(--r);padding:16px;margin-bottom:12px}
+.score-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px}
+.score-item{text-align:center}
+.score-num{font-family:'Noto Serif SC',serif;font-size:26px;font-weight:600;color:var(--gold)}
+.score-num-unit{font-size:12px;color:rgba(255,255,255,.5)}
+.score-desc{font-size:10px;color:rgba(255,255,255,.6);margin-top:1px}
+.dim-row{margin-bottom:10px}
+.dim-row:last-child{margin-bottom:0}
+.dim-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:4px}
+.dim-label{font-size:11px;color:rgba(255,255,255,.7);font-weight:500}
+.dim-score{font-family:'Noto Serif SC',serif;font-size:17px;font-weight:600}
+.dim-bar-wrap{height:4px;background:rgba(255,255,255,.1);border-radius:2px;overflow:hidden;margin-bottom:5px}
+.dim-bar-fill{height:100%;border-radius:2px;transition:width 1s ease}
+.dim-reason{font-size:10px;color:rgba(255,255,255,.5);line-height:1.6}
+.score-card-title{font-size:11px;color:rgba(255,255,255,.6);margin-bottom:10px;font-weight:500;letter-spacing:.05em}
+.report-body{padding:14px}
+.report-sec{margin-bottom:16px}
+.report-sec-title{font-family:'Noto Serif SC',serif;font-size:13px;font-weight:600;color:var(--navy);display:flex;align-items:center;gap:7px;margin-bottom:9px}
+.report-sec-title::before{content:'';width:3px;height:13px;background:var(--gold);border-radius:2px;display:inline-block;flex-shrink:0}
+/* match check badge */
+.match-badge{display:inline-flex;align-items:center;gap:3px;font-size:10px;padding:2px 7px;border-radius:10px;margin-left:5px}
+.match-ok{background:#e8f5ee;color:var(--green)}
+.match-warn{background:#fff8e1;color:#9a6c00}
+.match-no{background:#fdecea;color:var(--red)}
+/* school cards */
+.school-card{border:1px solid var(--border);border-radius:var(--r);margin-bottom:12px;overflow:hidden}
+.school-img-placeholder{width:100%;height:95px;display:flex;align-items:center;justify-content:center;font-size:30px;position:relative}
+.school-img-placeholder::after{content:'';position:absolute;inset:0;background:linear-gradient(to bottom,transparent 20%,rgba(13,31,60,.65))}
+.school-img-label{position:absolute;bottom:8px;left:10px;color:#fff;font-size:11px;font-weight:500;z-index:1;font-family:'Noto Serif SC',serif}
+.school-body{padding:11px 13px}
+.school-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:3px;gap:6px}
+.school-name{font-size:13px;font-weight:500;color:var(--navy)}
+.school-tag{font-size:10px;padding:2px 8px;border-radius:10px;white-space:nowrap;flex-shrink:0}
+.tag-rush{background:#fdecea;color:#c0392b}
+.tag-match{background:#fdf6e3;color:#9a7018}
+.tag-safe{background:#e8f5ee;color:var(--green)}
+.tag-pathway{background:#ede7f6;color:#5e35b1}
+.tag-g5{background:linear-gradient(135deg,#fff3cd,#ffe082);color:#6b4a00;border:1px solid #e0b500;font-weight:600}
+.school-qs{font-size:11px;color:var(--muted);margin-bottom:2px}
+.school-location{font-size:11px;color:var(--muted);margin-bottom:7px}
+.school-costs{display:grid;grid-template-columns:1fr 1fr;gap:5px;margin-bottom:8px}
+.cost-item{background:var(--cream);border-radius:5px;padding:5px 8px}
+.cost-label{font-size:10px;color:var(--muted);margin-bottom:1px}
+.cost-val{font-size:12px;color:var(--navy);font-weight:500}
+.req-block{background:#f8f4ee;border:1px solid #e8dfc8;border-radius:var(--r2);padding:9px 11px;margin-bottom:7px}
+.req-block-title{font-size:10px;font-weight:600;color:var(--navy);margin-bottom:6px;display:flex;align-items:center;gap:4px}
+.req-row{font-size:11px;color:#4a4435;line-height:1.75;display:flex;gap:5px;align-items:flex-start}
+.req-row::before{content:'·';color:var(--gold);flex-shrink:0;margin-top:1px}
+.req-row.warn{color:var(--red)}
+.req-row.warn::before{content:'⚠'}
+.school-prob{display:flex;align-items:center;gap:6px;margin-top:6px}
+.prob-bar{flex:1;height:4px;background:var(--cream2);border-radius:2px;overflow:hidden}
+.prob-fill{height:100%;border-radius:2px}
+.prob-val{font-size:11px;font-weight:500;width:30px;text-align:right}
+.analysis-block{background:var(--cream);border-radius:var(--r2);padding:11px 13px;margin-bottom:8px}
+.ab-head{display:flex;align-items:center;gap:7px;margin-bottom:7px}
+.ab-title{font-size:12px;font-weight:500;color:var(--navy)}
+.ab-body{font-size:12px;color:#4a4435;line-height:1.75}
+.ab-list{list-style:none;padding:0}
+.ab-list li{padding:3px 0;display:flex;gap:5px;align-items:flex-start}
+.ab-list li::before{content:'→';color:var(--gold);flex-shrink:0;font-size:10px;margin-top:3px}
+.advice-block{background:var(--cream);border-radius:var(--r2);padding:11px 13px;margin-bottom:8px}
+.advice-item{padding:8px 0;border-bottom:1px solid var(--cream2);font-size:12px;color:#3a3228;line-height:1.75}
+.advice-item:last-child{border-bottom:none}
+.advice-item-title{font-size:12px;font-weight:500;color:var(--navy);margin-bottom:3px;display:flex;align-items:center;gap:5px}
+.advice-tag{font-size:10px;padding:1px 7px;border-radius:10px;font-weight:500}
+.at-urgent{background:#fdecea;color:var(--red)}
+.at-important{background:#fdf6e3;color:#9a7018}
+.at-plan{background:#e8f5ee;color:var(--green)}
+.weak-item{display:flex;align-items:center;padding:7px 0;border-bottom:1px solid var(--cream2);gap:7px}
+.weak-item:last-child{border-bottom:none}
+.weak-label{font-size:12px;color:var(--navy);width:62px;flex-shrink:0}
+.weak-bar-wrap{flex:1;height:4px;background:var(--cream2);border-radius:2px;overflow:hidden}
+.weak-fill{height:100%;border-radius:2px}
+.weak-status{font-size:10px;width:40px;text-align:right;flex-shrink:0;font-weight:500}
+.timeline-card{border:1px solid var(--border);border-radius:var(--r);padding:12px 14px;margin-bottom:9px;position:relative;padding-left:17px}
+.timeline-card::before{content:'';position:absolute;left:0;top:0;bottom:0;width:4px;border-radius:4px 0 0 4px}
+.tc-p1::before{background:#e74c3c}
+.tc-p2::before{background:var(--gold)}
+.tc-p3::before{background:var(--green2)}
+.tc-p4::before{background:#5e35b1}
+.tl-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:5px;gap:8px}
+.tl-phase{font-size:10px;padding:2px 8px;border-radius:10px;font-weight:500;flex-shrink:0}
+.tc-p1 .tl-phase{background:#fdecea;color:#c0392b}
+.tc-p2 .tl-phase{background:#fdf6e3;color:#9a7018}
+.tc-p3 .tl-phase{background:#e8f5ee;color:var(--green)}
+.tc-p4 .tl-phase{background:#ede7f6;color:#5e35b1}
+.tl-time{font-size:10px;color:var(--muted)}
+.tl-title{font-size:13px;font-weight:500;color:var(--navy);margin-bottom:3px}
+.tl-body{font-size:11px;color:var(--muted);line-height:1.7}
+.va-card{border:1px solid var(--border);border-radius:var(--r);padding:13px 14px;margin-bottom:10px;position:relative}
+.va-card.featured{border-color:var(--gold);background:#fffdf7}
+.va-badge{position:absolute;top:-1px;right:12px;font-size:9px;padding:2px 8px;background:var(--gold);color:var(--navy);border-radius:0 0 6px 6px;font-weight:600}
+.va-top{display:flex;gap:10px;align-items:flex-start;margin-bottom:7px}
+.va-icon{width:36px;height:36px;border-radius:var(--r2);display:flex;align-items:center;justify-content:center;font-size:17px;flex-shrink:0}
+.va-title{font-size:13px;font-weight:500;color:var(--navy);margin-bottom:2px}
+.va-desc{font-size:11px;color:var(--muted);line-height:1.5}
+.va-reason{background:var(--cream);border-radius:var(--r2);padding:8px 10px;margin-bottom:8px;font-size:11px;color:#4a4435;line-height:1.65}
+.va-price-area{display:flex;align-items:baseline;gap:7px;flex-wrap:wrap}
+.va-price{font-size:16px;font-weight:600;color:var(--navy);font-family:'Noto Serif SC',serif}
+.va-orig{font-size:11px;color:var(--muted);text-decoration:line-through}
+.va-save{font-size:11px;color:var(--green);font-weight:500}
+.included-card{background:linear-gradient(135deg,var(--navy) 0%,var(--navy2) 100%);border-radius:var(--r);padding:16px 18px;margin-bottom:12px;color:#fff}
+.inc-title{font-family:'Noto Serif SC',serif;font-size:14px;color:var(--gold2);margin-bottom:10px;display:flex;align-items:center;gap:6px}
+.inc-price-row{display:flex;align-items:baseline;gap:8px;margin-bottom:12px}
+.inc-free{font-family:'Noto Serif SC',serif;font-size:24px;color:var(--gold);font-weight:600}
+.inc-orig{font-size:12px;color:rgba(255,255,255,.5);text-decoration:line-through}
+.inc-list{list-style:none;padding:0}
+.inc-list li{font-size:12px;color:rgba(255,255,255,.85);padding:3px 0;display:flex;gap:6px;align-items:flex-start}
+.inc-list li::before{content:'✓';color:var(--green2);flex-shrink:0;font-weight:600}
+.inc-note{font-size:10px;color:rgba(255,255,255,.4);margin-top:8px}
+.why-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:4px}
+.why-item{background:var(--cream);border-radius:var(--r2);padding:10px 11px}
+.why-icon{font-size:18px;margin-bottom:4px}
+.why-label{font-size:11px;font-weight:500;color:var(--navy);margin-bottom:2px}
+.why-desc{font-size:10px;color:var(--muted);line-height:1.5}
+.consult-bar{background:var(--navy);border-radius:var(--r);padding:13px 15px;display:flex;align-items:center;gap:10px;margin-bottom:12px}
+.consult-avatar{width:34px;height:34px;border-radius:50%;background:var(--gold);display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:600;color:var(--navy);flex-shrink:0}
+.consult-text{flex:1;font-size:12px;color:rgba(255,255,255,.8);line-height:1.5}
+.consult-text strong{color:#fff}
+.consult-btn{font-size:12px;padding:6px 11px;background:var(--gold);color:var(--navy);border:none;border-radius:var(--r2);cursor:pointer;font-weight:500;white-space:nowrap}
+.divider{height:1px;background:var(--cream2);margin:14px 0}
+.stream-text{font-size:12px;color:#4a4435;line-height:1.8}
+.cursor{display:inline-block;width:2px;height:12px;background:var(--gold);animation:blink .7s infinite;vertical-align:middle;margin-left:1px}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:0}}
+.page{display:none}
+.page.active{display:block}
+.foot-note{font-size:11px;color:var(--muted);text-align:center;margin-top:14px;line-height:1.6}
+.activity-row{background:var(--cream);border-radius:var(--r2);padding:10px 11px;margin-bottom:8px}
+.season-tag-inline{font-size:10px;padding:2px 9px;border-radius:10px;font-weight:500;margin-left:6px}
+</style>
+</head>
+<body>
+<div class="app-header">
+  <div class="logo">瑞仕途教育<span>留学评估</span></div>
+  <div class="header-tag">专享权益</div>
+</div>
+<div class="progress-bar">
+  <div class="progress-steps">
+    <div class="p-step"><div class="p-dot active" id="pd1">1</div><span class="p-label active" id="pl1">基本信息</span></div>
+    <div class="p-line" id="pline1"></div>
+    <div class="p-step"><div class="p-dot" id="pd2">2</div><span class="p-label" id="pl2">学术背景</span></div>
+    <div class="p-line" id="pline2"></div>
+    <div class="p-step"><div class="p-dot" id="pd3">3</div><span class="p-label" id="pl3">专业分析</span></div>
+    <div class="p-line" id="pline3"></div>
+    <div class="p-step"><div class="p-dot" id="pd4">4</div><span class="p-label" id="pl4">完成</span></div>
+  </div>
+</div>
+
+<div class="main">
+
+<!-- PAGE 1 -->
+<div class="page active" id="page1">
+  <div class="sec">
+    <div class="sec-head"><div class="sec-title"><span class="sec-icon">👤</span>学生基本信息</div></div>
+    <div class="sec-body">
+      <div class="row2">
+        <div class="field"><label class="label">学生姓名<span class="req">*</span></label><input type="text" id="name" placeholder="请输入姓名"></div>
+        <div class="field"><label class="label">出生年份<span class="req">*</span></label>
+          <select id="birth"><option value="">选择年份</option><option>2008</option><option>2007</option><option>2006</option><option>2005</option><option>2004</option><option>2003</option><option>2002</option><option>2001</option><option>2000</option><option>1999</option><option>1998</option></select>
+        </div>
+      </div>
+      <div class="field"><label class="label">当前就读学校<span class="req">*</span></label><input type="text" id="school" placeholder="如：武汉大学、上海某高中"></div>
+      <div class="row2">
+        <div class="field"><label class="label">当前学历阶段<span class="req">*</span></label>
+          <select id="edu" onchange="updateGradeOptions()"><option value="">选择</option>
+            <option>高中在读</option><option>本科在读</option><option>本科毕业</option>
+            <option>硕士在读</option><option>硕士毕业</option>
+          </select>
+        </div>
+        <div class="field" id="grade-field" style="display:none">
+          <label class="label">具体年级<span class="req">*</span></label>
+          <select id="grade"><option value="">选择年级</option></select>
+        </div>
+
+      </div>
+      <div class="field">
+        <label class="label">活动背景</label>
+        <div id="activity-rows"></div>
+        <button class="add-row-btn" id="activity-add-btn" onclick="addActivityRow()">＋ 添加活动</button>
+      </div>
+    </div>
+  </div>
+  <div class="sec">
+    <div class="sec-head"><div class="sec-title"><span class="sec-icon">👨‍👩‍👧</span>家长联系信息</div></div>
+    <div class="sec-body">
+      <div class="row2">
+        <div class="field"><label class="label">家长姓名<span class="req">*</span></label><input type="text" id="pname" placeholder="请输入姓名"></div>
+        <div class="field"><label class="label">联系电话<span class="req">*</span></label><input type="tel" id="phone" placeholder="11位手机号"></div>
+      </div>
+      <div class="field"><label class="label">所在城市</label>
+        <select id="city"><option value="">选择城市</option><option>北京</option><option>上海</option><option>广州</option><option>深圳</option><option>杭州</option><option>成都</option><option>武汉</option><option>南京</option><option>其他</option></select>
+      </div>
+    </div>
+  </div>
+  <div class="sec">
+    <div class="sec-head"><div class="sec-title"><span class="sec-icon">🔑</span>权益码验证</div></div>
+    <div class="sec-body">
+      <div class="field">
+        <label class="label">请输入权益码<span class="req">*</span></label>
+        <div style="display:flex;gap:8px;align-items:flex-start">
+          <div style="flex:1">
+            <input type="text" id="benefit-code" placeholder="如：PINGAN-A8K2X" style="text-transform:uppercase;letter-spacing:.05em" oninput="this.value=this.value.toUpperCase()">
+            <div id="code-msg" style="font-size:11px;margin-top:5px;display:none"></div>
+          </div>
+          <button onclick="verifyCode()" id="verify-btn" style="padding:9px 14px;background:var(--navy);color:#fff;border:none;border-radius:var(--r2);font-size:13px;cursor:pointer;white-space:nowrap;font-family:'DM Sans',sans-serif;flex-shrink:0">验证</button>
+        </div>
+        <div id="code-ok" style="display:none;margin-top:8px;padding:8px 12px;background:#e8f5ee;border-radius:var(--r2);font-size:12px;color:var(--green);display:none">
+          ✓ 权益码有效 · <span id="code-institution"></span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <button class="btn-primary" id="next-btn" onclick="goPage2()" style="opacity:.4;pointer-events:none">下一步：填写学术背景 →</button>
+  <div class="foot-note">您的信息受到严格保护，仅用于生成个人评估报告</div>
+</div>
+
+<!-- PAGE 2 -->
+<div class="page" id="page2">
+  <div class="sec">
+    <div class="sec-head"><div class="sec-title"><span class="sec-icon">📊</span>学术成绩</div></div>
+    <div class="sec-body">
+      <div class="field">
+        <label class="label">GPA / 均分<span class="req">*</span></label>
+        <div class="score-row">
+          <input type="text" id="gpa" placeholder="如：3.7 或 85">
+          <select id="gpa-type" style="width:auto;flex-shrink:0"><option>4.0制</option><option>5.0制</option><option>百分制</option></select>
+        </div>
+      </div>
+      <div class="field">
+        <label class="label">英语语言成绩</label>
+        <div class="chips" id="lang-chips">
+          <span class="chip" onclick="selectLang(this,'雅思')">雅思 IELTS</span>
+          <span class="chip" onclick="selectLang(this,'托福')">托福 TOEFL</span>
+          <span class="chip" onclick="selectLang(this,'PTE')">PTE</span>
+          <span class="chip" onclick="selectLang(this,'Duolingo')">Duolingo</span>
+          <span class="chip" onclick="selectLang(this,'暂无')">暂无</span>
+        </div>
+      </div>
+      <div id="lang-score-wrap" style="display:none">
+        <div class="row2">
+          <div class="field"><label class="label">成绩分数</label><input type="text" id="lang-score" placeholder="如：6.5 / 90"></div>
+          <div class="field"><label class="label">成绩状态</label><select id="lang-status"><option>已出分</option><option>预估分</option></select></div>
+        </div>
+      </div>
+      <div id="no-lang-wrap" style="display:none">
+        <div class="row2">
+          <div class="field"><label class="label">母语/其他语言</label><input type="text" id="no-lang-type" placeholder="如：法语、日语"></div>
+          <div class="field"><label class="label">预估分数（选填）</label><input type="text" id="no-lang-score" placeholder="预估"></div>
+        </div>
+      </div>
+      <div class="field">
+        <label class="label">课程体系 / 标化成绩<span style="font-size:10px;color:var(--muted);margin-left:4px">点击展开填写</span></label>
+        <div class="qual-tabs">
+          <span class="qual-tab" id="qtab-alevel" onclick="toggleQual('alevel')">A-Level</span>
+          <span class="qual-tab" id="qtab-ap" onclick="toggleQual('ap')">AP</span>
+          <span class="qual-tab" id="qtab-ib" onclick="toggleQual('ib')">IB</span>
+          <span class="qual-tab" id="qtab-gaokao" onclick="toggleQual('gaokao')">高考</span>
+          <span class="qual-tab" id="qtab-sat" onclick="toggleQual('sat')">SAT/ACT</span>
+          <span class="qual-tab" id="qtab-gre" onclick="toggleQual('gre')">GRE/GMAT</span>
+        </div>
+        <div class="qual-panel" id="qpanel-alevel">
+          <div style="font-size:11px;color:var(--muted);margin-bottom:8px">最多10门，默认3门 · 勾选已出分后填写实际等级</div>
+          <div class="subject-rows" id="alevel-rows"></div>
+          <button class="add-row-btn" id="alevel-add" onclick="addRow('alevel')">＋ 添加科目</button>
+        </div>
+        <div class="qual-panel" id="qpanel-ap">
+          <div style="font-size:11px;color:var(--muted);margin-bottom:8px">最多10门，默认3门 · 满分5分</div>
+          <div class="subject-rows" id="ap-rows"></div>
+          <button class="add-row-btn" id="ap-add" onclick="addRow('ap')">＋ 添加科目</button>
+        </div>
+        <div class="qual-panel" id="qpanel-ib">
+          <div style="font-size:11px;color:var(--muted);margin-bottom:8px">最多10门 · 满分7分，总分45分</div>
+          <div class="subject-rows" id="ib-rows"></div>
+          <button class="add-row-btn" id="ib-add" onclick="addRow('ib')">＋ 添加科目</button>
+        </div>
+        <div class="qual-panel" id="qpanel-gaokao">
+          <div class="row2">
+            <div class="field"><label class="label">高考总分</label><input type="text" id="gaokao-total" placeholder="如：620"></div>
+            <div class="field"><label class="label">满分</label><select id="gaokao-max"><option>750</option><option>700</option><option>其他</option></select></div>
+            <div class="field"><label class="label">考试年份</label><input type="text" id="gaokao-year" placeholder="如：2024"></div>
+            <div class="field"><label class="label">省份</label><input type="text" id="gaokao-prov" placeholder="如：湖北"></div>
+          </div>
+        </div>
+        <div class="qual-panel" id="qpanel-sat">
+          <div class="row2">
+            <div class="field"><label class="label">SAT 总分（满分1600）</label><input type="text" id="sat-score" placeholder="如：1350"></div>
+            <div class="field"><label class="label">ACT 总分（满分36）</label><input type="text" id="act-score" placeholder="如：28"></div>
+          </div>
+          <div class="field" style="margin-top:4px"><label class="label">成绩状态</label><select id="sat-status"><option>已出分</option><option>预估分</option></select></div>
+        </div>
+        <div class="qual-panel" id="qpanel-gre">
+          <div class="row2">
+            <div class="field"><label class="label">GRE 总分（满分340）</label><input type="text" id="gre-score" placeholder="如：320"></div>
+            <div class="field"><label class="label">GMAT 总分（满分800）</label><input type="text" id="gmat-score" placeholder="如：680"></div>
+          </div>
+          <div class="field" style="margin-top:4px"><label class="label">成绩状态</label><select id="gre-status"><option>已出分</option><option>预估分</option></select></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="sec">
+    <div class="sec-head"><div class="sec-title"><span class="sec-icon">🎯</span>留学意向</div></div>
+    <div class="sec-body">
+      <div class="field">
+        <label class="label">目标国家<span class="req">*</span></label>
+        <div class="chips" id="country-chips">
+          <span class="chip sel" onclick="selectSingle(this,'country-chips')">英国</span>
+          <span class="chip" onclick="selectSingle(this,'country-chips')">澳洲</span>
+          <span class="chip" onclick="selectSingle(this,'country-chips')">英国+澳洲</span>
+        </div>
+      </div>
+      <div class="field">
+        <label class="label">目标专业方向<span class="req">*</span></label>
+        <div class="chips" id="target-chips">
+          <span class="chip" onclick="selectSingle(this,'target-chips')">商科/金融</span>
+          <span class="chip" onclick="selectSingle(this,'target-chips')">计算机/IT</span>
+          <span class="chip" onclick="selectSingle(this,'target-chips')">工程</span>
+          <span class="chip" onclick="selectSingle(this,'target-chips')">法律</span>
+          <span class="chip" onclick="selectSingle(this,'target-chips')">传媒/设计</span>
+          <span class="chip" onclick="selectSingle(this,'target-chips')">理科</span>
+          <span class="chip" onclick="selectSingle(this,'target-chips')">教育</span>
+          <span class="chip" onclick="selectMajorOther(this)">其他</span>
+        </div>
+      </div>
+      <div class="field" id="major-other-wrap" style="display:none">
+        <label class="label">请填写目标专业方向</label>
+        <input type="text" id="major-other-input" placeholder="如：心理学、建筑学、护理等">
+      </div>
+      <div class="field"><label class="label">预计入学时间</label>
+        <select id="enroll" onchange="onEnrollChange()">
+          <option>2027年秋季（Fall 2027）</option>
+          <option>2028年1月</option>
+          <option>2028年秋季（Fall 2028）</option>
+          <option>2029年及以后</option>
+        </select>
+        <div id="season-tag" style="margin-top:5px;display:none"></div>
+      </div>
+      <!-- Non-current-season: target school selector -->
+      <div class="field" id="target-school-wrap" style="display:none">
+        <label class="label">目标院校（可多选）<span class="req">*</span></label>
+        <div style="font-size:10px;color:var(--muted);margin-bottom:6px">根据您的目标院校，报告将给出具体达标路径规划</div>
+        <div id="target-school-chips" style="display:flex;flex-wrap:wrap;gap:5px;margin-bottom:8px"></div>
+        <select id="target-school-picker" onchange="addTargetSchool(this)">
+          <option value="">点击添加目标院校…</option>
+        </select>
+        <div id="target-school-selected" style="margin-top:8px;display:flex;flex-wrap:wrap;gap:5px"></div>
+      </div>
+      <div class="field"><label class="label">年均预算（学费+生活费）</label>
+        <select id="budget"><option>20万以内</option><option>20-30万</option><option>30-40万</option><option>40万以上</option></select>
+      </div>
+      <div class="field">
+        <label class="label">是否接受预科课程</label>
+        <div class="chips" id="pathway-chips">
+          <span class="chip sel" onclick="selectSingle(this,'pathway-chips')">接受预科</span>
+          <span class="chip" onclick="selectSingle(this,'pathway-chips')">不接受预科</span>
+        </div>
+        <div style="font-size:10px;color:var(--muted);margin-top:4px">预科可通过冲刺档院校官方渠道直升，语言门槛更低（IELTS 5.0起）</div>
+      </div>
+      <div class="field"><label class="label">补充说明（选填）</label><textarea id="extra" placeholder="如特殊情况、家长偏好等…"></textarea></div>
+    </div>
+  </div>
+  <button class="btn-primary gold" onclick="startGenerate()">✦ 立即生成专业分析报告</button>
+  <div style="height:8px"></div>
+  <button class="btn-outline" onclick="showPage('page1',1)">← 返回修改</button>
+</div>
+
+<!-- PAGE 3 -->
+<div class="page" id="page3">
+  <div class="gen-screen">
+    <div class="gen-icon"><span style="font-size:22px;color:var(--gold)">✦</span><div class="spin-ring"></div></div>
+    <div style="font-family:'Noto Serif SC',serif;font-size:17px;font-weight:600;color:var(--navy);margin-bottom:6px">正在生成您的专属分析报告</div>
+    <div style="font-size:12px;color:var(--muted);margin-bottom:24px">基于背景数据，精准匹配院校录取数据库</div>
+    <div class="gen-steps">
+      <div class="gen-step active" id="gs1"><div class="step-ic active" id="gsi1">●</div>解析学术背景与课程体系</div>
+      <div class="gen-step" id="gs2"><div class="step-ic" id="gsi2">2</div>专业维度匹配7所院校</div>
+      <div class="gen-step" id="gs3"><div class="step-ic" id="gsi3">3</div>核查录取条件与竞争力评估</div>
+      <div class="gen-step" id="gs4"><div class="step-ic" id="gsi4">4</div>生成针对性申请建议与规划</div>
+    </div>
+  </div>
+</div>
+
+<!-- PAGE 4 Report -->
+<div class="page" id="page4">
+  <div class="report-header">
+    <div class="report-title" id="rp-name">留学专业分析报告</div>
+    <div class="report-sub">由 瑞仕途教育顾问系统 出具</div>
+    <div class="report-badges">
+      <span class="rbadge" id="rp-country">英国</span>
+      <span class="rbadge" id="rp-major-badge">待定</span>
+      <span class="rbadge" id="rp-time">2027年秋季</span>
+      <span class="rbadge" id="rp-season" style="display:none"></span>
+    </div>
+  </div>
+  <div class="report-body">
+    <div class="score-card">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px">
+        <div>
+          <div class="score-card-title">综合竞争力评分</div>
+          <div class="score-num" id="sc-total" style="margin-top:2px">—<span class="score-num-unit">/100</span></div>
+          <div style="font-size:10px;color:rgba(255,255,255,.5);margin-top:2px">四维度加权评估</div>
+        </div>
+        <div style="text-align:right;font-size:10px;color:rgba(255,255,255,.45);line-height:1.8">
+          校内成绩 /25<br>语言成绩 /25<br>课程标化 /25<br>软实力背景 /25
+        </div>
+      </div>
+      <div id="score-4dim"></div>
+    </div>
+    <div class="report-sec">
+      <div class="report-sec-title">综合评估点评</div>
+      <div class="analysis-block"><div class="stream-text" id="ai-summary"></div></div>
+    </div>
+    <div class="report-sec" id="school-sec">
+      <div class="report-sec-title" id="school-list-title">推荐院校清单</div>
+      <div id="school-list"></div>
+    </div>
+    <div class="report-sec" id="compare-sec">
+      <div class="report-sec-title">院校横向对比 · 就业前景</div>
+      <div id="compare-table-wrap"></div>
+    </div>
+    <div class="report-sec" id="target-path-sec" style="display:none">
+      <div class="report-sec-title">目标院校达标路径规划</div>
+      <div id="target-path-wrap"></div>
+    </div>
+    <div class="report-sec">
+      <div class="report-sec-title">薄弱项分析</div>
+      <div class="analysis-block"><div id="weak-list"></div></div>
+    </div>
+    <div class="report-sec">
+      <div class="report-sec-title">针对性申请建议</div>
+      <div id="advice-blocks"></div>
+    </div>
+    <div class="report-sec">
+      <div class="report-sec-title">时间规划建议</div>
+      <div id="timeline-list"></div>
+    </div>
+    <div class="report-sec">
+      <div class="report-sec-title">增值服务推荐</div>
+      <div id="va-list"></div>
+    </div>
+    <div class="report-sec">
+      <div class="report-sec-title">为什么选择瑞仕途</div>
+      <div class="why-grid">
+        <div class="why-item"><div class="why-icon">🎓</div><div class="why-label">专属顾问 1对1</div><div class="why-desc">资深顾问全程负责，不转手、不外包，固定顾问跟进到录取</div></div>
+        <div class="why-item"><div class="why-icon">🌐</div><div class="why-label">院校直通资源</div><div class="why-desc">与英澳100+院校招生办保持直接沟通，掌握第一手录取动态</div></div>
+        <div class="why-item"><div class="why-icon">📊</div><div class="why-label">精准院校匹配</div><div class="why-desc">专业×成绩×语言三维交叉匹配，不保守、不冒进</div></div>
+        <div class="why-item"><div class="why-icon">✍️</div><div class="why-label">文书深度把控</div><div class="why-desc">顾问深度参与写作全程，确保每份PS真实有力</div></div>
+        <div class="why-item"><div class="why-icon">🔬</div><div class="why-label">海外科研资源</div><div class="why-desc">对接英澳知名高校教授真实科研项目，提升学术竞争力</div></div>
+        <div class="why-item"><div class="why-icon">🛡️</div><div class="why-label">金融机构背书</div><div class="why-desc">由头部银行/保险机构合作引荐，服务品质经过严格遴选</div></div>
+      </div>
+    </div>
+    <div class="report-sec" id="rights-sec" style="margin-top:16px">
+      <div class="report-sec-title" id="rights-title">高净值客户专享申请权益</div>
+      <div id="rights-card-wrap"></div>
+    <div class="consult-bar">
+      <div class="consult-avatar">顾</div>
+      <div class="consult-text"><strong>专属顾问已就绪</strong><br>免费1对1解读报告，约30分钟</div>
+      <button class="consult-btn">立即预约</button>
+    </div>
+    <button class="btn-primary gold" onclick="finalSubmit()">✦ 确认申请 · 顾问1个工作日内联系您</button>
+    <div style="height:8px"></div>
+    <div class="foot-note">提交后信息由专属顾问团队接管，全程保密</div>
+  </div>
+</div>
+
+<!-- PAGE 5 Done -->
+<div class="page" id="page5">
+  <div style="text-align:center;padding:40px 20px">
+    <div style="font-size:46px;margin-bottom:14px">🎉</div>
+    <div style="font-family:'Noto Serif SC',serif;font-size:19px;font-weight:600;color:var(--navy);margin-bottom:7px">申请节点已确认</div>
+    <div style="font-size:12px;color:var(--muted);line-height:1.8;margin-bottom:24px">专属顾问将在 <strong style="color:var(--navy)">1个工作日内</strong> 主动联系您<br>请保持手机畅通</div>
+    <div class="sec" style="text-align:left">
+      <div class="sec-body">
+        <div style="font-size:11px;color:var(--muted);margin-bottom:5px">您的申请编号</div>
+        <div style="font-family:'Noto Serif SC',serif;font-size:21px;font-weight:600;color:var(--gold);letter-spacing:.1em" id="order-no">RST-2027-0001</div>
+        <div style="font-size:11px;color:var(--muted);margin-top:4px">权益码：<span id="done-code" style="font-weight:500;color:var(--navy)"></span> · <span id="done-institution"></span></div>
+        <div class="divider"></div>
+        <div style="font-size:12px;color:var(--muted);line-height:2">接下来的步骤：<br>① 顾问电话沟通，确认留学规划<br>② 发送完整材料清单<br>③ 安排报告解读会（30分钟）</div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+
+<script>
+// ═══════════════════════════════════════════════════════
+// 飞书配置（填入你的实际参数）
+// ═══════════════════════════════════════════════════════
+const FEISHU_CONFIG = {
+  APP_ID:        'cli_aa9526f4aa7adce6',
+  APP_SECRET:    'fzWqOkklAbFMfVhKkX9h3goWEThS34ra',
+  BITABLE_TOKEN: 'OPBUbfiQHabnhes2FUycic80nNe',
+  CODE_TABLE_ID: 'tblIIFz9jPfWoTIm',
+  DATA_TABLE_ID: 'tbl92SZnQNSkOPH4',
+  WEBHOOK:       'https://open.feishu.cn/open-apis/bot/v2/hook/e8dd6cec-54b5-46d9-9be8-6afc392362c5',
+};
+
+// ═══════════════════════════════════════════════════════
+// 飞书API工具函数
+// ═══════════════════════════════════════════════════════
+
+// 获取飞书访问Token（tenant_access_token）
+async function getFeishuToken(){
+  try{
+    const r = await Promise.race([
+      fetch('https://open.feishu.cn/open-apis/auth/v3/tenant_access_token/internal',{
+        method:'POST',
+        headers:{'Content-Type':'application/json'},
+        body:JSON.stringify({app_id:FEISHU_CONFIG.APP_ID, app_secret:FEISHU_CONFIG.APP_SECRET})
+      }),
+      new Promise((_,rej)=>setTimeout(()=>rej(new Error('timeout')),8000))
+    ]);
+    if(!r.ok) throw new Error('HTTP '+r.status);
+    const d = await r.json();
+    if(d.code!==0) throw new Error('Feishu error: '+d.msg);
+    return d.tenant_access_token || null;
+  }catch(e){
+    console.error('getFeishuToken error:',e);
+    return null;
+  }
+}
+
+// 查询权益码是否有效（存在且未使用）
+async function validateCode(code){
+  // Step 1: Get token
+  let token = null;
+  try{
+    const tr = await Promise.race([
+      fetch('https://open.feishu.cn/open-apis/auth/v3/tenant_access_token/internal',{
+        method:'POST',
+        mode:'cors',
+        headers:{'Content-Type':'application/json'},
+        body:JSON.stringify({app_id:FEISHU_CONFIG.APP_ID, app_secret:FEISHU_CONFIG.APP_SECRET})
+      }),
+      new Promise((_,rej)=>setTimeout(()=>rej(new Error('timeout')),10000))
+    ]);
+    const td = await tr.json();
+    console.log('Token response:',td);
+    token = td.tenant_access_token;
+  }catch(e){
+    console.error('Token fetch failed:',e);
+    return {valid:false, msg:'网络连接异常（'+e.message+'），请检查网络后重试'};
+  }
+  
+  if(!token) return {valid:false, msg:'获取授权失败，请检查App ID和Secret是否正确'};
+  
+  // Step 2: Search for code
+  try{
+    const url=`https://open.feishu.cn/open-apis/bitable/v1/apps/${FEISHU_CONFIG.BITABLE_TOKEN}/tables/${FEISHU_CONFIG.CODE_TABLE_ID}/records/search`;
+    console.log('Searching URL:',url);
+    const r = await Promise.race([
+      fetch(url,{
+        method:'POST',
+        mode:'cors',
+        headers:{'Content-Type':'application/json','Authorization':'Bearer '+token},
+        body:JSON.stringify({
+          filter:{
+            conjunction:'AND',
+            conditions:[{field_name:'权益码',operator:'is',value:[code]}]
+          },
+          page_size:1
+        })
+      }),
+      new Promise((_,rej)=>setTimeout(()=>rej(new Error('timeout')),10000))
+    ]);
+    const d = await r.json();
+    console.log('Search response:',d);
+    if(d.code!==0) return {valid:false, msg:'查询失败('+d.msg+')，请确认多维表格已开启互联网访问'};
+    if(!d.data||!d.data.items||d.data.items.length===0){
+      return {valid:false, msg:'权益码无效，请确认后重新输入'};
+    }
+    const record=d.data.items[0];
+    const fields=record.fields;
+    const used=fields['是否已用'];
+    const isUsed=used===true||(Array.isArray(used)&&used[0]?.text==='是');
+    if(isUsed) return {valid:false, msg:'该权益码已被使用，每个权益码仅限使用一次'};
+    const instField=fields['机构名称'];
+    const institution=Array.isArray(instField)?instField[0]?.text:instField||'未知机构';
+    return {valid:true, recordId:record.record_id, institution};
+  }catch(e){
+    console.error('Search failed:',e);
+    return {valid:false, msg:'查询异常（'+e.message+'），请稍后重试'};
+  }
+}
+
+// 标记权益码为已使用
+async function markCodeUsed(token, recordId, clientName, orderNo){
+  try{
+    await fetch(`https://open.feishu.cn/open-apis/bitable/v1/apps/${FEISHU_CONFIG.BITABLE_TOKEN}/tables/${FEISHU_CONFIG.CODE_TABLE_ID}/records/${recordId}`,{
+      method:'PUT',
+      headers:{'Content-Type':'application/json','Authorization':'Bearer '+token},
+      body:JSON.stringify({
+        fields:{
+          '是否已用': true,
+          '使用时间': new Date().toLocaleString('zh-CN'),
+          '客户姓名': clientName,
+          '订单号': orderNo
+        }
+      })
+    });
+  }catch(e){}
+}
+
+// 写入客户数据到Sheet2
+async function writeClientData(token, data){
+  try{
+    await fetch(`https://open.feishu.cn/open-apis/bitable/v1/apps/${FEISHU_CONFIG.BITABLE_TOKEN}/tables/${FEISHU_CONFIG.DATA_TABLE_ID}/records`,{
+      method:'POST',
+      headers:{'Content-Type':'application/json','Authorization':'Bearer '+token},
+      body:JSON.stringify({fields: data})
+    });
+  }catch(e){}
+}
+
+// 推送飞书机器人通知
+async function sendFeishuNotification(data){
+  try{
+    const nl='\n';
+    const actLine=data.activities&&data.activities.length>0?'🏆 活动：'+data.activitiesText+nl:'';
+    const msg='🎓 新客户提交报告'+nl+nl+
+      '📋 订单号：'+data.orderNo+nl+
+      '🏦 来源机构：'+data.institution+nl+
+      '🔑 权益码：'+data.code+nl+
+      '👤 客户：'+data.name+' | '+data.phone+nl+
+      '📍 城市：'+(data.city||'未填写')+nl+
+      '🎯 目标：'+data.country+' '+data.major+' '+data.enroll.split('（')[0]+nl+
+      '📚 就读：'+data.school+' '+(data.grade||'')+nl+
+      '📊 GPA：'+data.gpa+'（'+data.gpaType+'）| 语言：'+data.lang+' '+(data.langScore||'')+nl+
+      actLine+
+      '⏰ 提交时间：'+new Date().toLocaleString('zh-CN')+nl+
+      (data.isCurrent?'✅ 当季申请':'📅 长期规划');
+    await fetch(FEISHU_CONFIG.WEBHOOK,{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({msg_type:'text',content:{text:msg}})
+    });
+  }catch(e){}
+}
+
+// 生成订单号
+function genOrderNo(code){
+  const d=new Date();
+  const ts=d.getFullYear().toString().slice(2)+
+    String(d.getMonth()+1).padStart(2,'0')+
+    String(d.getDate()).padStart(2,'0')+
+    String(d.getHours()).padStart(2,'0')+
+    String(d.getMinutes()).padStart(2,'0');
+  return 'RST-'+ts+'-'+code.split('-').pop();
+}
+
+
+// ═══════════════════════════════════════════════════════
+// SUBJECT DATA
+// ═══════════════════════════════════════════════════════
+;
+
+// ═══════════════════════════════════════════════════════
+// SCHOOL DATABASE  key=专业slug
+// Each school: id,name,qs,country,city,geo,emoji,col
+// Each entry in specialtyData: tuition,living,alevel,lang,prereq,notes
+// ═══════════════════════════════════════════════════════
+
+// Master school registry
+const SCHOOLS={
+  // G5 UK
+  oxford:    {name:'牛津大学',       qs:4,  country:'UK',city:'牛津，英格兰南部',    geo:'全球最古老大学之一，学术声誉无与伦比，录取极度竞争',       emoji:'📚',col:'#003366', g5:true, oxbridge:true},
+  cambridge: {name:'剑桥大学',       qs:2,  country:'UK',city:'剑桥，英格兰东部',    geo:'世界顶尖学府，STEM与人文均领先全球，须通过笔试与面试',     emoji:'🏛️',col:'#a3107c', g5:true, oxbridge:true},
+  imperial:  {name:'帝国理工学院',   qs:8,  country:'UK',city:'伦敦，英格兰',        geo:'理工科全球最顶尖之一，坐落伦敦核心，业界联系极强',          emoji:'⚙️',col:'#003e74', g5:true},
+  lse:       {name:'伦敦政经学院',   qs:45, country:'UK',city:'伦敦，英格兰',        geo:'经济/政治/法律全球第一梯队，地处伦敦金融城核心',            emoji:'💼',col:'#c8102e', g5:true},
+  ucl:       {name:'伦敦大学学院',   qs:9,  country:'UK',city:'伦敦，英格兰',        geo:'伦敦综合型顶尖大学，理工文商均衡强劲，科研实力顶级',        emoji:'🔭',col:'#500778', g5:true},
+  // Non-G5 UK
+  edinburgh: {name:'爱丁堡大学',     qs:27, country:'UK',city:'爱丁堡，苏格兰首府',  geo:'历史名城，欧洲文化之都，安全宜居，文理均衡',                emoji:'🏰',col:'#4a3c8c'},
+  manchester:{name:'曼彻斯特大学',   qs:34, country:'UK',city:'曼彻斯特，英格兰西北',geo:'英国第三大城市，文化多元，创意产业中心',                    emoji:'🏙️',col:'#3c5a9a'},
+  bristol:   {name:'布里斯托大学',   qs:54, country:'UK',city:'布里斯托，英格兰西南',geo:'艺术气息浓厚，法律与金融均有盛名',                          emoji:'🌉',col:'#c0392b'},
+  warwick:   {name:'华威大学',       qs:69, country:'UK',city:'考文垂，英格兰中部',  geo:'商学院与数学全英顶尖，企业合作密切',                        emoji:'⚔️',col:'#4a235a'},
+  durham:    {name:'杜伦大学',       qs:82, country:'UK',city:'杜伦，英格兰东北部',  geo:'古典学府，法律与商科排名高，古城氛围',                      emoji:'⛪',col:'#6d1a36'},
+  birmingham:{name:'伯明翰大学',     qs:84, country:'UK',city:'伯明翰，英格兰中部',  geo:'英国第二大城市，华人社区成熟，就业丰富',                    emoji:'🌆',col:'#2c6e49'},
+  southampton:{name:'南安普顿大学',  qs:78, country:'UK',city:'南安普顿，英格兰南部',geo:'港口城市，工程与电子工程全英顶尖',                          emoji:'⚓',col:'#005a9e'},
+  leeds:     {name:'利兹大学',       qs:86, country:'UK',city:'利兹，约克郡',        geo:'英国最大校园之一，商科与传媒全英知名',                      emoji:'🎭',col:'#7b2d8b'},
+  nottingham:{name:'诺丁汉大学',     qs:100,country:'UK',city:'诺丁汉，英格兰中部',  geo:'绿色校园，商科与工程均有强劲排名',                          emoji:'🏹',col:'#1a6b3c'},
+  sheffield: {name:'谢菲尔德大学',   qs:105,country:'UK',city:'谢菲尔德，南约克郡',  geo:'大学城氛围浓厚，生活成本较低',                              emoji:'🏛️',col:'#7b5e2a'},
+  leicester: {name:'莱斯特大学',     qs:163,country:'UK',city:'莱斯特，英格兰中部',  geo:'英国地理中心，多元文化，生活成本低',                        emoji:'🌿',col:'#1a6b3c'},
+  coventry:  {name:'考文垂大学',     qs:601,country:'UK',city:'考文垂，英格兰中部',  geo:'工程与汽车制造重镇，实践导向强',                            emoji:'🚗',col:'#b71c1c'},
+  // Additional UK non-G5
+  glasgow:    {name:'格拉斯哥大学',    qs:78, country:'UK',city:'格拉斯哥，苏格兰',       geo:'苏格兰最大城市，医学与工程全英顶尖，文化活跃',     emoji:'🏴󠁧󠁢󠁳󠁣󠁴󠁿',col:'#8b1a4a'},
+  bristol:    {name:'布里斯托大学',    qs:54, country:'UK',city:'布里斯托，英格兰西南部',  geo:'艺术气息浓厚，法律与金融均有盛名，生活质量高',     emoji:'🌉',col:'#c0392b'},
+  // Additional UK non-G5
+  // UK pathway (对应冲刺校官方预科)
+  oxford_pw:    {name:'牛津大学 St Clares预科', qs:4, country:'UK',city:'牛津，英格兰南部',  geo:'提升至牛津录取区间，语言IELTS 5.5起，完成后申请牛津本科',emoji:'🎓',col:'#5e35b1',g5:true},
+  imperial_pw:  {name:'帝国理工 INTO预科',        qs:8, country:'UK',city:'伦敦，英格兰',       geo:'帝国理工官方直升预科，理工科方向，语言IELTS 5.0起',     emoji:'🎓',col:'#5e35b1',g5:true},
+  lse_pw:       {name:'LSE UoL国际预科',          qs:45,country:'UK',city:'伦敦，英格兰',       geo:'伦敦大学联盟预科，直升LSE路径，语言IELTS 5.0起',        emoji:'🎓',col:'#5e35b1',g5:true},
+  manchester_pw:{name:'曼彻斯特 INTO预科',        qs:34,country:'UK',city:'曼彻斯特，英格兰西北',geo:'INTO官方预科，直升曼彻斯特本科，语言IELTS 5.0起',       emoji:'🎓',col:'#5e35b1'},
+  edinburgh_pw: {name:'爱丁堡 ICLC预科',         qs:27,country:'UK',city:'爱丁堡，苏格兰首府',  geo:'官方预科项目，直升爱丁堡大学，语言IELTS 5.0起',          emoji:'🎓',col:'#5e35b1'},
+  // AU
+  melbourne: {name:'墨尔本大学',     qs:13, country:'AU',city:'墨尔本，维多利亚州',  geo:'连续多年全球最宜居城市，华人社区完善',                      emoji:'🌃',col:'#003087'},
+  sydney:    {name:'悉尼大学',       qs:18, country:'AU',city:'悉尼，新南威尔士州',  geo:'澳洲最大城市，国际化程度极高',                              emoji:'🌉',col:'#c60c30'},
+  unsw:      {name:'新南威尔士大学', qs:19, country:'AU',city:'悉尼，新南威尔士州',  geo:'理工科全澳顶尖，与工业界联系密切',                          emoji:'🔬',col:'#f5a623'},
+  anu:       {name:'澳国立大学',     qs:30, country:'AU',city:'堪培拉，首都直辖区',  geo:'政府资源丰富，法律与政策类全澳最强',                        emoji:'🏛️',col:'#b71c1c'},
+  monash:    {name:'莫纳什大学',     qs:37, country:'AU',city:'墨尔本，维多利亚州',  geo:'墨尔本双子校，商科与工程实力突出',                          emoji:'🎓',col:'#003087'},
+  uq:        {name:'昆士兰大学',     qs:40, country:'AU',city:'布里斯班，昆士兰州',  geo:'阳光之州，资源与生物技术全澳领先',                          emoji:'☀️',col:'#4a235a'},
+  adelaide:  {name:'阿德莱德大学',   qs:82, country:'AU',city:'阿德莱德，南澳大利亚',geo:'宜居之都，南澳移民政策对留学生友好',                        emoji:'🌺',col:'#2e7d32'},
+  uwa:       {name:'西澳大学',       qs:86, country:'AU',city:'珀斯，西澳大利亚州',  geo:'澳洲最阳光城市，华人竞争相对较小',                         emoji:'🌊',col:'#e65100'},
+  // AU pathway
+  melbourne_pw:{name:'墨尔本大学 Dip预科', qs:13,country:'AU',city:'墨尔本，维多利亚州',geo:'官方预科直升墨尔本大学，语言IELTS 5.5起', emoji:'🎓',col:'#5e35b1'},
+  monash_pw:   {name:'莫纳什大学 FY预科',  qs:37,country:'AU',city:'墨尔本，维多利亚州',geo:'莫纳什官方直升项目，语言IELTS 5.5起',    emoji:'🎓',col:'#5e35b1'},
+};
+
+// ═══════════════════════════════════════════════════════
+// SPECIALTY DATABASE
+// Structure: SPEC_DB[specialty][schoolId] = {tier, tuition, living, alevel_req, alevel_tier, lang_req, prereq, prob_base}
+// alevel_tier: 1=A*AA+, 2=AAA-AAB, 3=ABB-BBB, 4=BBC-
+// ═══════════════════════════════════════════════════════
+const SPEC_DB={
+  '商科/金融':{
+    oxford:    {tier:'g5',   tuition:'£27,000-31,000',living:'£14,000-16,000',alevel:'A*AA（数学A*，笔试+面试）',alevel_tier:1,lang:'IELTS 7.5（各项7.0）',prereq:'TSA笔试+面试',gaokao:'不接受高考直录',prob_base:28},
+    cambridge: {tier:'g5',   tuition:'£25,000-29,000',living:'£14,000-16,000',alevel:'A*A*A（数学A*，笔试+面试）',alevel_tier:1,lang:'IELTS 7.5（各项7.0）',prereq:'ESAT/TMUA笔试+面试',gaokao:'不接受高考直录',prob_base:22},
+    lse:       {tier:'g5',   tuition:'£26,000-30,000',living:'£14,000-16,000',alevel:'A*AA（数学A*）',alevel_tier:1,lang:'IELTS 7.0（各项6.5）',prereq:'数学A*硬性前置',gaokao:'不接受高考直录',prob_base:35},
+    ucl:       {tier:'g5',   tuition:'£25,000-28,000',living:'£14,000-16,000',alevel:'A*AA（数学A或A*）',alevel_tier:1,lang:'IELTS 6.5（各项6.0）',prereq:'数学A级以上强制',gaokao:'不接受高考直录',prob_base:38},
+    warwick:   {tier:'rush', tuition:'£25,000-28,000',living:'£11,000-13,000',alevel:'AAA（数学A*或A）',alevel_tier:2,lang:'IELTS 6.5（各项6.0）',prereq:'数学A级事实前置',gaokao:'接受，660+/省前3%',prob_base:50},
+    edinburgh: {tier:'rush', tuition:'£24,000-27,500',living:'£13,000-15,000',alevel:'AAA（数学建议）',alevel_tier:2,lang:'IELTS 7.0（各项6.0）',prereq:'数学A加分显著',gaokao:'接受，650+/省前5%',prob_base:52},
+    durham:    {tier:'rush', tuition:'£21,500-25,000',living:'£10,000-12,000',alevel:'AAA-AAB',alevel_tier:2,lang:'IELTS 6.5（各项6.0）',prereq:'无强制',gaokao:'接受，640+/省前8%',prob_base:55},
+    manchester:{tier:'match',tuition:'£22,500-25,000',living:'£12,000-14,000',alevel:'AAB（含数学A）',alevel_tier:3,lang:'IELTS 6.5（各项5.5）',prereq:'需A-Level数学',gaokao:'接受，620+/省前10%',prob_base:68},
+    nottingham:{tier:'match',tuition:'£19,500-22,500',living:'£9,000-11,000', alevel:'ABB',alevel_tier:3,lang:'IELTS 6.0（各项5.5）',prereq:'无',gaokao:'接受，610+',prob_base:74},
+    birmingham:{tier:'match',tuition:'£20,500-23,000',living:'£10,000-12,000',alevel:'ABB（建议含数学）',alevel_tier:3,lang:'IELTS 6.5（各项5.5）',prereq:'无强制',gaokao:'接受，600+/省前15%',prob_base:72},
+    leeds:     {tier:'safe', tuition:'£18,000-21,000',living:'£10,000-12,000',alevel:'ABB-BBB',alevel_tier:3,lang:'IELTS 6.0（各项5.5）',prereq:'无',gaokao:'接受，590+',prob_base:78},
+    sheffield: {tier:'safe', tuition:'£17,000-20,000',living:'£9,000-11,000', alevel:'BBB',alevel_tier:4,lang:'IELTS 6.0（各项5.5）',prereq:'无',gaokao:'接受，580+',prob_base:82},
+    leicester: {tier:'safe', tuition:'£17,500-20,000',living:'£9,000-11,000', alevel:'BBB',alevel_tier:4,lang:'IELTS 6.0（各项5.5）',prereq:'无',gaokao:'接受，580+',prob_base:87},
+    manchester_pw:{tier:'pathway',tuition:'£18,000-20,000',living:'£12,000-14,000',alevel:'不要求',alevel_tier:5,lang:'IELTS 5.0',prereq:'直升曼彻斯特商学院',gaokao:'接受高考入读预科',prob_base:94},
+    lse_pw:    {tier:'pathway',tuition:'£19,000-22,000',living:'£14,000-16,000',alevel:'不要求',alevel_tier:5,lang:'IELTS 5.0',prereq:'UoL预科，直升LSE路径',gaokao:'接受高考',prob_base:90},
+    melbourne: {tier:'rush', tuition:'A$44,000-50,000',living:'A$20,000-24,000',alevel:'ATAR 90+',alevel_tier:2,lang:'IELTS 7.0（各项6.5）',prereq:'无',gaokao:'接受，630+/省前8%',prob_base:46},
+    unsw:      {tier:'match',tuition:'A$40,000-45,000',living:'A$21,000-25,000',alevel:'ATAR 85+',alevel_tier:3,lang:'IELTS 6.5（各项6.0）',prereq:'无',gaokao:'接受，610+/省前12%',prob_base:65},
+    monash:    {tier:'match',tuition:'A$38,000-43,000',living:'A$19,000-23,000',alevel:'ATAR 83+',alevel_tier:3,lang:'IELTS 6.5（各项6.0）',prereq:'无',gaokao:'接受，600+',prob_base:68},
+    adelaide:  {tier:'safe', tuition:'A$33,000-37,000',living:'A$15,000-18,000',alevel:'ATAR 75+',alevel_tier:4,lang:'IELTS 6.0',prereq:'无',gaokao:'接受，570+',prob_base:84},
+    melbourne_pw:{tier:'pathway',tuition:'A$29,000-33,000',living:'A$18,000-22,000',alevel:'不要求',alevel_tier:5,lang:'IELTS 5.5',prereq:'直升墨尔本大学',gaokao:'接受高考',prob_base:95},
+  },
+  '计算机/IT':{
+    oxford:    {tier:'g5',   tuition:'£30,000-34,000',living:'£14,000-16,000',alevel:'A*A*A（数学A*+物理/CS A*）',alevel_tier:1,lang:'IELTS 7.0（各项7.0）',prereq:'MAT笔试+面试',gaokao:'不接受高考直录',prob_base:18},
+    cambridge: {tier:'g5',   tuition:'£28,000-32,000',living:'£14,000-16,000',alevel:'A*A*A（数学A*+物理/CS A*）',alevel_tier:1,lang:'IELTS 7.5（各项7.5）',prereq:'ESAT笔试+面试',gaokao:'不接受高考直录',prob_base:15},
+    imperial:  {tier:'g5',   tuition:'£31,000-35,000',living:'£14,000-16,000',alevel:'A*A*A（数学A*+物理A*）',alevel_tier:1,lang:'IELTS 6.5（各项6.5）',prereq:'数学+物理双A*强制',gaokao:'不接受高考直录',prob_base:32},
+    ucl:       {tier:'g5',   tuition:'£29,000-33,000',living:'£14,000-16,000',alevel:'A*AA（数学A*）',alevel_tier:1,lang:'IELTS 6.5（各项6.0）',prereq:'数学A*，CS背景加分',gaokao:'不接受高考直录',prob_base:35},
+    edinburgh: {tier:'rush', tuition:'£28,000-32,000',living:'£13,000-15,000',alevel:'AAA（数学A*）',alevel_tier:2,lang:'IELTS 6.5',prereq:'数学A*事实前置',gaokao:'接受，660+/省前3%',prob_base:48},
+    bristol:   {tier:'rush', tuition:'£26,000-30,000',living:'£13,000-15,000',alevel:'AAA-AAB（数学A*或A）',alevel_tier:2,lang:'IELTS 6.5（各项5.5）',prereq:'数学A*强烈建议',gaokao:'接受，650+/省前5%',prob_base:50},
+    manchester:{tier:'rush', tuition:'£27,000-30,000',living:'£12,000-14,000',alevel:'AAA（数学+物理A）',alevel_tier:2,lang:'IELTS 6.5（各项5.5）',prereq:'数学+物理A强制',gaokao:'接受，640+',prob_base:52},
+    southampton:{tier:'match',tuition:'£24,000-27,000',living:'£11,000-13,000',alevel:'AAB（数学A）',alevel_tier:3,lang:'IELTS 6.0（各项5.5）',prereq:'数学A强制',gaokao:'接受，630+',prob_base:62},
+    leeds:     {tier:'match',tuition:'£22,000-25,000',living:'£10,000-12,000',alevel:'ABB（含数学B+）',alevel_tier:3,lang:'IELTS 6.0（各项5.5）',prereq:'数学B级',gaokao:'接受，605+',prob_base:72},
+    nottingham:{tier:'match',tuition:'£23,000-26,000',living:'£9,000-11,000', alevel:'ABB（含数学B+）',alevel_tier:3,lang:'IELTS 6.0（各项5.5）',prereq:'数学B+以上',gaokao:'接受，610+',prob_base:70},
+    sheffield: {tier:'match',tuition:'£21,000-24,000',living:'£9,000-11,000', alevel:'ABB（含数学）',alevel_tier:3,lang:'IELTS 6.0（各项5.5）',prereq:'数学B+',gaokao:'接受，600+',prob_base:74},
+    birmingham:{tier:'safe', tuition:'£20,000-23,000',living:'£10,000-12,000',alevel:'BBB-ABB（含数学）',alevel_tier:3,lang:'IELTS 6.0（各项5.5）',prereq:'数学B级',gaokao:'接受，590+',prob_base:76},
+    leicester: {tier:'safe', tuition:'£18,000-21,000',living:'£9,000-11,000', alevel:'BBC（含数学）',alevel_tier:4,lang:'IELTS 6.0（各项5.5）',prereq:'数学C以上',gaokao:'接受，570+',prob_base:88},
+    imperial_pw:{tier:'pathway',tuition:'£20,000-24,000',living:'£14,000-16,000',alevel:'不要求',alevel_tier:5,lang:'IELTS 5.0',prereq:'帝国理工INTO预科，直升CS/EE',gaokao:'接受高考',prob_base:88},
+    manchester_pw:{tier:'pathway',tuition:'£17,000-20,000',living:'£12,000-14,000',alevel:'不要求',alevel_tier:5,lang:'IELTS 5.0',prereq:'直升曼彻斯特CS本科',gaokao:'接受高考',prob_base:92},
+    unsw:      {tier:'rush', tuition:'A$43,000-48,000',living:'A$21,000-25,000',alevel:'ATAR 92+',alevel_tier:1,lang:'IELTS 6.5（各项6.0）',prereq:'无',gaokao:'接受，650+',prob_base:44},
+    melbourne: {tier:'rush', tuition:'A$46,000-52,000',living:'A$20,000-24,000',alevel:'ATAR 90+',alevel_tier:2,lang:'IELTS 6.5（各项6.0）',prereq:'无',gaokao:'接受，640+',prob_base:48},
+    monash:    {tier:'match',tuition:'A$39,000-44,000',living:'A$19,000-23,000',alevel:'ATAR 82+',alevel_tier:3,lang:'IELTS 6.0（各项5.5）',prereq:'无',gaokao:'接受，600+',prob_base:67},
+    uq:        {tier:'match',tuition:'A$37,000-42,000',living:'A$16,000-20,000',alevel:'ATAR 80+',alevel_tier:3,lang:'IELTS 6.0（各项5.5）',prereq:'无',gaokao:'接受，590+',prob_base:70},
+    uwa:       {tier:'safe', tuition:'A$31,000-36,000',living:'A$15,000-18,000',alevel:'ATAR 75+',alevel_tier:4,lang:'IELTS 6.0',prereq:'无',gaokao:'接受，570+',prob_base:86},
+    melbourne_pw:{tier:'pathway',tuition:'A$28,000-32,000',living:'A$18,000-22,000',alevel:'不要求',alevel_tier:5,lang:'IELTS 5.5',prereq:'直升墨尔本IT学院',gaokao:'接受高考',prob_base:94},
+  },
+  '工程':{
+    cambridge: {tier:'g5',  tuition:'£27,000-31,000',living:'£14,000-16,000',alevel:'A*A*A（数学A*+物理A*）',alevel_tier:1,lang:'IELTS 7.5（各项7.5）',prereq:'ESAT笔试+面试',gaokao:'不接受高考直录',prob_base:14},
+    imperial:  {tier:'g5',  tuition:'£28,000-32,000',living:'£14,000-16,000',alevel:'A*A*A（数学A*+物理A*）',alevel_tier:1,lang:'IELTS 6.5（各项6.5）',prereq:'数学+物理双A*',gaokao:'不接受高考直录',prob_base:30},
+    ucl:       {tier:'g5',  tuition:'£25,000-29,000',living:'£14,000-16,000',alevel:'A*AA（数学A*+物理A）',alevel_tier:1,lang:'IELTS 6.5（各项6.0）',prereq:'数学A*+物理A强制',gaokao:'不接受高考直录',prob_base:33},
+    southampton:{tier:'rush',tuition:'£24,000-27,000',living:'£11,000-13,000',alevel:'AAB（数学A+物理A）',alevel_tier:2,lang:'IELTS 6.5（各项5.5）',prereq:'数学A、物理A强制',gaokao:'接受，640+',prob_base:52},
+    bristol:   {tier:'rush', tuition:'£24,000-27,000',living:'£13,000-15,000',alevel:'AAB（数学A+物理A）',alevel_tier:2,lang:'IELTS 6.5（各项5.5）',prereq:'数学+物理A强制',gaokao:'接受，635+/省前5%',prob_base:52},
+    manchester:{tier:'rush', tuition:'£26,000-29,000',living:'£12,000-14,000',alevel:'AAB（数学A+物理A）',alevel_tier:2,lang:'IELTS 6.5（各项5.5）',prereq:'数学A、物理A强制',gaokao:'接受，630+',prob_base:50},
+    leeds:     {tier:'match',tuition:'£21,000-24,000',living:'£10,000-12,000',alevel:'ABB（数学A+物理B+）',alevel_tier:3,lang:'IELTS 6.0（各项5.5）',prereq:'数学A+物理B+',gaokao:'接受，615+',prob_base:68},
+    nottingham:{tier:'match',tuition:'£22,000-25,000',living:'£9,000-11,000', alevel:'ABB（含数学+物理）',alevel_tier:3,lang:'IELTS 6.0（各项5.5）',prereq:'数学+物理B级',gaokao:'接受，600+',prob_base:72},
+    sheffield: {tier:'match',tuition:'£21,000-24,000',living:'£9,000-11,000', alevel:'ABB（含数学+物理）',alevel_tier:3,lang:'IELTS 6.0（各项5.5）',prereq:'数学+物理B级',gaokao:'接受，600+',prob_base:73},
+    birmingham:{tier:'match',tuition:'£22,000-25,000',living:'£10,000-12,000',alevel:'ABB（数学B++物理B+）',alevel_tier:3,lang:'IELTS 6.5（各项5.5）',prereq:'数学+物理B+',gaokao:'接受，610+',prob_base:70},
+    glasgow:   {tier:'safe', tuition:'£20,000-23,000',living:'£10,000-12,000',alevel:'ABB-BBB（含数学+物理）',alevel_tier:3,lang:'IELTS 6.5（各项5.5）',prereq:'数学+物理B级',gaokao:'接受，585+',prob_base:76},
+    coventry:  {tier:'safe', tuition:'£15,000-18,000',living:'£8,000-10,000', alevel:'BCC（含数学）',alevel_tier:4,lang:'IELTS 6.0（各项5.5）',prereq:'数学C以上',gaokao:'接受，560+',prob_base:91},
+    imperial_pw:{tier:'pathway',tuition:'£18,000-22,000',living:'£14,000-16,000',alevel:'不要求（数学基础必要）',alevel_tier:5,lang:'IELTS 5.0',prereq:'帝国理工INTO预科，完成后申请工程本科',gaokao:'接受高考',prob_base:87},
+    manchester_pw:{tier:'pathway',tuition:'£17,000-20,000',living:'£12,000-14,000',alevel:'不要求',alevel_tier:5,lang:'IELTS 5.0',prereq:'直升工程学院',gaokao:'接受高考',prob_base:90},
+    unsw:      {tier:'rush', tuition:'A$44,000-49,000',living:'A$21,000-25,000',alevel:'ATAR 90+',alevel_tier:2,lang:'IELTS 6.5（各项6.0）',prereq:'数学背景建议',gaokao:'接受，640+',prob_base:47},
+    melbourne: {tier:'rush', tuition:'A$46,000-52,000',living:'A$20,000-24,000',alevel:'ATAR 88+',alevel_tier:2,lang:'IELTS 6.5（各项6.0）',prereq:'无',gaokao:'接受，630+',prob_base:50},
+    monash:    {tier:'match',tuition:'A$40,000-45,000',living:'A$19,000-23,000',alevel:'ATAR 83+',alevel_tier:3,lang:'IELTS 6.5（各项5.5）',prereq:'无',gaokao:'接受，600+',prob_base:65},
+    uq:        {tier:'match',tuition:'A$38,000-43,000',living:'A$16,000-20,000',alevel:'ATAR 80+',alevel_tier:3,lang:'IELTS 6.0（各项5.5）',prereq:'无',gaokao:'接受，590+',prob_base:69},
+    uwa:       {tier:'safe', tuition:'A$31,000-36,000',living:'A$15,000-18,000',alevel:'ATAR 72+',alevel_tier:4,lang:'IELTS 6.0',prereq:'无',gaokao:'接受，560+',prob_base:85},
+    monash_pw: {tier:'pathway',tuition:'A$27,000-31,000',living:'A$19,000-23,000',alevel:'不要求',alevel_tier:5,lang:'IELTS 5.5',prereq:'直升莫纳什工程学院',gaokao:'接受高考',prob_base:93},
+  },
+  '法律':{
+    oxford:    {tier:'g5',   tuition:'£21,000-25,000',living:'£14,000-16,000',alevel:'A*AA（LNAT高分）',alevel_tier:1,lang:'IELTS 7.5（各项7.5）',prereq:'LNAT笔试（目标27+）+面试',gaokao:'不接受高考直录',prob_base:20},
+    cambridge: {tier:'g5',   tuition:'£20,000-24,000',living:'£14,000-16,000',alevel:'A*A*A（LNAT高分）',alevel_tier:1,lang:'IELTS 7.5（各项7.5）',prereq:'LNAT笔试（目标28+）+面试',gaokao:'不接受高考直录',prob_base:16},
+    ucl:       {tier:'g5',   tuition:'£19,500-23,000',living:'£14,000-16,000',alevel:'A*AA（LNAT）',alevel_tier:1,lang:'IELTS 7.0（各项6.5）',prereq:'LNAT笔试，目标25+',gaokao:'不接受高考直录',prob_base:30},
+    lse:       {tier:'g5',   tuition:'£21,000-25,000',living:'£14,000-16,000',alevel:'A*AA',alevel_tier:1,lang:'IELTS 7.0（各项6.5）',prereq:'无笔试，写作/分析能力关键',gaokao:'不接受高考直录',prob_base:33},
+    edinburgh: {tier:'rush', tuition:'£22,500-26,000',living:'£13,000-15,000',alevel:'AAA',alevel_tier:2,lang:'IELTS 7.0（各项6.5）',prereq:'无，文科背景加分',gaokao:'接受，650+',prob_base:48},
+    durham:    {tier:'rush', tuition:'£21,000-24,000',living:'£10,000-12,000',alevel:'AAA',alevel_tier:2,lang:'IELTS 7.0（各项6.5）',prereq:'历史/英文背景建议',gaokao:'接受，640+',prob_base:50},
+    bristol:   {tier:'rush', tuition:'£19,500-22,500',living:'£13,000-15,000',alevel:'AAA-AAB',alevel_tier:2,lang:'IELTS 7.0（各项6.0）',prereq:'无，辩论/写作背景加分',gaokao:'接受，635+/省前5%',prob_base:55},
+    glasgow:   {tier:'rush', tuition:'£18,500-22,000',living:'£10,000-12,000',alevel:'AAA-AAB',alevel_tier:2,lang:'IELTS 7.0（各项6.5）',prereq:'无',gaokao:'接受，640+',prob_base:53},
+    leeds:     {tier:'match',tuition:'£18,000-21,000',living:'£10,000-12,000',alevel:'ABB',alevel_tier:3,lang:'IELTS 6.5（各项6.0）',prereq:'无',gaokao:'接受，595+',prob_base:69},
+    nottingham:{tier:'match',tuition:'£18,500-21,000',living:'£9,000-11,000', alevel:'ABB',alevel_tier:3,lang:'IELTS 6.5（各项6.0）',prereq:'无',gaokao:'接受，600+',prob_base:68},
+    sheffield: {tier:'match',tuition:'£18,000-20,500',living:'£9,000-11,000', alevel:'ABB',alevel_tier:3,lang:'IELTS 6.5（各项6.0）',prereq:'无',gaokao:'接受，590+',prob_base:70},
+    birmingham:{tier:'match',tuition:'£17,500-20,500',living:'£10,000-12,000',alevel:'ABB-BBB',alevel_tier:3,lang:'IELTS 6.5（各项6.0）',prereq:'无',gaokao:'接受，585+',prob_base:71},
+    leicester: {tier:'safe', tuition:'£16,000-18,500',living:'£9,000-11,000', alevel:'BBB',alevel_tier:4,lang:'IELTS 6.5（各项5.5）',prereq:'无',gaokao:'接受，580+',prob_base:86},
+    edinburgh_pw:{tier:'pathway',tuition:'£18,000-21,000',living:'£13,000-15,000',alevel:'不要求',alevel_tier:5,lang:'IELTS 5.0',prereq:'直升爱丁堡法学院',gaokao:'接受高考',prob_base:92},
+    lse_pw:    {tier:'pathway',tuition:'£19,000-22,000',living:'£14,000-16,000',alevel:'不要求',alevel_tier:5,lang:'IELTS 5.0',prereq:'UoL预科，LSE直升路径',gaokao:'接受高考',prob_base:88},
+    anu:       {tier:'rush', tuition:'A$38,000-44,000',living:'A$18,000-22,000',alevel:'ATAR 90+',alevel_tier:2,lang:'IELTS 7.0（各项6.5）',prereq:'无',gaokao:'接受，640+',prob_base:48},
+    melbourne: {tier:'rush', tuition:'A$42,000-48,000',living:'A$20,000-24,000',alevel:'ATAR 92+',alevel_tier:1,lang:'IELTS 7.0（各项6.5）',prereq:'JD需本科学位',gaokao:'接受本科入学，650+',prob_base:45},
+    unsw:      {tier:'match',tuition:'A$40,000-45,000',living:'A$21,000-25,000',alevel:'ATAR 87+',alevel_tier:3,lang:'IELTS 6.5（各项6.0）',prereq:'无',gaokao:'接受，620+',prob_base:62},
+    uq:        {tier:'match',tuition:'A$36,000-41,000',living:'A$16,000-20,000',alevel:'ATAR 83+',alevel_tier:3,lang:'IELTS 6.5（各项6.0）',prereq:'无',gaokao:'接受，600+',prob_base:66},
+    adelaide:  {tier:'safe', tuition:'A$31,000-36,000',living:'A$15,000-18,000',alevel:'ATAR 78+',alevel_tier:4,lang:'IELTS 6.5（各项6.0）',prereq:'无',gaokao:'接受，580+',prob_base:83},
+    melbourne_pw:{tier:'pathway',tuition:'A$28,000-32,000',living:'A$18,000-22,000',alevel:'不要求',alevel_tier:5,lang:'IELTS 5.5',prereq:'直升法学院',gaokao:'接受高考',prob_base:93},
+  },
+  '传媒/设计':{
+    ucl:       {tier:'g5',   tuition:'£21,000-25,000',living:'£14,000-16,000',alevel:'A*AA（相关科目）',alevel_tier:1,lang:'IELTS 6.5（各项6.0）',prereq:'需写作样本或作品集',gaokao:'不接受高考直录',prob_base:35},
+    edinburgh: {tier:'rush', tuition:'£19,000-22,000',living:'£13,000-15,000',alevel:'AAB-AAA（含相关科目）',alevel_tier:2,lang:'IELTS 6.5（各项6.0）',prereq:'部分方向需作品集',gaokao:'接受，640+',prob_base:54},
+    glasgow:   {tier:'rush', tuition:'£18,000-21,000',living:'£10,000-12,000',alevel:'AAB（相关背景）',alevel_tier:3,lang:'IELTS 6.5（各项5.5）',prereq:'设计类需作品集',gaokao:'接受，595+',prob_base:58},
+    leeds:     {tier:'rush', tuition:'£19,500-22,500',living:'£10,000-12,000',alevel:'AAB（含媒体/艺术）',alevel_tier:3,lang:'IELTS 6.5（各项5.5）',prereq:'通常需作品集',gaokao:'接受，600+',prob_base:56},
+    manchester:{tier:'match',tuition:'£20,000-23,000',living:'£12,000-14,000',alevel:'ABB-AAB',alevel_tier:3,lang:'IELTS 6.5（各项5.5）',prereq:'部分方向需作品集',gaokao:'接受，590+',prob_base:60},
+    nottingham:{tier:'match',tuition:'£18,500-21,000',living:'£9,000-11,000', alevel:'ABB',alevel_tier:3,lang:'IELTS 6.0（各项5.5）',prereq:'设计类需作品集',gaokao:'接受，570+',prob_base:68},
+    sheffield: {tier:'match',tuition:'£17,500-20,000',living:'£9,000-11,000', alevel:'ABB-BBB',alevel_tier:3,lang:'IELTS 6.0（各项5.5）',prereq:'部分方向需作品集',gaokao:'接受，560+',prob_base:72},
+    birmingham:{tier:'match',tuition:'£17,000-20,000',living:'£10,000-12,000',alevel:'BBB（艺术相关背景）',alevel_tier:4,lang:'IELTS 6.0（各项5.5）',prereq:'设计类需作品集',gaokao:'接受，555+',prob_base:74},
+    leicester: {tier:'safe', tuition:'£15,500-18,000',living:'£9,000-11,000', alevel:'BCC',alevel_tier:4,lang:'IELTS 6.0（各项5.5）',prereq:'无',gaokao:'接受，540+',prob_base:88},
+    manchester_pw:{tier:'pathway',tuition:'£16,000-19,000',living:'£12,000-14,000',alevel:'不要求',alevel_tier:5,lang:'IELTS 5.0',prereq:'设计方向仍需作品集',gaokao:'接受高考',prob_base:91},
+    sydney:    {tier:'rush', tuition:'A$39,000-45,000',living:'A$22,000-26,000',alevel:'ATAR 85+',alevel_tier:3,lang:'IELTS 6.5（各项6.0）',prereq:'设计需作品集',gaokao:'接受，610+',prob_base:55},
+    unsw:      {tier:'match',tuition:'A$37,000-42,000',living:'A$21,000-25,000',alevel:'ATAR 82+',alevel_tier:3,lang:'IELTS 6.5（各项6.0）',prereq:'设计类需作品集',gaokao:'接受，590+',prob_base:62},
+    monash:    {tier:'match',tuition:'A$36,000-41,000',living:'A$19,000-23,000',alevel:'ATAR 78+',alevel_tier:3,lang:'IELTS 6.0（各项5.5）',prereq:'艺术方向需作品集',gaokao:'接受，570+',prob_base:67},
+    adelaide:  {tier:'safe', tuition:'A$30,000-35,000',living:'A$15,000-18,000',alevel:'ATAR 70+',alevel_tier:4,lang:'IELTS 6.0（各项5.5）',prereq:'无',gaokao:'接受，550+',prob_base:84},
+    melbourne_pw:{tier:'pathway',tuition:'A$27,000-31,000',living:'A$18,000-22,000',alevel:'不要求',alevel_tier:5,lang:'IELTS 5.5',prereq:'设计方向仍需作品集',gaokao:'接受高考',prob_base:92},
+  },
+  '理科':{
+    oxford:    {tier:'g5',  tuition:'£28,000-33,000',living:'£14,000-16,000',alevel:'A*A*A（含数学+2门理科A*）',alevel_tier:1,lang:'IELTS 7.5（各项7.5）',prereq:'PAT/BioAdmissions笔试+面试',gaokao:'不接受高考直录',prob_base:18},
+    cambridge: {tier:'g5',  tuition:'£26,000-30,000',living:'£14,000-16,000',alevel:'A*A*A（数学+对应理科双A*）',alevel_tier:1,lang:'IELTS 7.5（各项7.5）',prereq:'ESAT笔试+面试',gaokao:'不接受高考直录',prob_base:14},
+    imperial:  {tier:'g5',  tuition:'£32,000-36,000',living:'£14,000-16,000',alevel:'A*A*A（数学A*+对应理科A*）',alevel_tier:1,lang:'IELTS 6.5（各项6.5）',prereq:'数学+物理/化学双A*',gaokao:'不接受高考直录',prob_base:28},
+    ucl:       {tier:'g5',  tuition:'£27,000-31,000',living:'£14,000-16,000',alevel:'A*AA（含对应理科A*）',alevel_tier:1,lang:'IELTS 6.5（各项6.0）',prereq:'对应理科A*',gaokao:'不接受高考直录',prob_base:33},
+    edinburgh: {tier:'rush',tuition:'£26,000-30,000',living:'£13,000-15,000',alevel:'AAA（含数学+2门理科）',alevel_tier:2,lang:'IELTS 6.5',prereq:'含数学+至少一门理科A',gaokao:'接受，650+',prob_base:48},
+    bristol:   {tier:'rush',tuition:'£24,000-28,000',living:'£13,000-15,000',alevel:'AAA-AAB（含对应理科A*）',alevel_tier:2,lang:'IELTS 6.5（各项5.5）',prereq:'对应理科A*建议',gaokao:'接受，640+/省前5%',prob_base:50},
+    manchester:{tier:'rush',tuition:'£25,000-28,000',living:'£12,000-14,000',alevel:'AAA-AAB（含对应理科A）',alevel_tier:2,lang:'IELTS 6.5（各项5.5）',prereq:'对应科目A级',gaokao:'接受，640+',prob_base:50},
+    glasgow:   {tier:'match',tuition:'£20,000-24,000',living:'£10,000-12,000',alevel:'ABB-AAB（含理科B+）',alevel_tier:3,lang:'IELTS 6.5（各项5.5）',prereq:'对应理科B+',gaokao:'接受，605+',prob_base:66},
+    leeds:     {tier:'match',tuition:'£19,000-22,000',living:'£10,000-12,000',alevel:'ABB-BBB（含理科）',alevel_tier:3,lang:'IELTS 6.0（各项5.5）',prereq:'对应理科B级',gaokao:'接受，580+',prob_base:77},
+    nottingham:{tier:'match',tuition:'£22,000-25,000',living:'£9,000-11,000', alevel:'ABB（含对应理科B+）',alevel_tier:3,lang:'IELTS 6.0（各项5.5）',prereq:'对应科目B级',gaokao:'接受，610+',prob_base:68},
+    sheffield: {tier:'match',tuition:'£20,000-23,000',living:'£9,000-11,000', alevel:'ABB（含数学+理科）',alevel_tier:3,lang:'IELTS 6.0（各项5.5）',prereq:'数学+对应理科B级',gaokao:'接受，600+',prob_base:71},
+    birmingham:{tier:'match',tuition:'£21,000-24,000',living:'£10,000-12,000',alevel:'ABB（含对应理科）',alevel_tier:3,lang:'IELTS 6.5（各项5.5）',prereq:'对应理科B级',gaokao:'接受，600+',prob_base:70},
+    leicester: {tier:'safe', tuition:'£17,000-20,000',living:'£9,000-11,000', alevel:'BBB（含对应理科）',alevel_tier:4,lang:'IELTS 6.0（各项5.5）',prereq:'对应理科C以上',gaokao:'接受，570+',prob_base:87},
+    imperial_pw:{tier:'pathway',tuition:'£20,000-24,000',living:'£14,000-16,000',alevel:'不要求（理科基础重要）',alevel_tier:5,lang:'IELTS 5.0',prereq:'帝国理工INTO预科，理科基础模块',gaokao:'接受高考',prob_base:87},
+    edinburgh_pw:{tier:'pathway',tuition:'£18,000-21,000',living:'£13,000-15,000',alevel:'不要求',alevel_tier:5,lang:'IELTS 5.0',prereq:'预科需理科基础模块',gaokao:'接受高考',prob_base:91},
+    melbourne: {tier:'rush', tuition:'A$43,000-49,000',living:'A$20,000-24,000',alevel:'ATAR 90+',alevel_tier:2,lang:'IELTS 6.5（各项6.0）',prereq:'对应学科背景',gaokao:'接受，640+',prob_base:46},
+    unsw:      {tier:'rush', tuition:'A$41,000-46,000',living:'A$21,000-25,000',alevel:'ATAR 88+',alevel_tier:2,lang:'IELTS 6.5（各项6.0）',prereq:'无',gaokao:'接受，630+',prob_base:50},
+    uq:        {tier:'match',tuition:'A$38,000-43,000',living:'A$16,000-20,000',alevel:'ATAR 82+',alevel_tier:3,lang:'IELTS 6.0（各项5.5）',prereq:'无',gaokao:'接受，600+',prob_base:67},
+    monash:    {tier:'match',tuition:'A$37,000-42,000',living:'A$19,000-23,000',alevel:'ATAR 80+',alevel_tier:3,lang:'IELTS 6.0（各项5.5）',prereq:'无',gaokao:'接受，590+',prob_base:70},
+    uwa:       {tier:'safe', tuition:'A$30,000-35,000',living:'A$15,000-18,000',alevel:'ATAR 74+',alevel_tier:4,lang:'IELTS 6.0',prereq:'无',gaokao:'接受，560+',prob_base:85},
+    melbourne_pw:{tier:'pathway',tuition:'A$27,000-31,000',living:'A$18,000-22,000',alevel:'不要求',alevel_tier:5,lang:'IELTS 5.5',prereq:'理科基础模块',gaokao:'接受高考',prob_base:93},
+  },
+  '教育':{
+    ucl:       {tier:'g5',  tuition:'£18,000-22,000',living:'£14,000-16,000',alevel:'AAB（含相关文科）',alevel_tier:2,lang:'IELTS 7.0（各项7.0）',prereq:'语言各项7.0无弹性',gaokao:'不接受高考直录',prob_base:38},
+    edinburgh: {tier:'rush',tuition:'£17,000-20,000',living:'£13,000-15,000',alevel:'ABB（教育/社科加分）',alevel_tier:3,lang:'IELTS 7.0（各项6.5）',prereq:'语言各项6.5',gaokao:'接受，625+',prob_base:58},
+    glasgow:   {tier:'rush',tuition:'£16,500-19,500',living:'£10,000-12,000',alevel:'ABB',alevel_tier:3,lang:'IELTS 6.5（各项6.5）',prereq:'无',gaokao:'接受，610+',prob_base:62},
+    manchester:{tier:'match',tuition:'£16,500-19,500',living:'£12,000-14,000',alevel:'ABB（教育/社科加分）',alevel_tier:3,lang:'IELTS 6.5（各项6.0）',prereq:'实习/志愿经历加分',gaokao:'接受，600+',prob_base:62},
+    birmingham:{tier:'match',tuition:'£16,000-18,500',living:'£10,000-12,000',alevel:'BBB',alevel_tier:4,lang:'IELTS 6.5（各项6.0）',prereq:'儿童相关经历加分',gaokao:'接受，580+',prob_base:74},
+    leeds:     {tier:'match',tuition:'£16,500-19,000',living:'£10,000-12,000',alevel:'BBB',alevel_tier:4,lang:'IELTS 6.5（各项6.0）',prereq:'志愿服务加分',gaokao:'接受，570+',prob_base:73},
+    sheffield: {tier:'match',tuition:'£15,500-18,000',living:'£9,000-11,000', alevel:'BBB',alevel_tier:4,lang:'IELTS 6.0（各项5.5）',prereq:'无',gaokao:'接受，560+',prob_base:75},
+    nottingham:{tier:'safe', tuition:'£16,000-18,500',living:'£9,000-11,000', alevel:'BBB-ABB',alevel_tier:3,lang:'IELTS 6.5（各项6.0）',prereq:'无',gaokao:'接受，575+',prob_base:70},
+    coventry:  {tier:'safe', tuition:'£13,500-16,000',living:'£8,000-10,000', alevel:'BCC',alevel_tier:4,lang:'IELTS 6.0（各项5.5）',prereq:'无',gaokao:'接受，540+',prob_base:91},
+    manchester_pw:{tier:'pathway',tuition:'£14,000-17,000',living:'£12,000-14,000',alevel:'不要求',alevel_tier:5,lang:'IELTS 5.0',prereq:'完成预科后进教育学院',gaokao:'接受高考',prob_base:93},
+    melbourne: {tier:'rush', tuition:'A$35,000-40,000',living:'A$20,000-24,000',alevel:'ATAR 80+',alevel_tier:3,lang:'IELTS 7.0（各项7.0）',prereq:'语言各项7.0严格',gaokao:'接受，600+（语言要求严格）',prob_base:55},
+    sydney:    {tier:'rush', tuition:'A$36,000-41,000',living:'A$22,000-26,000',alevel:'ATAR 82+',alevel_tier:3,lang:'IELTS 7.5（各项7.5）',prereq:'语言要求极高',gaokao:'接受，620+（确认语言）',prob_base:50},
+    anu:       {tier:'match',tuition:'A$33,000-38,000',living:'A$18,000-22,000',alevel:'ATAR 76+',alevel_tier:4,lang:'IELTS 7.0（各项7.0）',prereq:'无',gaokao:'接受，580+',prob_base:65},
+    adelaide:  {tier:'safe', tuition:'A$29,000-34,000',living:'A$15,000-18,000',alevel:'ATAR 68+',alevel_tier:4,lang:'IELTS 7.0（各项7.0）',prereq:'无',gaokao:'接受，550+',prob_base:82},
+    monash_pw: {tier:'pathway',tuition:'A$24,000-28,000',living:'A$19,000-23,000',alevel:'不要求',alevel_tier:5,lang:'IELTS 5.5',prereq:'直升莫纳什教育学院',gaokao:'接受高考',prob_base:93},
+  },
+  '其他':{
+    ucl:       {tier:'g5',  tuition:'£22,000-27,000',living:'£14,000-16,000',alevel:'A*AA（视专业）',alevel_tier:1,lang:'IELTS 6.5（各项6.0）',prereq:'视具体专业',gaokao:'不接受高考直录',prob_base:35},
+    edinburgh: {tier:'rush',tuition:'£20,000-25,000',living:'£13,000-15,000',alevel:'AAA-AAB',alevel_tier:2,lang:'IELTS 6.5',prereq:'视专业',gaokao:'接受，630+',prob_base:53},
+    bristol:   {tier:'rush',tuition:'£20,000-24,000',living:'£13,000-15,000',alevel:'AAA-AAB',alevel_tier:2,lang:'IELTS 6.5',prereq:'视专业',gaokao:'接受，625+/省前5%',prob_base:54},
+    glasgow:   {tier:'rush',tuition:'£18,000-22,000',living:'£10,000-12,000',alevel:'AAB-ABB',alevel_tier:3,lang:'IELTS 6.5',prereq:'视专业',gaokao:'接受，610+',prob_base:60},
+    manchester:{tier:'match',tuition:'£20,000-24,000',living:'£12,000-14,000',alevel:'ABB-AAB',alevel_tier:3,lang:'IELTS 6.5',prereq:'视专业',gaokao:'接受，620+',prob_base:63},
+    nottingham:{tier:'match',tuition:'£18,000-21,000',living:'£9,000-11,000', alevel:'BBB-ABB',alevel_tier:3,lang:'IELTS 6.0',prereq:'无',gaokao:'接受，590+',prob_base:72},
+    sheffield: {tier:'match',tuition:'£17,000-20,000',living:'£9,000-11,000', alevel:'BBB',alevel_tier:4,lang:'IELTS 6.0',prereq:'无',gaokao:'接受，570+',prob_base:76},
+    leeds:     {tier:'safe', tuition:'£18,000-21,000',living:'£10,000-12,000',alevel:'BBB-ABC',alevel_tier:3,lang:'IELTS 6.0',prereq:'无',gaokao:'接受，575+',prob_base:75},
+    leicester: {tier:'safe', tuition:'£15,500-18,500',living:'£9,000-11,000', alevel:'BCC',alevel_tier:4,lang:'IELTS 6.0',prereq:'无',gaokao:'接受，550+',prob_base:88},
+    coventry:  {tier:'safe', tuition:'£13,000-16,000',living:'£8,000-10,000', alevel:'CCC',alevel_tier:4,lang:'IELTS 6.0',prereq:'无',gaokao:'接受，530+',prob_base:93},
+    manchester_pw:{tier:'pathway',tuition:'£15,000-18,000',living:'£12,000-14,000',alevel:'不要求',alevel_tier:5,lang:'IELTS 5.0',prereq:'直升后视专业',gaokao:'接受高考',prob_base:92},
+    melbourne: {tier:'rush', tuition:'A$38,000-44,000',living:'A$20,000-24,000',alevel:'ATAR 82+',alevel_tier:3,lang:'IELTS 6.5',prereq:'视专业',gaokao:'接受，600+',prob_base:55},
+    unsw:      {tier:'match',tuition:'A$36,000-42,000',living:'A$21,000-25,000',alevel:'ATAR 78+',alevel_tier:3,lang:'IELTS 6.5',prereq:'无',gaokao:'接受，580+',prob_base:65},
+    adelaide:  {tier:'safe', tuition:'A$30,000-36,000',living:'A$15,000-18,000',alevel:'ATAR 72+',alevel_tier:4,lang:'IELTS 6.0',prereq:'无',gaokao:'接受，550+',prob_base:84},
+    melbourne_pw:{tier:'pathway',tuition:'A$26,000-30,000',living:'A$18,000-22,000',alevel:'不要求',alevel_tier:5,lang:'IELTS 5.5',prereq:'直升墨尔本大学',gaokao:'接受高考',prob_base:94},
+  }
+};;
+
+// ═══════════════════════════════════════════════════════
+// MATCHING ENGINE
+// ═══════════════════════════════════════════════════════
+// ═══════════════════════════════════════════════════════
+// 4-DIMENSION HONEST SCORING ENGINE
+// ═══════════════════════════════════════════════════════
+
+function score4Dim(state, rowCounts, activeQuals){
+  // ── DIM 1: 校内成绩 (25 pts) ──────────────────────────
+  const gpaF = parseFloat(state.gpa)||0;
+  const gpaMax = state.gpaType==='百分制'?100:(state.gpaType==='5.0制'?5:4);
+  const gpaRatio = gpaF>0 ? Math.min(gpaF/gpaMax,1) : 0;
+  let d1=0, d1reason='';
+  if(gpaF===0){d1=0;d1reason='尚未填写GPA/均分，无法评估。';}
+  else if(gpaRatio>=0.93){d1=24;d1reason=`GPA ${state.gpa}（${state.gpaType}），处于顶尖区间，达到G5院校均分要求。`;}
+  else if(gpaRatio>=0.87){d1=21;d1reason=`GPA ${state.gpa}，学术成绩优秀，达到主流非G5院校要求。`;}
+  else if(gpaRatio>=0.78){d1=17;d1reason=`GPA ${state.gpa}，成绩良好，符合中等目标院校要求，距顶校仍有差距。`;}
+  else if(gpaRatio>=0.68){d1=13;d1reason=`GPA ${state.gpa}，成绩中等偏下，部分匹配院校可接受，但竞争力有限。`;}
+  else{d1=8;d1reason=`GPA ${state.gpa}，当前成绩低于主流院校最低录取线，需要显著提升。`;}
+
+  // ── DIM 2: 语言成绩 (25 pts) ─────────────────────────
+  const lsRaw = parseFloat(state.langScore)||0;
+  let d2=0, d2reason='';
+  if(state.lang==='暂无'||state.lang===''){
+    d2=3;d2reason='尚无任何语言成绩。语言是所有申请的硬性门槛，当前状态无法提交任何院校申请。';
+  } else if(lsRaw===0){
+    d2=5;d2reason=`已选择${state.lang}但未填写分数，按预估处理，实际分数将直接影响院校可选范围。`;
+  } else if(state.lang.includes('雅思')){
+    if(lsRaw>=7.5){d2=25;d2reason=`雅思 ${lsRaw}，超过G5院校语言要求，语言竞争力极强。`;}
+    else if(lsRaw>=7.0){d2=22;d2reason=`雅思 ${lsRaw}，达到G5及顶级非G5院校要求，语言无障碍。`;}
+    else if(lsRaw>=6.5){d2=18;d2reason=`雅思 ${lsRaw}，达到主流非G5院校（曼彻斯特/伯明翰等）要求，部分G5不够。`;}
+    else if(lsRaw>=6.0){d2=13;d2reason=`雅思 ${lsRaw}，仅能满足部分保底院校要求，主流院校6.5的门槛未达到。`;}
+    else{d2=6;d2reason=`雅思 ${lsRaw}，低于绝大多数院校的最低语言要求（6.0），申请资格受限。`;}
+  } else if(state.lang.includes('托福')){
+    if(lsRaw>=110){d2=25;d2reason=`托福 ${lsRaw}，超过G5院校要求，语言竞争力极强。`;}
+    else if(lsRaw>=100){d2=22;d2reason=`托福 ${lsRaw}，达到主流院校要求。`;}
+    else if(lsRaw>=90){d2=17;d2reason=`托福 ${lsRaw}，基本达线，部分院校可接受，冲刺校仍有差距。`;}
+    else if(lsRaw>=80){d2=12;d2reason=`托福 ${lsRaw}，低于多数院校要求（90+），申请范围受限。`;}
+    else{d2=6;d2reason=`托福 ${lsRaw}，当前分数低于主流院校接受线。`;}
+  } else {
+    d2=10;d2reason=`${state.lang}成绩${lsRaw||'未填写'}，部分院校接受，但主流英国院校优先认可雅思/托福。`;
+  }
+
+  // ── DIM 3: 标化/课程体系 (25 pts) ────────────────────
+  let d3=0, d3reason='';
+  const hasAlevel = activeQuals.has('alevel') && rowCounts['alevel']>0;
+  const hasIB = activeQuals.has('ib') && rowCounts['ib']>0;
+  const hasAP = activeQuals.has('ap') && rowCounts['ap']>0;
+  const hasGaokao = activeQuals.has('gaokao');
+  const hasSAT = activeQuals.has('sat');
+  const hasGRE = activeQuals.has('gre');
+
+  // Read alevel grades to assess quality
+  let alevelGrades=[], alevelStarCount=0, alevelACount=0;
+  for(let i=1;i<=rowCounts['alevel'];i++){
+    const g=document.getElementById('alevel-r'+i+'-g');
+    if(g&&g.value.trim()){
+      const v=g.value.trim().toUpperCase();
+      alevelGrades.push(v);
+      if(v.includes('A*')) alevelStarCount++;
+      else if(v==='A') alevelACount++;
+    }
+  }
+
+  if(hasAlevel&&alevelGrades.length>0){
+    if(alevelStarCount>=2){d3=25;d3reason=`A-Level ${alevelGrades.join('/')}，双A*以上，处于G5申请的顶尖梯队。`;}
+    else if(alevelStarCount>=1||alevelACount>=2){d3=21;d3reason=`A-Level ${alevelGrades.join('/')}，成绩优秀，具备冲刺QS Top50院校的条件。`;}
+    else if(alevelACount>=1){d3=17;d3reason=`A-Level ${alevelGrades.join('/')}，已出A级科目，匹配主流非G5院校。`;}
+    else if(alevelGrades.length>0){d3=12;d3reason=`A-Level已在修读中（预估分），尚未出分，实际竞争力待考证。`;}
+    else{d3=8;d3reason='A-Level已选修但未填写成绩，按在读状态评估。';}
+  } else if(hasIB){
+    let ibTotal=0;
+    for(let i=1;i<=rowCounts['ib'];i++){const g=document.getElementById('ib-r'+i+'-g');if(g&&g.value.trim())ibTotal+=parseInt(g.value)||0;}
+    if(ibTotal>=40){d3=25;d3reason=`IB预估总分约${ibTotal}分，接近满分，竞争力极强。`;}
+    else if(ibTotal>=36){d3=21;d3reason=`IB预估约${ibTotal}分，达到主流顶校申请区间。`;}
+    else if(ibTotal>=30){d3=15;d3reason=`IB预估约${ibTotal}分，处于中等区间，匹配度适中。`;}
+    else{d3=9;d3reason=`IB预估约${ibTotal}分，低于主流目标院校要求，需大幅提升。`;}
+  } else if(hasGaokao){
+    const gt=parseFloat(document.getElementById('gaokao-total')?.value)||0;
+    const gmax=parseInt(document.getElementById('gaokao-max')?.value)||750;
+    const gr=gt/gmax;
+    if(gr>=0.93){d3=22;d3reason=`高考${gt}分（满分${gmax}），成绩优异，部分英国院校直录接受。`;}
+    else if(gr>=0.85){d3=17;d3reason=`高考${gt}分，成绩良好，接受高考的院校中具备竞争力。`;}
+    else if(gr>=0.75){d3=12;d3reason=`高考${gt}分，仅能申请部分门槛较低的接受高考院校。`;}
+    else{d3=7;d3reason=`高考${gt}分，当前分数在接受高考的英国院校中竞争力有限。`;}
+  } else if(hasAP){
+    d3=10;d3reason='AP课程在读/已修，但英国院校对AP认可度低于A-Level，建议评估是否补充A-Level。';
+  } else {
+    d3=4;d3reason='尚无任何国际认可的标化课程体系记录（A-Level/IB/高考均未填写）。这是申请英国顶校的核心缺口。';
+  }
+
+  // ── DIM 4: 背景软实力 (25 pts) ───────────────────────
+  const acts = (state.activitiesText||''||'').trim();
+  let d4=0, d4reason='';
+  if(!acts&&actsArr.length===0){
+    d4=4;d4reason='未填写任何活动背景。对于顶校申请，软实力是区分同质化申请者的关键，当前状态几乎无可描述的素材。';
+  } else {
+    // Heuristic scoring based on keywords
+    const actLower=(acts+(actsArr.map(a=>a.type+a.name+a.result).join(' '))).toLowerCase();
+    let pts=8; // base for having something
+    const has=kw=>actLower.includes(kw);
+    if(has('国际')||has('international')||has('全国')||has('national')) pts+=6;
+    if(has('金奖')||has('一等奖')||has('gold')||has('first prize')||has('冠军')) pts+=5;
+    if(has('银奖')||has('二等奖')||has('silver')||has('second')) pts+=3;
+    if(has('科研')||has('research')||has('论文')||has('paper')||has('发表')) pts+=4;
+    if(has('学生会')||has('主席')||has('president')||has('领导')) pts+=2;
+    if(has('志愿')||has('volunteer')||has('公益')) pts+=1;
+    if(has('竞赛')||has('比赛')||has('olympiad')||has('competition')) pts+=2;
+    d4=Math.min(pts,25);
+    if(d4>=22)d4reason=`课外背景亮眼：${acts.slice(0,60)}${acts.length>60?'…':''}。具备国际级竞赛/科研等高含金量素材，文书可写性强。`;
+    else if(d4>=16)d4reason=`课外背景较好：${acts.slice(0,60)}${acts.length>60?'…':''}。有一定亮点，文书素材充分，建议深挖细节。`;
+    else if(d4>=10)d4reason=`课外背景一般：${acts.slice(0,60)}${acts.length>60?'…':''}。有基础活动经历，但缺乏竞赛/科研等高含金量项目，建议针对性补充。`;
+    else d4reason=`课外背景薄弱：${acts.slice(0,60)}${acts.length>60?'…':''}。活动经历较少且层次有限，是申请中的明显短板。`;
+  }
+
+  const total=d1+d2+d3+d4;
+  const acTier = gpaRatio>=0.92?1:gpaRatio>=0.85?2:gpaRatio>=0.75?3:4;
+
+  return {
+    total,d1,d2,d3,d4,
+    d1reason,d2reason,d3reason,d4reason,
+    acTier,
+    langScoreNum: d2>=20?90:d2>=17?75:d2>=13?60:d2>=6?40:0,
+    alevelGrades
+  };
+}
+
+// Legacy wrappers for backward compat
+function computeAcademicTier(gpa,gpaType,hasAlevel,alevelGrades,hasIB,ibTotal,hasGaokao,gaokaoRatio){
+  if(hasAlevel&&alevelGrades.length>0){
+    const stars=alevelGrades.filter(g=>g.toUpperCase().includes('A*')).length;
+    const As=alevelGrades.filter(g=>g.toUpperCase()==='A').length;
+    if(stars>=2) return 1; if(stars>=1||As>=3) return 2; if(As>=2) return 3; return 4;
+  }
+  if(hasIB&&ibTotal>0){if(ibTotal>=40)return 1;if(ibTotal>=36)return 2;if(ibTotal>=30)return 3;return 4;}
+  if(hasGaokao&&gaokaoRatio>0){if(gaokaoRatio>=0.93)return 1;if(gaokaoRatio>=0.87)return 2;if(gaokaoRatio>=0.78)return 3;return 4;}
+  const gpaF=parseFloat(gpa)||3.0,gpaMax=gpaType==='百分制'?100:(gpaType==='5.0制'?5:4),ratio=gpaF/gpaMax;
+  if(ratio>=0.92)return 1;if(ratio>=0.85)return 2;if(ratio>=0.75)return 3;return 4;
+}
+function computeLangScore(lang,score){
+  const s=parseFloat(score)||0;
+  if(lang.includes('雅思')&&s>0){if(s>=7.5)return 100;if(s>=7.0)return 90;if(s>=6.5)return 78;if(s>=6.0)return 65;if(s>=5.5)return 50;return 35;}
+  if(lang.includes('托福')&&s>0){if(s>=110)return 100;if(s>=100)return 90;if(s>=90)return 78;if(s>=80)return 65;if(s>=70)return 50;return 35;}
+  if(lang==='PTE'&&s>0){if(s>=79)return 95;if(s>=70)return 85;if(s>=65)return 78;if(s>=58)return 65;return 45;}
+  return 0;
+}
+
+function selectSchools(specialty,country,acTier,langScore,acceptPathway,useGaokao){
+  const specData=SPEC_DB[specialty]||SPEC_DB['其他'];
+  const filtered=Object.entries(specData).filter(([id,d])=>{
+    const s=SCHOOLS[id];if(!s)return false;
+    const cOk=(country==='英国')?s.country==='UK':(country==='澳洲')?s.country==='AU':true;
+    if(!cOk)return false;
+    if(useGaokao&&d.gaokao&&d.gaokao.includes('不接受高考直录')&&d.tier!=='pathway')return false;
+    return true;
+  });
+  const pathways=filtered.filter(([,d])=>d.tier==='pathway');
+  const nonPathway=filtered.filter(([,d])=>d.tier!=='pathway');
+  const adjusted=nonPathway.map(([id,d])=>{
+    const s=SCHOOLS[id];
+    let prob=d.prob_base;
+    const gap=d.alevel_tier-acTier;
+    if(gap>=2)prob=Math.min(prob+12,97);
+    else if(gap===1)prob=Math.min(prob+5,95);
+    else if(gap===-1)prob=Math.max(prob-12,8);
+    else if(gap<=-2)prob=Math.max(prob-22,5);
+    if(langScore===0)prob=Math.max(prob-20,5);
+    else if(langScore<50)prob=Math.max(prob-10,8);
+    else if(langScore>=90)prob=Math.min(prob+5,97);
+    return {id,d,prob:Math.round(prob),isG5:!!(s&&s.g5)};
+  });
+  adjusted.sort((a,b)=>b.prob-a.prob);
+  const g5Ones=adjusted.filter(x=>x.d.tier==='g5');
+  const rushOnes=adjusted.filter(x=>x.d.tier==='rush');
+  const matchOnes=adjusted.filter(x=>x.d.tier==='match');
+  const safeOnes=adjusted.filter(x=>x.d.tier==='safe');
+  const slate=[];
+  const seen=new Set();
+  function add(x){if(x&&!seen.has(x.id)){slate.push(x);seen.add(x.id);return true;}return false;}
+  if(acTier<=2){
+    g5Ones.slice(0,2).forEach(add);
+    rushOnes.forEach(x=>{if(slate.length<4)add(x);});
+    matchOnes.forEach(x=>{if(slate.length<4)add(x);});
+    safeOnes.forEach(x=>{if(slate.length<5)add(x);});
+  }else if(acTier===3){
+    g5Ones.slice(0,1).forEach(add);
+    rushOnes.filter(x=>x.prob>40).slice(0,1).forEach(add);
+    matchOnes.forEach(x=>{if(slate.length<4)add(x);});
+    safeOnes.forEach(x=>{if(slate.length<5)add(x);});
+  }else{
+    g5Ones.filter(x=>x.prob>10).slice(0,1).forEach(add);
+    matchOnes.forEach(x=>{if(slate.length<3)add(x);});
+    safeOnes.forEach(x=>{if(slate.length<5)add(x);});
+  }
+  const allSorted=[...g5Ones,...rushOnes,...matchOnes,...safeOnes];
+  allSorted.forEach(x=>{if(slate.length<5)add(x);});
+  if(acceptPathway&&pathways.length>0){
+    const hasG5=slate.some(x=>x.isG5);
+    let best=null;
+    if(hasG5) best=pathways.find(([id])=>SCHOOLS[id]&&SCHOOLS[id].g5);
+    if(!best){const m=pathways.find(([id])=>slate.some(x=>x.id===id.replace('_pw','')));best=m||pathways[0];}
+    if(best){const[pwId,pwD]=best;slate.push({id:pwId,d:pwD,prob:pwD.prob_base,isG5:!!(SCHOOLS[pwId]&&SCHOOLS[pwId].g5)});}
+  }
+  return slate.slice(0,6);
+}
+
+
+// ═══════════════════════════════════════════════════════
+// SUBJECT DATA
+// ═══════════════════════════════════════════════════════
+const SUBJECTS={
+  alevel:['Mathematics','Further Mathematics','Physics','Chemistry','Biology','Computer Science','Economics','Business Studies','Accounting','English Language','English Literature','History','Geography','Psychology','Sociology','Art & Design','Media Studies','Law','Politics','French','Spanish','Chinese','German','Physical Education'],
+  ap:['Calculus AB','Calculus BC','Statistics','Physics 1','Physics 2','Physics C','Chemistry','Biology','Environmental Science','Computer Science A','Computer Science Principles','English Language','English Literature','World History','US History','Art History','Economics (Micro)','Economics (Macro)','Government & Politics','Psychology','Chinese Language','Spanish Language','French Language'],
+  ib:['Mathematics AA HL','Mathematics AI HL','Mathematics AA SL','Mathematics AI SL','Physics HL','Physics SL','Chemistry HL','Chemistry SL','Biology HL','Biology SL','Computer Science HL','Computer Science SL','Economics HL','Economics SL','Business Management HL','Business Management SL','English A HL','English A SL','Chinese A HL','Chinese A SL','History HL','History SL','Psychology HL','Psychology SL','Visual Arts HL','Visual Arts SL','TOK']
+};
+const GRADE_PH={alevel:'等级（A*/A/B/C…）',ap:'分数（1-5）',ib:'分数（1-7）'};
+const rowCounts={alevel:0,ap:0,ib:0};
+const activeQuals=new Set();
+
+// ═══════════════════════════════════════════════════════
+// STATE
+// ═══════════════════════════════════════════════════════
+const S={name:'',country:'英国',targetMajor:'',gpa:'',gpaType:'4.0制',lang:'暂无',langScore:'',enroll:'2027年秋季（Fall 2027）',activities:[],activitiesText:'',pathway:'接受预科',edu:'',school:'',grade:'',city:'',targetSchoolIds:[],targetSchoolNames:[],_isCurrent:true};
+
+function toggleQual(type){
+  const tab=document.getElementById('qtab-'+type),panel=document.getElementById('qpanel-'+type);
+  if(activeQuals.has(type)){activeQuals.delete(type);tab.classList.remove('active');panel.classList.remove('show');}
+  else{
+    activeQuals.add(type);tab.classList.add('active');panel.classList.add('show');
+    if((type==='alevel'||type==='ap')&&rowCounts[type]===0){for(let i=0;i<3;i++)addRow(type,true);}
+    if(type==='ib'&&rowCounts['ib']===0) addRow('ib',true);
+  }
+}
+function addRow(type,silent){
+  if(!['alevel','ap','ib'].includes(type))return;
+  if(rowCounts[type]>=10){if(!silent)alert('最多10门科目');return;}
+  rowCounts[type]++;
+  const id=type+'-r'+rowCounts[type];
+  const opts=SUBJECTS[type].map(s=>`<option>${s}</option>`).join('');
+  const ph=GRADE_PH[type];
+  const div=document.createElement('div');div.className='subject-row';div.id=id;
+  div.innerHTML=`<div class="subject-row-top"><select><option value="">选择科目</option>${opts}</select><button class="del-btn" onclick="delRow('${type}','${id}')">删除</button></div>
+  <div class="row2"><div><label class="graded-toggle"><input type="checkbox" onchange="toggleGraded(this,'${id}-g')"> 已出分</label></div><div><input type="text" id="${id}-g" placeholder="${ph}（预估）" style="font-size:12px;padding:7px 10px"></div></div>`;
+  document.getElementById(type+'-rows').appendChild(div);
+  if(rowCounts[type]>=10)document.getElementById(type+'-add').style.display='none';
+}
+function delRow(type,rowId){const el=document.getElementById(rowId);if(el){el.remove();rowCounts[type]--;document.getElementById(type+'-add').style.display='';}}
+function toggleGraded(cb,gid){const el=document.getElementById(gid);const ph=el.placeholder.replace('（预估）','');el.placeholder=cb.checked?ph:ph+'（预估）';}
+function selectLang(el,lang){document.getElementById('lang-chips').querySelectorAll('.chip').forEach(c=>c.classList.remove('sel'));el.classList.add('sel');S.lang=lang;document.getElementById('lang-score-wrap').style.display=lang==='暂无'?'none':'';document.getElementById('no-lang-wrap').style.display=lang==='暂无'?'':'none';}
+
+// ═══════════════════════════════════════════════════════
+// SEASON & ENROLL LOGIC
+// ═══════════════════════════════════════════════════════
+
+// Enroll options → (open year, open month) of the academic year
+const ENROLL_DATES={
+  '2027年秋季（Fall 2027）':{y:2027,m:9},
+  '2028年1月':{y:2028,m:1},
+  '2028年秋季（Fall 2028）':{y:2028,m:9},
+  '2029年及以后':{y:2029,m:9},
+};
+
+function isCurrentSeason(enrollStr){
+  const d=ENROLL_DATES[enrollStr];
+  if(!d) return false;
+  const now=new Date();
+  // Window start = 18 months before open date
+  const windowStart=new Date(d.y,d.m-1,1); // 1st of open month
+  windowStart.setMonth(windowStart.getMonth()-18);
+  return now>=windowStart;
+}
+
+function onEnrollChange(){
+  const val=document.getElementById('enroll').value;
+  const isCurrent=isCurrentSeason(val);
+  S._isCurrent=isCurrent;
+  const tag=document.getElementById('season-tag');
+  if(isCurrent){
+    tag.style.display='';
+    tag.innerHTML='<span style="font-size:10px;padding:2px 9px;border-radius:10px;background:#e8f5ee;color:var(--green);font-weight:500">✓ 当季申请</span>';
+  }else{
+    tag.style.display='';
+    tag.innerHTML='<span style="font-size:10px;padding:2px 9px;border-radius:10px;background:#fdf6e3;color:#9a7018;font-weight:500">📅 长期规划</span>';
+  }
+  // Show/hide target school picker for non-current
+  const tsWrap=document.getElementById('target-school-wrap');
+  if(tsWrap) tsWrap.style.display=isCurrent?'none':'';
+  if(!isCurrent) populateTargetSchoolPicker();
+}
+
+// Populate target school dropdown from SCHOOLS registry
+function populateTargetSchoolPicker(){
+  const picker=document.getElementById('target-school-picker');
+  if(!picker||picker.options.length>2) return; // already populated
+  const schools=Object.entries(SCHOOLS)
+    .filter(([id,s])=>s.country==='UK'&&!s.g5&&!id.includes('_pw'))
+    .sort((a,b)=>a[1].qs-b[1].qs);
+  // Add G5 group
+  const g5Schools=Object.entries(SCHOOLS).filter(([id,s])=>s.g5&&s.country==='UK'&&!id.includes('_pw'));
+  const allSchools=[...g5Schools,...schools];
+  allSchools.forEach(([id,s])=>{
+    const opt=document.createElement('option');
+    opt.value=id;
+    opt.textContent=(s.g5?'[G5] ':'')+s.name+' (QS #'+s.qs+')';
+    picker.appendChild(opt);
+  });
+}
+
+const selectedTargetSchools=new Set();
+function addTargetSchool(sel){
+  const id=sel.value;
+  if(!id||selectedTargetSchools.has(id)) return;
+  selectedTargetSchools.add(id);
+  sel.value='';
+  renderTargetSchools();
+}
+function removeTargetSchool(id){
+  selectedTargetSchools.delete(id);
+  renderTargetSchools();
+}
+function renderTargetSchools(){
+  const wrap=document.getElementById('target-school-selected');
+  if(!wrap) return;
+  if(selectedTargetSchools.size===0){wrap.innerHTML='';return;}
+  wrap.innerHTML=[...selectedTargetSchools].map(id=>{
+    const s=SCHOOLS[id];
+    return `<div style="display:flex;align-items:center;gap:5px;padding:4px 9px;background:var(--navy);border-radius:20px;font-size:11px;color:#fff">
+      ${s?s.name:'Unknown'}
+      <span onclick="removeTargetSchool('${id}')" style="cursor:pointer;opacity:.7;font-size:12px">×</span>
+    </div>`;
+  }).join('');
+}
+
+// ═══════════════════════════════════════════════════════
+// ACTIVITY ROWS
+// ═══════════════════════════════════════════════════════
+let activityCount=0;
+const ACT_TYPES=['竞赛','科研','实习','课外活动','志愿服务','特长/艺术','其他'];
+
+function addActivityRow(silent){
+  if(activityCount>=10){if(!silent)alert('最多10条');return;}
+  activityCount++;
+  const id='act-'+activityCount;
+  const div=document.createElement('div');
+  div.id=id;
+  div.style.cssText='background:var(--cream);border-radius:var(--r2);padding:10px 11px;margin-bottom:8px';
+  div.innerHTML=`
+    <div style="display:flex;gap:7px;align-items:center;margin-bottom:7px">
+      <select style="width:auto;flex-shrink:0;font-size:12px;padding:7px 10px" id="${id}-type">
+        ${ACT_TYPES.map(t=>`<option>${t}</option>`).join('')}
+      </select>
+      <input type="text" id="${id}-name" placeholder="活动/项目名称" style="flex:1;font-size:12px;padding:7px 10px">
+      <button class="del-btn" onclick="removeActivity('${id}')">删除</button>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:7px">
+      <input type="text" id="${id}-result" placeholder="成绩/奖项（如：全国二等奖）" style="font-size:12px;padding:7px 10px">
+      <select id="${id}-year" style="font-size:12px;padding:7px 10px"><option value="">参与年份</option><option>2018年</option><option>2019年</option><option>2020年</option><option>2021年</option><option>2022年</option><option>2023年</option><option>2024年</option><option>2025年</option><option>2026年</option><option>2027年</option><option>2028年</option><option>2029年</option></select>
+    </div>`;
+  document.getElementById('activity-rows').appendChild(div);
+  const addBtn=document.getElementById('activity-add-btn');
+  if(activityCount>=10) addBtn.style.display='none';
+}
+
+function removeActivity(id){
+  const el=document.getElementById(id);
+  if(el){el.remove();activityCount--;}
+  document.getElementById('activity-add-btn').style.display='';
+}
+
+function getActivities(){
+  const rows=[];
+  for(let i=1;i<=20;i++){
+    const el=document.getElementById('act-'+i);
+    if(!el) continue;
+    const type=document.getElementById('act-'+i+'-type')?.value||'';
+    const name=document.getElementById('act-'+i+'-name')?.value.trim()||'';
+    const result=document.getElementById('act-'+i+'-result')?.value.trim()||'';
+    const year=document.getElementById('act-'+i+'-year')?.value.trim()||'';
+    if(name||result) rows.push({type,name,result,year});
+  }
+  return rows;
+}
+
+function selectMajorOther(el){
+  selectSingle(el,'target-chips');
+  document.getElementById('major-other-wrap').style.display='';
+  document.getElementById('major-other-input').focus();
+}
+
+// Call onEnrollChange on page load to set initial state
+setTimeout(()=>{onEnrollChange();addActivityRow(true);},100);
+
+// ── Benefit code verification state ──────────────────
+let codeVerified = false;
+let codeRecordId = '';
+let codeInstitution = '';
+let benefitCode = '';
+
+async function verifyCode(){
+  const code = document.getElementById('benefit-code').value.trim().toUpperCase();
+  if(!code){ showCodeMsg('请输入权益码','#e74c3c'); return; }
+  
+  const btn = document.getElementById('verify-btn');
+  btn.textContent='验证中…'; btn.disabled=true;
+  showCodeMsg('正在验证权益码…','var(--muted)');
+  
+  const result = await validateCode(code);
+  btn.textContent='验证'; btn.disabled=false;
+  
+  if(result.valid){
+    codeVerified=true;
+    codeRecordId=result.recordId;
+    codeInstitution=result.institution;
+    benefitCode=code;
+    showCodeMsg('','');
+    const okEl=document.getElementById('code-ok');
+    okEl.style.display='';
+    document.getElementById('code-institution').textContent=result.institution;
+    const nextBtn=document.getElementById('next-btn');
+    nextBtn.style.opacity='1';nextBtn.style.pointerEvents='auto';
+  }else{
+    codeVerified=false;
+    showCodeMsg(result.msg,'#e74c3c');
+    document.getElementById('code-ok').style.display='none';
+    const nextBtn=document.getElementById('next-btn');
+    nextBtn.style.opacity='.4';nextBtn.style.pointerEvents='none';
+  }
+}
+
+function showCodeMsg(msg,color){
+  const el=document.getElementById('code-msg');
+  el.textContent=msg; el.style.color=color;
+  el.style.display=msg?'':'none';
+}
+
+function updateGradeOptions(){
+  const edu=document.getElementById('edu').value;
+  const gradeField=document.getElementById('grade-field');
+  const gradeSelect=document.getElementById('grade');
+  const opts={
+    '高中在读':['高一（Year 10/Grade 10）','高二（Year 11/Grade 11）','高三（Year 12/A2/IB2）'],
+    '本科在读':['大一（Year 1）','大二（Year 2）','大三（Year 3）','大四（Year 4）'],
+    '硕士在读':['研一（Year 1）','研二（Year 2）'],
+  };
+  if(opts[edu]){
+    gradeField.style.display='';
+    gradeSelect.innerHTML='<option value="">选择年级</option>'+opts[edu].map(o=>`<option>${o}</option>`).join('');
+  } else {
+    gradeField.style.display='none';
+    gradeSelect.innerHTML='<option value="">选择年级</option>';
+  }
+}
+
+function selectSingle(el,gid){document.getElementById(gid).querySelectorAll('.chip').forEach(c=>c.classList.remove('sel'));el.classList.add('sel');}
+function showPage(id,step){document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));document.getElementById(id).classList.add('active');updateProgress(step);window.scrollTo(0,0);}
+function updateProgress(step){for(let i=1;i<=4;i++){const dot=document.getElementById('pd'+i),lbl=document.getElementById('pl'+i),line=document.getElementById('pline'+i);if(i<step){dot.className='p-dot done';dot.textContent='✓';lbl.className='p-label done';}else if(i===step){dot.className='p-dot active';dot.textContent=i;lbl.className='p-label active';}else{dot.className='p-dot';dot.textContent=i;lbl.className='p-label';}if(line)line.className='p-line'+(i<step?' done':'');}}
+function delay(ms){return new Promise(r=>setTimeout(r,ms));}
+
+function goPage2(){
+  if(!codeVerified){ alert('请先验证权益码'); return; }
+  const n=document.getElementById('name').value.trim(),sc=document.getElementById('school').value.trim(),e=document.getElementById('edu').value,p=document.getElementById('phone').value.trim();
+  if(!n||!sc||!e||!p){
+    const missing=[];
+    if(!n) missing.push('学生姓名');
+    if(!sc) missing.push('就读学校');
+    if(!e) missing.push('学历阶段');
+    if(!p) missing.push('联系电话');
+    alert('请填写以下必填项：' + missing.join('、'));
+    return;
+  }
+  S.name=n;S.school=sc;S.edu=e;
+  S.grade=document.getElementById('grade').value||'';
+  showPage('page2',2);
+}
+
+function startGenerate(){
+  // Sync enroll & season state
+  S.enroll=document.getElementById('enroll').value;
+  S._isCurrent=isCurrentSeason(S.enroll);
+  const g=document.getElementById('gpa').value.trim();if(!g){alert('请填写GPA/均分');return;}
+  S.gpa=g;S.gpaType=document.getElementById('gpa-type').value;
+  S.langScore=document.getElementById('lang-score').value.trim();
+  S.activities=getActivities();
+  S.activitiesText=S.activities.map(a=>`${a.type}：${a.name}${a.result?' ('+a.result+')':''}`).join('；')||'未填写';
+  S.grade=document.getElementById('grade')?.value||'';
+  S.city=document.getElementById('city')?.value||'';
+  // Target major: check if 其他 was selected
+  const moInput=document.getElementById('major-other-input');
+  if(moInput&&moInput.value.trim()){S.targetMajor=moInput.value.trim();}
+  // Target schools for non-current students
+  S.targetSchoolIds=[...selectedTargetSchools];
+  S.targetSchoolNames=[...selectedTargetSchools].map(id=>SCHOOLS[id]?.name||id);
+  S._isCurrent=isCurrentSeason(S.enroll);
+  S.school=document.getElementById('school').value.trim();
+  const cc=document.querySelector('#country-chips .chip.sel');if(cc)S.country=cc.textContent;
+  const tc=document.querySelector('#target-chips .chip.sel');if(tc)S.targetMajor=tc.textContent;
+  const pc=document.querySelector('#pathway-chips .chip.sel');if(pc)S.pathway=pc.textContent;
+  showPage('page3',3);runGen();
+}
+
+async function runGen(){
+  const steps=[{gs:'gs1',gsi:'gsi1'},{gs:'gs2',gsi:'gsi2'},{gs:'gs3',gsi:'gsi3'},{gs:'gs4',gsi:'gsi4'}];
+  for(let i=0;i<steps.length;i++){
+    await delay(850);
+    if(i>0){document.getElementById(steps[i-1].gs).className='gen-step done';const pi=document.getElementById(steps[i-1].gsi);pi.className='step-ic done';pi.textContent='✓';}
+    document.getElementById(steps[i].gs).className='gen-step active';const ai=document.getElementById(steps[i].gsi);ai.className='step-ic active';ai.textContent='●';
+  }
+  buildReportData();
+  // Mark step 4 done and show page immediately - don't block on API
+  await delay(600);
+  document.getElementById(steps[3].gs).className='gen-step done';const last=document.getElementById(steps[3].gsi);last.className='step-ic done';last.textContent='✓';
+  await delay(400);
+  showPage('page4',3);
+  // Fetch summary in background after page is shown
+  fetchSummary(); // intentionally NOT awaited
+}
+
+// ═══════════════════════════════════════════════════════
+// REPORT BUILD
+// ═══════════════════════════════════════════════════════
+function buildReportData(){
+  document.getElementById('rp-name').textContent=(S.name||'同学')+' 留学专业分析报告';
+  document.getElementById('rp-country').textContent=S.country;
+  document.getElementById('rp-major-badge').textContent=S.targetMajor||'留学申请';
+  document.getElementById('rp-time').textContent=S.enroll.split('（')[0]+'入学';
+  const seasonEl=document.getElementById('rp-season');
+  if(seasonEl){
+    seasonEl.style.display='';
+    seasonEl.textContent=S._isCurrent?'当季申请':'长期规划';
+    seasonEl.style.background=S._isCurrent?'rgba(82,183,136,.25)':'rgba(201,168,76,.2)';
+    seasonEl.style.color=S._isCurrent?'#52b788':S.color;
+  }
+
+  // ── Run 4-dim scoring ──
+  const dims = score4Dim(S, rowCounts, activeQuals);
+  S._dims = dims;
+  S._acTier = dims.acTier;
+  S._langScore = dims.langScoreNum;
+  S._acScore = Math.round(dims.d1/25*100);
+
+  // ── Render score card ──
+  const totalColor = dims.total>=80?'#52b788':dims.total>=65?'#c9a84c':'#e74c3c';
+  document.getElementById('sc-total').innerHTML=
+    dims.total+'<span class="score-num-unit">/100</span>';
+  document.getElementById('sc-total').style.color=totalColor;
+
+  // Replace the 3-col score grid with 4-dim display
+  const scoreGrid = document.getElementById('score-4dim');
+  if(scoreGrid){
+    const dimData=[
+      {label:'校内成绩',score:dims.d1,max:25,reason:dims.d1reason},
+      {label:'语言成绩',score:dims.d2,max:25,reason:dims.d2reason},
+      {label:'课程标化',score:dims.d3,max:25,reason:dims.d3reason},
+      {label:'软实力背景',score:dims.d4,max:25,reason:dims.d4reason},
+    ];
+    scoreGrid.innerHTML=dimData.map(d=>{
+      const pct=Math.round(d.score/d.max*100);
+      const c=pct>=80?'#52b788':pct>=60?'#c9a84c':'#e74c3c';
+      const label=pct>=80?'良好':pct>=60?'待提升':'需加强';
+      return `<div class="dim-row">
+        <div class="dim-header">
+          <span class="dim-label">${d.label}</span>
+          <span class="dim-score" style="color:${c}">${d.score}<span style="font-size:11px;color:rgba(255,255,255,.4)">/${d.max}</span></span>
+        </div>
+        <div class="dim-bar-wrap">
+          <div class="dim-bar-fill" style="width:${pct}%;background:${c}"></div>
+        </div>
+        <div class="dim-reason">${d.reason}</div>
+      </div>`;
+    }).join('');
+  }
+
+  // Read back qualifications for matching
+  const alevelGrades=dims.alevelGrades;
+  let ibTotal=0;
+  for(let i=1;i<=rowCounts['ib'];i++){const el=document.getElementById('ib-r'+i+'-g');if(el&&el.value.trim())ibTotal+=parseInt(el.value)||0;}
+  const gaokaoTotal=parseFloat(document.getElementById('gaokao-total')?.value)||0;
+  const gaokaoMax=parseInt(document.getElementById('gaokao-max')?.value)||750;
+  const hasAlevel=activeQuals.has('alevel')&&alevelGrades.length>0;
+  const hasIB=activeQuals.has('ib')&&ibTotal>0;
+  const hasGaokao=activeQuals.has('gaokao')&&gaokaoTotal>0;
+
+  const acTier=dims.acTier;
+  const langScore=dims.langScoreNum;
+  const acScore=S._acScore;
+  const total=dims.total;
+
+  const country=S.country;
+  const acceptPathway=S.pathway==='接受预科';
+  const useGaokao=activeQuals.has('gaokao');
+  const slate=selectSchools(S.targetMajor||'其他',country,acTier,langScore,acceptPathway,useGaokao);
+  const slateHasG5=slate.some(x=>x.isG5&&x.d.tier!=='pathway');
+  S._hasG5=slateHasG5;S._useGaokao=useGaokao;
+
+  if(S._isCurrent){
+    buildSchoolCards(slate,acTier,langScore);
+    buildComparisionTable(slate);
+    document.getElementById('school-sec').style.display='';
+    document.getElementById('compare-sec').style.display='';
+    document.getElementById('target-path-sec').style.display='none';
+  }else{
+    document.getElementById('school-sec').style.display='none';
+    document.getElementById('compare-sec').style.display='none';
+    document.getElementById('target-path-sec').style.display='';
+    buildTargetPath(acTier,langScore,dims);
+  }
+  buildWeakness(acTier,langScore);
+  const alevelSubjectNames=[];
+  for(let i=1;i<=rowCounts['alevel'];i++){
+    const sel=document.querySelector('#alevel-r'+i+' select');
+    if(sel&&sel.value) alevelSubjectNames.push(sel.value);
+  }
+  const alevelAnalysis=activeQuals.has('alevel')&&alevelSubjectNames.length>0?analyzeAlevelSubjects(alevelSubjectNames,S.targetMajor||'其他',acTier):null;
+  S._alevelAnalysis=alevelAnalysis;
+  buildAdvice(acTier,langScore,slate,alevelGrades,alevelSubjectNames);
+  buildTimeline(langScore);
+  buildVA(langScore,acScore);
+  renderRightsCard();
+}
+
+// School image map (Unsplash source-style direct URLs, free to use)
+const SCHOOL_IMGS={
+  oxford:'https://images.unsplash.com/photo-1580537659466-0a9bfa916a54?w=400&q=60',
+  cambridge:'https://images.unsplash.com/photo-1548504769-900b70ed122e?w=400&q=60',
+  imperial:'https://images.unsplash.com/photo-1513635269975-59663e0ac1ad?w=400&q=60',
+  lse:'https://images.unsplash.com/photo-1569949381669-ecf31ae8e613?w=400&q=60',
+  ucl:'https://images.unsplash.com/photo-1526129318478-62ed807ebdf9?w=400&q=60',
+  edinburgh:'https://images.unsplash.com/photo-1506377872008-6645d9d29ef7?w=400&q=60',
+  manchester:'https://images.unsplash.com/photo-1548624313-0396c75e4b1a?w=400&q=60',
+  bristol:'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=400&q=60',
+  warwick:'https://images.unsplash.com/photo-1580137189272-c9379f8864fd?w=400&q=60',
+  durham:'https://images.unsplash.com/photo-1467269204594-9661b134dd2b?w=400&q=60',
+  birmingham:'https://images.unsplash.com/photo-1568605117036-5fe5e7bab0b7?w=400&q=60',
+  southampton:'https://images.unsplash.com/photo-1559827260-dc66d52bef19?w=400&q=60',
+  leeds:'https://images.unsplash.com/photo-1513635269975-59663e0ac1ad?w=400&q=60',
+  nottingham:'https://images.unsplash.com/photo-1541339907198-e08756dedf3f?w=400&q=60',
+  sheffield:'https://images.unsplash.com/photo-1607237138185-eedd9c632b0b?w=400&q=60',
+  leicester:'https://images.unsplash.com/photo-1562774053-701939374585?w=400&q=60',
+  coventry:'https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=400&q=60',
+  melbourne:'https://images.unsplash.com/photo-1514395462725-fb4566210144?w=400&q=60',
+  sydney:'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=400&q=60',
+  unsw:'https://images.unsplash.com/photo-1523050854058-8df90110c9f1?w=400&q=60',
+  anu:'https://images.unsplash.com/photo-1541339907198-e08756dedf3f?w=400&q=60',
+  monash:'https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=400&q=60',
+  uq:'https://images.unsplash.com/photo-1607237138185-eedd9c632b0b?w=400&q=60',
+  adelaide:'https://images.unsplash.com/photo-1562774053-701939374585?w=400&q=60',
+  uwa:'https://images.unsplash.com/photo-1559827260-dc66d52bef19?w=400&q=60',
+};
+function getSchoolImg(id){
+  const base=id.replace('_pw','');
+  return SCHOOL_IMGS[base]||'';
+}
+
+function buildSchoolCards(slate,acTier,langScore){
+  const tagCols={rush:'#e74c3c',match:'#c9a84c',safe:'#52b788',pathway:'#5e35b1',g5:'#b8860b'};
+  const tagLabels={rush:'冲刺',match:'匹配',safe:'保底',pathway:'预科直升',g5:'G5冲刺'};
+  const slateHasG5=slate.some(x=>x.isG5&&x.d.tier!=='pathway');
+
+  let html='';
+  // G5 fee notice banner
+
+
+  html+=slate.map(({id,d,prob,isG5})=>{
+    const s=SCHOOLS[id];if(!s)return'';
+    const tier=isG5&&d.tier!=='pathway'?'g5':d.tier;
+    const acOk=acTier<=d.alevel_tier;
+    const langOk=langScore>=50||d.alevel_tier===5;
+    const acWarn=acTier>d.alevel_tier;
+    const isOxbridge=!!(s.oxbridge);
+    const reqLabel=S._useGaokao?'高考录取要求':S.targetMajor+'录取要求';
+    const gaokaoReq=S._useGaokao&&d.gaokao?`<div class="req-row">高考要求：${d.gaokao}</div>`:'';
+    const oxbridgeNote=isOxbridge?`<div style="background:#fff8e1;border:1px solid #f0d060;border-radius:5px;padding:6px 10px;margin-top:6px;font-size:11px;color:#7a5800;display:flex;gap:5px"><span>⚠️</span><span>牛津/剑桥额外要求入学笔试及面试，需提前至少12个月规划备考</span></div>`:'';
+    return `<div class="school-card">
+      <div class="school-img-placeholder" style="background:linear-gradient(135deg,${s.col}33,${s.col}66);overflow:hidden">
+        <img src="${getSchoolImg(id)}" alt="${s.name}" style="width:100%;height:100%;object-fit:cover;position:absolute;inset:0;opacity:0.7" onerror="this.style.display='none'">
+        <span style="font-size:30px;z-index:1;position:relative">${s.emoji}</span>
+        <div class="school-img-label" style="z-index:2">📍 ${s.city.split('，')[0]}</div>
+      </div>
+      <div class="school-body">
+        <div class="school-top"><div class="school-name">${s.name}</div><span class="school-tag tag-${d.tier==='pathway'?'pathway':isG5?'rush':d.tier}">${tagLabels[tier]}</span></div>
+        <div class="school-qs">QS 世界排名 #${s.qs}${isG5?' · <span style="color:#b8860b;font-weight:500">G5院校</span>':''}</div>
+        <div class="school-location">📍 ${s.city} · ${s.geo}</div>
+        <div class="school-costs">
+          <div class="cost-item"><div class="cost-label">学费（每年 · ${S.targetMajor||'本专业'}）</div><div class="cost-val">${d.tuition}</div></div>
+          <div class="cost-item"><div class="cost-label">生活费（每年）</div><div class="cost-val">${d.living}</div></div>
+        </div>
+        <div class="req-block">
+          <div class="req-block-title">📋 ${reqLabel}</div>
+          <div class="req-row ${acWarn?'warn':''}">学术要求：${d.alevel}</div>
+          <div class="req-row ${!langOk&&d.alevel_tier<5?'warn':''}">语言要求：${d.lang}</div>
+          ${gaokaoReq}
+          ${d.prereq?`<div class="req-row">前置/特殊要求：${d.prereq}</div>`:''}
+        </div>
+        ${oxbridgeNote}
+        <div class="school-prob">
+          <div class="prob-bar"><div class="prob-fill" style="width:${prob}%;background:${tagCols[tier]||'#c9a84c'}"></div></div>
+          <span class="prob-val" style="color:${tagCols[tier]||'#c9a84c'}">${prob}%</span>
+        </div>
+      </div>
+    </div>`;
+  }).join('');
+  document.getElementById('school-list').innerHTML=html;
+}
+
+const CAREER_DATA={
+  '商科/金融':{
+    trend:'金融科技(FinTech)、ESG投资与可持续金融、量化分析师需求全球增长。高盛、摩根等投行在亚太区大幅扩张。麦肯锡预测2030年前亚太金融人才缺口超50万。',
+    spotlight:'LSE/华威/爱丁堡毕业生在伦敦金融城就业率超70%，毕业1年内进入金融/咨询行业比例全英最高。',
+    roles:[
+      {title:'投行分析师',co:'Goldman Sachs / Morgan Stanley / Barclays',pay:'£55,000-£80,000起（含奖金）'},
+      {title:'咨询顾问',co:'McKinsey / BCG / Bain（MBB）',pay:'£50,000-£70,000起'},
+      {title:'量化研究员',co:'Two Sigma / Citadel / Jane Street',pay:'£70,000-£120,000+'},
+      {title:'基金经理助理',co:'Vanguard / BlackRock / Fidelity',pay:'£40,000-£60,000'},
+      {title:'FinTech产品经理',co:'Revolut / Wise / Monzo',pay:'£45,000-£70,000'},
+    ],
+    china_advantage:'中英双语+熟悉中国市场是外资银行亚太业务的核心竞争力，回国后顶级PE/VC/外资投行均优先考虑英国顶校背景。',
+    salary_uk:'£28,000-£45,000（应届）→ £60,000-£120,000（3-5年）',
+  },
+  '计算机/IT':{
+    trend:'AI/ML工程师、云架构师、网络安全专家全球供不应求。英国科技业薪资5年上涨37%，硅谷科技公司在伦敦大规模扩招。',
+    spotlight:'帝国理工/UCL/爱丁堡CS毕业生被谷歌、DeepMind、亚马逊等直接校招，起薪全英最高专业之一。',
+    roles:[
+      {title:'软件工程师',co:'Google / Meta / Amazon / Microsoft',pay:'£50,000-£90,000（含RSU）'},
+      {title:'AI/ML工程师',co:'DeepMind / OpenAI / Anthropic',pay:'£70,000-£150,000+'},
+      {title:'数据科学家',co:'各行业均有需求',pay:'£40,000-£75,000'},
+      {title:'网络安全分析师',co:'政府/金融/咨询',pay:'£45,000-£80,000'},
+      {title:'产品经理(技术)',co:'科技独角兽/大厂',pay:'£50,000-£90,000'},
+    ],
+    china_advantage:'英国CS学位在国内BAT/华为/字节等均高度认可，帝国/UCL毕业生回国薪资起点显著高于国内本科。',
+    salary_uk:'£30,000-£50,000（应届）→ £70,000-£150,000（3-5年）',
+  },
+  '工程':{
+    trend:'绿色能源转型驱动可再生能源/电动汽车工程师需求暴增。英国基础设施投资5年内超£650亿，工程类移民政策优先。',
+    spotlight:'南安普顿电子工程、帝国理工机械/航天、曼彻斯特化工全英顶级，毕业生平均就业率超90%。',
+    roles:[
+      {title:'结构/土木工程师',co:'Arup / Atkins / WSP',pay:'£28,000-£45,000'},
+      {title:'机械工程师',co:'Rolls-Royce / BAE Systems / Airbus',pay:'£30,000-£50,000'},
+      {title:'电气/电子工程师',co:'ARM / Qualcomm / 西门子',pay:'£35,000-£60,000'},
+      {title:'可持续能源工程师',co:'Orsted / BP / Shell（新能源部门）',pay:'£35,000-£60,000'},
+      {title:'航空航天工程师',co:'BAE Systems / Rolls-Royce / ESA',pay:'£32,000-£55,000'},
+    ],
+    china_advantage:'英国工程学位全球认可，特别在新能源、轨道交通、建筑行业，有国际背景的工程师在国内央企/大型私企均有竞争优势。',
+    salary_uk:'£26,000-£40,000（应届）→ £55,000-£90,000（3-5年）',
+  },
+  '法律':{
+    trend:'国际仲裁、跨境并购、数据隐私法律需求持续增长。AI法律工具兴起但高端律所对顶校出身要求不降反升。',
+    spotlight:'Magic Circle五大律所（Allen & Overy / Freshfields / Clifford Chance等）几乎仅招牛剑/LSE/UCL毕业生作为初级律师。',
+    roles:[
+      {title:'律所助理律师',co:'Clifford Chance / Freshfields / Linklaters',pay:'£50,000-£100,000（含签约奖金）'},
+      {title:'跨国企业法务',co:'跨国500强公司',pay:'£45,000-£80,000'},
+      {title:'国际仲裁律师',co:'ICC / LCIA 仲裁机构',pay:'£60,000-£120,000（中级）'},
+      {title:'合规官',co:'金融/科技/医药行业',pay:'£40,000-£70,000'},
+      {title:'法律科技顾问',co:'Thomson Reuters / LexisNexis',pay:'£45,000-£75,000'},
+    ],
+    china_advantage:'中英双语律师在跨境并购、知识产权、国际仲裁领域极度稀缺，顶校法律学位是进入Magic Circle或回国顶级律所的关键敲门砖。',
+    salary_uk:'£45,000-£65,000（律所应届）→ £100,000-£200,000（合伙人）',
+  },
+  '传媒/设计':{
+    trend:'内容经济崛起，UX/UI设计、品牌策略、数字营销人才需求持续上升。创意产业年产值超£115亿，英国是全球顶级广告/设计中心之一。',
+    spotlight:'利兹/曼彻斯特传媒、UCL/爱丁堡设计毕业生在BBC、WPP、Publicis等顶级媒体和广告集团中有强校友网络。',
+    roles:[
+      {title:'UX/UI设计师',co:'科技公司/设计机构',pay:'£28,000-£55,000'},
+      {title:'品牌创意总监',co:'Ogilvy / WPP / Publicis',pay:'£40,000-£80,000（中级）'},
+      {title:'内容策略师',co:'媒体/品牌公司',pay:'£30,000-£50,000'},
+      {title:'数字营销经理',co:'各行业',pay:'£30,000-£55,000'},
+      {title:'影视/游戏制作人',co:'BBC / Channel 4 / 游戏工作室',pay:'£25,000-£50,000'},
+    ],
+    china_advantage:'英国艺术/传媒学位在国内广告、互联网、时尚行业高度认可，对于想进入头部互联网公司创意部门的学生有显著竞争优势。',
+    salary_uk:'£22,000-£35,000（应届）→ £45,000-£80,000（3-5年）',
+  },
+  '理科':{
+    trend:'生物技术/医药研发、气候科学、材料科学是全球增长最快的领域。英国生命科学产业年出口超£700亿，政府大力投资科研。',
+    spotlight:'帝国/剑桥/UCL理科毕业生转行金融（量化/数据科学）比例高达30%，理科学位灵活性极强。',
+    roles:[
+      {title:'研究员/博士后',co:'英国/欧美顶尖大学',pay:'£28,000-£40,000（学术路径）'},
+      {title:'生物技术工程师',co:'AstraZeneca / GSK / Pfizer',pay:'£35,000-£60,000'},
+      {title:'数据分析师',co:'各行业',pay:'£35,000-£65,000'},
+      {title:'量化研究员（转行）',co:'对冲基金/投行',pay:'£60,000-£150,000+'},
+      {title:'环境/气候顾问',co:'政府/NGO/咨询',pay:'£28,000-£50,000'},
+    ],
+    china_advantage:'理科学位是最灵活的出路之一，可直接进入学术/科研，也可转向金融量化、数据科学等高薪领域，国内药企/科研机构也高度重视英国顶校背景。',
+    salary_uk:'£24,000-£38,000（应届）→ £50,000-£85,000（3-5年）',
+  },
+  '教育':{
+    trend:'国际教育、EdTech平台、高端家庭教育需求持续增长，尤其在亚太区。英国PGCE资质在全球50+国家认可。',
+    spotlight:'英国教育学位是进入国际学校（年薪£30,000-£50,000）和高端教育咨询行业的主流路径，亚太区需求旺盛。',
+    roles:[
+      {title:'国际学校教师',co:'各地IB/剑桥国际学校',pay:'£28,000-£48,000（含住房补贴）'},
+      {title:'课程设计师',co:'教育出版商/机构',pay:'£28,000-£45,000'},
+      {title:'EdTech产品经理',co:'Coursera / Duolingo / 国内教育独角兽',pay:'£40,000-£70,000'},
+      {title:'教育顾问',co:'留学机构/国际学校招生',pay:'£30,000-£55,000'},
+      {title:'高校行政/招生',co:'英国各大学',pay:'£26,000-£45,000'},
+    ],
+    china_advantage:'英国教育学位+双语背景在国内高端双语学校、国际教育集团中非常抢手，薪资和晋升空间优于纯国内背景。',
+    salary_uk:'£24,000-£35,000（应届）→ £40,000-£65,000（5年）',
+  },
+  '其他':{
+    trend:'跨学科背景在当前就业市场有独特优势，具体前景取决于专业方向。英国毕业生签证（Graduate Visa）允许毕业后留英工作2年。',
+    spotlight:'英国留学后可通过毕业生签证在英积累工作经验，为长期职业发展打好基础。',
+    roles:[
+      {title:'管理咨询顾问',co:'各咨询公司',pay:'£35,000-£55,000'},
+      {title:'政府/公共政策',co:'英国政府/智库',pay:'£28,000-£45,000'},
+      {title:'跨国企业管培生',co:'各行业500强',pay:'£28,000-£45,000'},
+      {title:'创业/初创公司',co:'伦敦科技生态系统',pay:'视情况而定'},
+    ],
+    china_advantage:'英国留学背景在外资企业校招中仍有显著优势，尤其是金融、咨询、科技三大行业。',
+    salary_uk:'£24,000-£40,000（应届）',
+  }
+};
+
+function buildComparisionTable(slate){
+  const maj=S.targetMajor||'其他';
+  const career=CAREER_DATA[maj]||CAREER_DATA['其他'];
+  const tagCols={rush:'#e74c3c',match:'#c9a84c',safe:'#52b788',pathway:'#5e35b1',g5:'#b8860b'};
+  const tagLabels={rush:'冲刺',match:'匹配',safe:'保底',pathway:'预科',g5:'G5冲刺'};
+  // Sort by QS rank ascending
+  const sorted=[...slate].sort((a,b)=>{
+    const qa=SCHOOLS[a.id]?SCHOOLS[a.id].qs:999;
+    const qb=SCHOOLS[b.id]?SCHOOLS[b.id].qs:999;
+    return qa-qb;
+  });
+  let rows='';
+  sorted.forEach(({id,d,prob},idx)=>{
+    const s=SCHOOLS[id];if(!s)return;
+    const tier=s.g5&&d.tier!=='pathway'?'g5':d.tier;
+    const tc=tagCols[tier]||'#888';
+    const bg=idx%2===0?'#fff':'var(--cream)';
+    rows+=`<tr style="background:${bg};border-bottom:1px solid var(--cream2)">
+      <td style="padding:8px 10px;font-weight:500;color:var(--navy);white-space:nowrap">${s.name}${s.g5&&d.tier!=='pathway'?'<span style="color:#b8860b;font-size:9px;margin-left:3px">G5</span>':''}</td>
+      <td style="padding:8px 6px;text-align:center;color:var(--muted)">#${s.qs}</td>
+      <td style="padding:8px 6px;text-align:center"><span style="font-size:9px;padding:2px 7px;border-radius:10px;background:${tc}22;color:${tc};font-weight:500;white-space:nowrap">${tagLabels[tier]||tier}</span></td>
+      <td style="padding:8px 6px;text-align:center;font-weight:500;color:${tc}">${prob}%</td>
+      <td style="padding:8px 6px;color:var(--navy);white-space:nowrap;font-size:10px">${d.tuition}</td>
+      <td style="padding:8px 6px;color:var(--muted);font-size:10px;max-width:120px">${d.alevel}</td>
+    </tr>`;
+  });
+  const tableHTML=`<div style="overflow-x:auto;margin-bottom:12px;border-radius:var(--r2);overflow:hidden;border:1px solid var(--border)">
+    <table style="width:100%;border-collapse:collapse;font-size:11px">
+      <thead><tr style="background:var(--navy);color:rgba(255,255,255,.85)">
+        <th style="padding:8px 10px;text-align:left;font-weight:500">院校</th>
+        <th style="padding:8px 6px;text-align:center;font-weight:500">QS排名</th>
+        <th style="padding:8px 6px;text-align:center;font-weight:500">档次</th>
+        <th style="padding:8px 6px;text-align:center;font-weight:500">录取率</th>
+        <th style="padding:8px 6px;text-align:left;font-weight:500">学费/年</th>
+        <th style="padding:8px 6px;text-align:left;font-weight:500">最低要求</th>
+      </tr></thead>
+      <tbody>${rows}</tbody>
+    </table></div>`;
+  const careerHTML=`<div style="background:var(--cream);border-radius:var(--r2);padding:12px 14px">
+    <div style="font-size:12px;font-weight:600;color:var(--navy);margin-bottom:6px;display:flex;align-items:center;gap:5px">📈 ${maj} · 行业趋势与就业前景</div>
+    <div style="font-size:11px;color:#4a4435;line-height:1.7;margin-bottom:6px">${career.trend}</div>
+    <div style="font-size:11px;background:#fff;border-radius:5px;padding:7px 10px;margin-bottom:8px;border-left:3px solid var(--gold);color:var(--navy)">${career.spotlight}</div>
+    <div style="font-size:10px;font-weight:500;color:var(--muted);margin-bottom:6px">典型就业岗位与薪资</div>
+    ${career.roles.map(r=>`<div style="display:flex;justify-content:space-between;align-items:flex-start;padding:5px 0;border-bottom:1px solid var(--cream2);gap:8px">
+      <div><div style="font-size:11px;font-weight:500;color:var(--navy)">${r.title}</div><div style="font-size:10px;color:var(--muted)">${r.co}</div></div>
+      <div style="font-size:10px;color:var(--green);font-weight:500;white-space:nowrap;flex-shrink:0">${r.pay}</div>
+    </div>`).join('')}
+    <div style="margin-top:8px;padding:7px 10px;background:rgba(82,183,136,.1);border-radius:5px;font-size:11px;color:var(--green)">
+      🇨🇳 中国学生优势：${career.china_advantage}
+    </div>
+  </div>`;
+    const el=document.getElementById('compare-table-wrap');
+  if(el) el.innerHTML=tableHTML+careerHTML;
+}
+
+function buildTargetPath(acTier,langScore,dims){
+  const schools=S.targetSchoolIds||[];
+  const maj=S.targetMajor||'目标专业';
+  const grade=S.grade||S.edu||'';
+  const specData=SPEC_DB[maj]||SPEC_DB['其他'];
+
+  if(schools.length===0){
+    document.getElementById('target-path-wrap').innerHTML=`
+      <div style="background:var(--cream);border-radius:var(--r2);padding:14px;text-align:center;color:var(--muted);font-size:13px">
+        您尚未选择目标院校。请返回填写页选择目标院校，系统将为您生成具体达标路径。
+      </div>`;
+    return;
+  }
+
+  const tagCols={rush:'#e74c3c',match:'#c9a84c',safe:'#52b788',g5:'#b8860b'};
+
+  let html=schools.map(id=>{
+    const school=SCHOOLS[id];
+    if(!school) return '';
+    const sd=specData[id];
+    if(!sd) return '';
+    const tier=school.g5?'g5':sd.tier;
+    const tc=tagCols[tier]||'#888';
+
+    // Gap analysis
+    const acGap=sd.alevel_tier-acTier; // positive = school needs less than student has
+    const langOk=langScore>=65;
+    const langTarget=maj.includes('法律')||maj.includes('教育')?'IELTS 7.0':school.g5?'IELTS 7.0-7.5':'IELTS 6.5';
+
+    // Build specific roadmap items
+    const roadmap=[];
+
+    // Academic requirement
+    roadmap.push({
+      icon:'📚',
+      title:'学术成绩目标',
+      status: acGap>=0?'达标':'待努力',
+      statusColor: acGap>=0?'var(--green)':'#e74c3c',
+      body:`<strong>${school.name} ${maj}方向要求：${sd.alevel}</strong><br>
+            ${acGap<-1?`当前学术水平距要求还有差距，需要在关键科目上取得更好成绩。建议重点提升${maj.includes('商科')||maj.includes('工程')||maj.includes('计算机')?'数学':maj.includes('理科')?'核心理科科目':'核心科目'}。`
+              :acGap<0?'当前成绩与要求接近，需稳定发挥并争取更高等级。'
+              :'当前学术水平达到或超过该校要求，重点维持并争取更优成绩。'}`
+    });
+
+    // Language
+    roadmap.push({
+      icon:'🗣️',
+      title:'语言成绩目标',
+      status:langOk?'达标':'待备考',
+      statusColor:langOk?'var(--green)':'#e74c3c',
+      body:`<strong>目标语言要求：${sd.lang}</strong><br>
+            ${langScore===0?`当前尚无语言成绩，建议在申请前18个月（即入学前约${Math.round(18-3)}个月）完成语言备考。`
+              :langScore<65?`当前${S.lang.split(' ')[0]} ${S.langScore}分，距目标${langTarget}仍有差距，建议系统备考冲刺。`
+              :'语言成绩达标，继续保持。'}`
+    });
+
+    // Background building timeline
+    const yearsToApply=grade.includes('高一')?2:grade.includes('高二')?1:grade.includes('大一')?3:grade.includes('大二')?2:grade.includes('大三')?1:1;
+    const currentActivitiesStr=S.activitiesText||'';
+    roadmap.push({
+      icon:'🏆',
+      title:'背景提升路径',
+      status:'规划中',
+      statusColor:'#9a7018',
+      body:`距申请约 <strong>${yearsToApply}年</strong>，建议分阶段布局：<br>
+            ${yearsToApply>=2?`• 第1年：夯实学科基础，参与${maj.includes('商科')?'商赛(UKBC/MUN)':maj.includes('计算机')||maj.includes('工程')?'数学/物理竞赛(AMC/BPhO)':maj.includes('法律')?'辩论赛/模拟法庭':'相关领域竞赛'}，目标获奖<br>`:''}
+            ${yearsToApply>=2?`• 第2年：深化背景，参与科研项目或海外夏校，撰写文书初稿<br>`:''}
+            • 申请年：完善文书，确保语言达标，10月前完成G5院校申请<br>
+            ${currentActivitiesStr&&currentActivitiesStr!=='未填写'?`• 现有基础：${currentActivitiesStr.slice(0,80)}${currentActivitiesStr.length>80?'…':''}，可在此基础上深化发展`:'• 建议尽早开始系统规划活动背景，每项活动要有明确目标和产出'}`
+    });
+
+    // Prerequisites
+    if(sd.prereq&&sd.prereq!=='无'&&sd.prereq!=='视专业而定'){
+      roadmap.push({
+        icon:'⚠️',
+        title:'前置/特殊要求',
+        status:'注意',
+        statusColor:'#9a7018',
+        body:`<strong>${sd.prereq}</strong>${school.g5&&(school.oxbridge)?'<br>牛津/剑桥须提前备考入学笔试（如MAT/TSA/LNAT），建议提前12-18个月规划。':''}`
+      });
+    }
+
+    return `<div style="border:1px solid var(--border);border-radius:var(--r);margin-bottom:14px;overflow:hidden">
+      <div style="background:var(--navy);padding:12px 14px;display:flex;align-items:center;justify-content:space-between">
+        <div>
+          <div style="font-family:'Noto Serif SC',serif;color:#fff;font-size:14px;font-weight:600">${school.name}</div>
+          <div style="font-size:11px;color:rgba(255,255,255,.6);margin-top:2px">QS #${school.qs} · ${school.city}</div>
+        </div>
+        <span style="font-size:11px;padding:3px 10px;border-radius:10px;background:${tc}33;color:${tc};border:1px solid ${tc}55;font-weight:500">${{g5:'G5目标',rush:'冲刺目标',match:'匹配目标',safe:'稳妥目标'}[tier]||'目标'}</span>
+      </div>
+      <div style="padding:12px 14px">
+        ${roadmap.map(r=>`<div style="margin-bottom:10px;padding:9px 11px;background:var(--cream);border-radius:var(--r2)">
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:5px">
+            <div style="font-size:12px;font-weight:500;color:var(--navy)">${r.icon} ${r.title}</div>
+            <span style="font-size:10px;padding:1px 8px;border-radius:10px;background:${r.statusColor}22;color:${r.statusColor};font-weight:500">${r.status}</span>
+          </div>
+          <div style="font-size:11px;color:#4a4435;line-height:1.75">${r.body}</div>
+        </div>`).join('')}
+      </div>
+    </div>`;
+  }).join('');
+
+  if(!html) html='<div style="color:var(--muted);font-size:13px;padding:12px">未找到目标院校对应的专业数据，请联系顾问进行1对1咨询。</div>';
+  document.getElementById('target-path-wrap').innerHTML=html;
+}
+
+function buildWeakness(acTier,langScore){
+  const noLang=langScore===0;
+  const weakData=[
+    {label:'学术实力',ratio:Math.round([95,82,68,52][acTier-1]),c:acTier<=2?'#52b788':acTier===3?'#c9a84c':'#e74c3c',status:['优秀','良好','待提升','需加强'][acTier-1]},
+    {label:'语言成绩',ratio:noLang?8:Math.min(langScore,92),c:noLang?'#e74c3c':langScore>=78?'#52b788':langScore>=60?'#c9a84c':'#e74c3c',status:noLang?'待备考':langScore>=78?'达标':langScore>=60?'接近目标':'待提升'},
+    {label:'文书材料',ratio:12,c:'#e74c3c',status:'待准备'},
+    {label:'课外背景',ratio:S.activities?70:25,c:S.activities?'#52b788':'#c9a84c',status:S.activities?'良好':'待补充'},
+  ];
+  document.getElementById('weak-list').innerHTML=weakData.map(w=>`
+    <div class="weak-item"><div class="weak-label">${w.label}</div><div class="weak-bar-wrap"><div class="weak-fill" style="width:${w.ratio}%;background:${w.c}"></div></div><span class="weak-status" style="color:${w.c}">${w.status}</span></div>`).join('');
+}
+
+function buildAdvice(acTier,langScore,slate,alevelGrades,alevelSubjectNames){
+  const noLang=langScore===0;
+  const lsRaw=parseFloat(S.langScore)||0;
+  const maj=S.targetMajor||'您的目标专业';
+  const dims=S._dims||{};
+  const topSchool=slate[0]?SCHOOLS[slate[0].id]?.name:'目标院校';
+  const topReq=slate[0]?.d?.alevel||'';
+  const hasG5=S._hasG5;
+  const edu=S.edu||'';
+  const isHighSchool=edu.includes('高中');
+  const isUG=edu.includes('本科');
+  const items=[];
+
+  // ── 1. A-Level subject advice (specific) ──────────────────────────────
+  if(S._alevelAnalysis){
+    const aa=S._alevelAnalysis;
+    if(aa.needMore){
+      items.push({tag:'at-urgent',label:'必须补充',title:`加修科目：${aa.suggested.join(' / ')}`,
+        body:`${aa.reason}${maj.includes('工程')||maj.includes('计算机')?` 帝国理工、UCL等工程/CS系明确写明"Mathematics and Physics are essential"，缺一科直接影响申请资格，不是软性建议。`:''}${isHighSchool?' 建议在高一/高二阶段完成加修，为A-Level考试预留充分备考时间。':''}`});
+    } else if(!aa.warn){
+      items.push({tag:'at-plan',label:'科目评估',title:'当前A-Level科目组合合理',
+        body:aa.reason});
+    }
+  }
+
+  // ── 2. Language (specific gap + timeline) ────────────────────────────
+  if(noLang){
+    const reqScore=maj.includes('教育')?'7.0（各项7.0，无弹性）':maj.includes('法律')?'7.0':maj.includes('G5')||hasG5?'7.5':'6.5';
+    items.push({tag:'at-urgent',label:'最高优先',title:`立即启动语言备考，目标 IELTS ${reqScore}`,
+      body:`当前无语言成绩，所有申请无法提交。${maj}方向目标院校语言要求 IELTS ${reqScore}，从零备考通常需要4-6个月系统训练。建议本月内确定备考计划，否则将直接压缩文书准备时间，形成连锁风险。`});
+  } else if(langScore<65&&lsRaw>0){
+    const gap=S.lang.includes('雅思')?(6.5-lsRaw).toFixed(1):S.lang.includes('托福')?(90-lsRaw):'约0.5';
+    const months=parseFloat(gap)<=0.5?'1-2':parseFloat(gap)<=1?'2-3':'3-5';
+    items.push({tag:'at-urgent',label:'紧急提升',title:`语言距达线还差 ${gap} 分，需 ${months} 个月集中突破`,
+      body:`${S.lang.split(' ')[0]} ${lsRaw} → 目标 6.5（${topSchool}最低要求）。每差0.5分实际上对应大量练习量，不要低估。建议专项强化：阅读+写作是大多数中国学生的失分项，先固定听力口语基础分，再集中攻写作。`});
+  }
+
+  // ── 3. Academic tier-specific advice ─────────────────────────────────
+  if(acTier===1){
+    if(hasG5){
+      items.push({tag:'at-important',label:'G5备考',title:'G5院校需要额外准备：笔试与面试',
+        body:`${topSchool.includes('牛津')||topSchool.includes('剑桥')?'牛剑申请除A*A*A成绩外，还需通过专科笔试（如工程ESAT、数学MAT、法律LNAT）。笔试通常在10月，须提前6个月备考。面试淘汰率约50%，需专项训练学科思维表达。':hasG5?'帝国理工/LSE/UCL不需笔试，但竞争极激烈，文书中的研究方向具体性是关键差异点。':''}`});
+    }
+  } else if(acTier>=3){
+    items.push({tag:'at-important',label:'背景差距',title:`当前学术水平距${topSchool}有差距，建议策略性布局`,
+      body:`您的学术背景目前最契合匹配与保底档院校。建议策略：①以2-3所匹配校为申请核心，集中打磨文书；②预科路径作为进入更高排名院校的保障方案；③不要为了"好看的名单"盲目冲刺，被拒后再申保底校时时间窗口已过。`});
+  }
+
+  // ── 4. Major-specific concrete actions ───────────────────────────────
+  if(maj.includes('商科')||maj.includes('金融')){
+    const hasMath=alevelSubjectNames.some(s=>s.toLowerCase().includes('math'));
+    items.push({tag:'at-important',label:'专业建议',title:'商科文书三条核心写作线索',
+      body:`①量化思维：用具体数据描述你做过的分析（哪怕是学校商赛或模拟投资），避免"我对金融感兴趣"这类无效陈述；②行业认知：展示对目标就业方向的具体了解（如FinTech、资产管理、咨询某一细分）；③驱动事件：一件改变你对商科认知的真实经历。${hasMath?'你有数学A-Level是加分项，在文书中明确提及量化课程中的具体收获。':'数学背景是商科顶校的隐性要求，建议在文书中体现自学数学相关内容的主动性。'}`});
+    if(isHighSchool){
+      items.push({tag:'at-plan',label:'竞赛建议',title:'商科高中生推荐参与的竞赛与活动',
+        body:`①英国商业挑战赛(UKBC)或国际经济学奥林匹克(IEO)：国际级获奖可直接写进文书；②模拟联合国(MUN)：锻炼商业谈判与表达能力，LSE/华威招生官认可；③学校或区级商业计划书大赛：展示实践能力。重点：参与一个并做深，远比参与五个却无成果有说服力。`});
+    }
+  } else if(maj.includes('计算机')||maj.includes('工程')){
+    items.push({tag:'at-important',label:'专业建议',title:'理工科文书的核心：有具体项目，不要泛谈热爱',
+      body:`帝国理工/UCL工程系文书评审官明确表示最看重"解决了什么真实问题"。建议围绕一个具体项目展开（即使是学校实验室项目或自己做的小程序）：描述问题→你的方案→遇到的挑战→最终结果→你从中学到的工程思维。切忌写"我从小喜欢拆机器"这类开头。`});
+    if(isHighSchool){
+      items.push({tag:'at-plan',label:'竞赛建议',title:'理工科高中生推荐竞赛',
+        body:`数学方向：AMC10/12→AIME，英国BMO；目标全球前5%可在文书中体现数学天赋。物理方向：IPhO预选赛或APhO。CS方向：英国BIO(生物信息学竞赛)、USACO(计算机奥林匹克)铜牌以上。重要：帝国理工官方明确"Further Mathematics是A-Level申请中的强加分项"，若尚未选修建议评估是否可加。`});
+    }
+  } else if(maj.includes('法律')){
+    items.push({tag:'at-urgent',label:'语言警示',title:'法律专业语言是所有专业中门槛最高的',
+      body:`英国法律本科要求 IELTS 7.0-7.5，各单项不低于6.5-7.0。澳洲教育专业同级。这不是建议，是硬性资格要求。申请牛津/剑桥法律还须通过LNAT笔试（重点考批判性阅读和论证性写作），建议至少提前8个月备考LNAT，市面上专项辅导资源有限，难度被严重低估。`});
+    items.push({tag:'at-plan',label:'文书建议',title:'法律文书：用一个真实案例展示你的法律思维',
+      body:`招生官最厌恶的文书开头："我想成为律师是因为我想帮助他人/主持公道。"有效替代方案：从一个你真正研究过的真实案例出发（可以是新闻事件、家庭经历、课堂辩论），展示你是如何分析其中法律逻辑的。展现法律思维而非法律情怀。`});
+  } else if(maj.includes('传媒')||maj.includes('设计')){
+    items.push({tag:'at-urgent',label:'作品集',title:'作品集质量决定录取结果，和成绩同等重要',
+      body:`设计/传媒类专业的作品集评审与成绩评审是平行进行的，甚至更重要。建议：①现在开始整理你最好的5-8件作品，每件附上创作过程说明；②找有经验的设计老师进行专项指导；③提前了解目标院校的作品集具体要求（尺寸/格式/是否需要过程稿各校不同）。作品集准备建议至少6个月，不是一周可以完成的事。`});
+  }
+
+  // ── 5. PS framework (specific, not generic) ──────────────────────────
+  items.push({tag:'at-plan',label:'文书规划',title:`个人陈述：${maj}方向具体写作框架`,
+    body:`避开最常见的错误结构（我的经历→我的收获→为什么申请这所学校）。有效结构：<br>
+    ①<strong>一个具体事件开头</strong>（100字内，直接进入场景，不要"我从小就对XXX感兴趣"）<br>
+    ②<strong>从这件事延伸出你的专业认知</strong>（展示你已有的学科思考，不是泛泛的兴趣表达）<br>
+    ③<strong>你已有的相关准备</strong>（课程、竞赛、项目、阅读，具体到书名/课程名/项目名）<br>
+    ④<strong>为什么是这所学校</strong>（必须具体到某位教授的研究方向或某个课程模块，不能写"贵校排名高"）<br>
+    ⑤<strong>未来规划</strong>（具体职业方向，与前面逻辑一致）<br>
+    建议初稿完成时间：提交前4个月。`});
+
+  // ── 6. Pathway advice if applicable ──────────────────────────────────
+  if(S.pathway==='接受预科'&&acTier>=3){
+    const pathwaySchool=slate.find(x=>x.d.tier==='pathway');
+    const pwName=pathwaySchool?SCHOOLS[pathwaySchool.id]?.name:'目标院校预科';
+    items.push({tag:'at-plan',label:'预科路径',title:`${pwName}：多花1年，换高排名院校`,
+      body:`预科不是"退而求其次"，是战略性选择。直录保底校 vs 预科直升冲刺校，多花约一年时间但院校层次有显著提升。语言入学要求低至IELTS 5.0，为语言提升争取了缓冲期。建议：同时准备直录申请和预科申请，收到Offer后再做决策，两手都留。`});
+  }
+
+  document.getElementById('advice-blocks').innerHTML=items.map(item=>`
+    <div class="advice-block">
+      <div class="advice-item">
+        <div class="advice-item-title"><span class="advice-tag ${item.tag}">${item.label}</span>${item.title}</div>
+        <div>${item.body}</div>
+      </div>
+    </div>`).join('');
+}
+
+function buildNonCurrentTimeline(langScore){
+  const grade=S.grade||S.edu||'';
+  const maj=S.targetMajor||'目标专业';
+  const noLang=langScore===0;
+  const enrollStr=S.enroll||'';
+  const targetSchools=S.targetSchoolNames||[];
+
+  // Determine years to application
+  const yr=grade.includes('高一')?2:grade.includes('高二')?1:grade.includes('大一')?3:grade.includes('大二')?2:grade.includes('大三')?1:2;
+
+  // Build phases based on grade
+  const phases=[];
+
+  if(grade.includes('高一')||grade.includes('大一')||grade.includes('大二')){
+    phases.push({p:'tc-p1',phase:'第一阶段·现在起',time:`${grade}阶段（约${yr}年后申请）`,
+      title:'夯实学科基础 + 探索方向',
+      body:`当前距申请约${yr}年，是背景提升的黄金窗口期。核心任务：①确保A-Level/GPA成绩在目标区间（${maj.includes('工程')||maj.includes('计算机')?'数学/物理争取A*':maj.includes('商科')?'数学争取A/A*':'核心科目争取A级'}）；②开始了解目标专业，阅读相关书籍/新闻，培养真实兴趣；③${noLang?'制定语言备考计划，建议高一/大一暑假前完成首次雅思测试':'继续提升语言成绩'}。`
+    });
+    phases.push({p:'tc-p2',phase:'第二阶段·1-1.5年后',time:'背景冲刺期',
+      title:'竞赛/科研/实习 集中发力',
+      body:`这一阶段是背景提升的关键期：①参与${maj.includes('商科')?'UKBC商业挑战赛、国际经济学奥林匹克(IEO)、MUN':maj.includes('计算机')||maj.includes('工程')?'AMC10/12、BPhO物理竞赛、CS竞赛':maj.includes('法律')?'LNAT备考、辩论赛、模拟法庭':'相关领域核心竞赛'}，目标取得可写入文书的成绩；②参与科研/海外夏校，产出具体成果（论文/推荐信）；③积累实习/志愿经历，丰富文书素材。`
+    });
+  } else if(grade.includes('高二')||grade.includes('大三')){
+    phases.push({p:'tc-p1',phase:'第一阶段·现在起',time:'申请准备期（约1年后申请）',
+      title:'语言冲刺 + 文书启动',
+      body:`距申请约1年，节奏开始紧凑。${noLang?'⚠️ 立即启动语言备考，目标在3-4个月内出分（雅思6.5+）':'语言成绩'+S.langScore+'分，建议本学期内冲刺到7.0'}。同步启动个人陈述框架构思，梳理现有背景素材，确定文书核心叙事线。`
+    });
+    phases.push({p:'tc-p2',phase:'第二阶段·3-6个月后',time:'文书定稿期',
+      title:'文书打磨 + 材料准备',
+      body:`完成个人陈述（PS）1-3轮修改；联系2-3位推荐人提前沟通；整理成绩单官方版本；${maj.includes('设计')||maj.includes('传媒')?'作品集需专项准备，建议现在开始整理。':'确认各院校是否需要额外材料（如作品集/写作样本）。'}`
+    });
+  }
+
+  phases.push({p:'tc-p3',phase:'申请阶段',time:`${enrollStr.split('（')[0]}申请季`,
+    title:'提交申请 → 等待录取',
+    body:`${targetSchools.length>0?`目标院校：${targetSchools.join('、')}。`:''} 英国G5/热门专业截止10月15日，其余院校1月15日。澳洲全年Rolling录取。所有材料由顾问统一审核提交，确保零遗漏。`
+  });
+
+  phases.push({p:'tc-p4',phase:'录取阶段',time:'申请提交后 6-12 周',
+    title:'跟进结果 → 签证入学',
+    body:'收到Offer后核实附加条件，顾问全程跟进，及时回复确认。办理相应签证（英国Student Visa需提前3-4个月申请）。'
+  });
+
+  // For non-current students, no countdown banner - just show grade-based timeline
+  const gradeNote=`<div style="background:rgba(201,168,76,.15);border:1px solid rgba(201,168,76,.3);border-radius:var(--r2);padding:10px 13px;margin-bottom:12px;font-size:11px;color:var(--navy)">
+    <strong>📅 长期规划模式</strong> · 您目前${grade}，预计 ${enrollStr.split('（')[0]} 入学，距申请约 <strong>${yr}年</strong>。现在是背景提升的最佳窗口期。
+  </div>`;
+
+  document.getElementById('timeline-list').innerHTML=gradeNote+phases.map(t=>`
+    <div class="timeline-card ${t.p}">
+      <div class="tl-head"><span class="tl-phase">${t.phase}</span><span class="tl-time">${t.time}</span></div>
+      <div class="tl-title">${t.title}</div>
+      <div class="tl-body">${t.body}</div>
+    </div>`).join('');
+}
+
+function buildTimeline(langScore){
+  if(!S._isCurrent){
+    buildNonCurrentTimeline(langScore);
+    return;
+  }
+  const noLang=langScore===0;
+  const langLow=langScore>0&&langScore<65;
+  const lsRaw=parseFloat(S.langScore)||0;
+
+  // Parse target enroll date → deadline anchors
+  const enrollStr=S.enroll||'2027年秋季（Fall 2027）';
+  let enrollYear=2027, enrollMonth=9; // default Fall 2027
+  if(enrollStr.includes('2028')&&enrollStr.includes('1月')){enrollYear=2028;enrollMonth=1;}
+  else if(enrollStr.includes('2028')){enrollYear=2028;enrollMonth=9;}
+  else if(enrollStr.includes('2029')){enrollYear=2029;enrollMonth=9;}
+  else if(enrollStr.includes('2027')&&enrollStr.includes('1月')){enrollYear=2027;enrollMonth=1;}
+
+  // Key UK/AU deadlines relative to enroll year
+  // UK: main UCAS deadline = Jan 15 of enrollYear-1 (for Sept entry)
+  // UK hot programs (Oxford/Cambridge/medicine): Oct 15 of enrollYear-1
+  // AU: rolling, suggest submit by Oct of enrollYear-1
+  const applyYear=enrollMonth===1?enrollYear-1:enrollYear-1; // academic year before entry
+  const ukMainDeadline=`${applyYear}年1月15日`;
+  const ukEarlyDeadline=`${applyYear}年10月15日`;
+  const auDeadline=`${applyYear}年10月`;
+  const visaDeadline=enrollMonth===1?`${enrollYear-1}年11月`:`${enrollYear}年6月`;
+  const offerExpect=`${applyYear}年3月-5月`;
+
+  // Today reference (approximate, good enough for planning)
+  const now=new Date();
+  const nowYear=now.getFullYear(), nowMonth=now.getMonth()+1;
+  
+  // Calculate months from now to key deadlines
+  function monthsUntil(y,m){return(y-nowYear)*12+(m-nowMonth);}
+  const monthsToUKMain=monthsUntil(applyYear,1);
+  const monthsToUKEarly=monthsUntil(applyYear,10);
+  const monthsToEnroll=monthsUntil(enrollYear,enrollMonth);
+
+  // Urgency label
+  function urgencyLabel(months){
+    if(months<=3) return '⚠️ 紧急';
+    if(months<=6) return '🔔 重要';
+    return '📅 规划';
+  }
+
+  // Build personalized phases
+  const phases=[];
+
+  // Phase 1: Language (if needed) or immediate prep
+  if(noLang||langLow){
+    const langTarget=noLang?'备考至6.5':S.lang.split(' ')[0]+(lsRaw>0?` ${lsRaw}→7.0`:'达标6.5');
+    const neededMonths=noLang?5:langLow?3:2;
+    const langDeadlineYear=nowYear+(nowMonth+neededMonths>12?1:0);
+    const langDeadlineMonth=((nowMonth+neededMonths-1)%12)+1;
+    const langDeadlineStr=`${langDeadlineYear}年${langDeadlineMonth}月`;
+    phases.push({
+      p:'tc-p1',
+      phase:urgencyLabel(neededMonths)+' 第一阶段',
+      time:`现在 → ${langDeadlineStr}`,
+      title:`语言成绩突破（${monthsToUKMain-neededMonths}个月后截止申请）`,
+      body:`语言成绩是所有院校申请的硬性前提。您需在 <strong>${langDeadlineStr}</strong> 前完成语言考试，才能在 <strong>${ukMainDeadline}</strong> 前完成英国院校申请提交。${noLang?'当前尚无成绩，每推迟一个月备考，整体申请节奏压缩一个月，建议本周内启动。':`当前${S.lang.split(' ')[0]} ${lsRaw}分，距主流院校要求仍差${S.lang.includes('雅思')?(7.0-lsRaw).toFixed(1):'一个区间'}分，建议立即密集备考。`}`,
+    });
+  }
+
+  // Phase 2: Materials and PS
+  const phase2Start=noLang||langLow?'语言备考同步':'现在';
+  const psDeadlineMonth=monthsToUKEarly<=4?`${applyYear}年8月`:monthsToUKMain<=8?`${applyYear}年10月`:`${applyYear}年11月`;
+  phases.push({
+    p:'tc-p2',
+    phase:'📋 第二阶段',
+    time:`${phase2Start} → ${psDeadlineMonth}`,
+    title:'文书与材料准备',
+    body:`个人陈述（PS）须在 <strong>${ukEarlyDeadline}</strong>（G5/热门专业截止）前完成，其余院校 <strong>${ukMainDeadline}</strong> 前提交。建议至少提前3个月开始写作：构思框架→初稿→3轮修改→定稿。同步准备：成绩单官方版、推荐信（提前2-3个月联系推荐人）、语言成绩官方报告${S.targetMajor?.includes('设计')||S.targetMajor?.includes('传媒')?'、作品集（Portfolio）':''}。`,
+  });
+
+  // Phase 3: Submit
+  const hasG5=S._hasG5;
+  phases.push({
+    p:'tc-p3',
+    phase:'🎯 第三阶段',
+    time:`${applyYear}年9月 → ${ukMainDeadline}`,
+    title:`正式提交申请（距今约${monthsToUKMain}个月）`,
+    body:`${hasG5?`<strong>牛津/剑桥等G5院校截止 ${ukEarlyDeadline}</strong>，须提前完成笔试备考（如TSA/LNAT/MAT）；其余G5院校同步提交。`:''}英国主流院校截止 <strong>${ukMainDeadline}</strong>，澳洲全年Rolling录取建议 <strong>${auDeadline}</strong> 前完成提交以获最佳录取机会。所有材料由顾问团队统一审核后提交，确保零遗漏。`,
+  });
+
+  // Phase 4: Offer & visa
+  phases.push({
+    p:'tc-p4',
+    phase:'✅ 第四阶段',
+    time:`${offerExpect} → ${visaDeadline}`,
+    title:`等待录取 → 确认Offer → 签证`,
+    body:`院校通常在提交后6-12周出结果，预计 <strong>${offerExpect}</strong> 陆续收到录取通知。收到Offer后：①核实附加条件（语言提分/前置课程）→ ②在截止日期前回复确认 → ③办理签证（英国Student Visa / 澳洲Student Visa，建议在 <strong>${visaDeadline}</strong> 前完成）。顾问全程跟进每个节点，无需家长自行催查。`,
+  });
+
+  // Countdown summary bar
+  // Convert months to display: if ≤3 months show days, else show months
+  function fmtMonths(m){
+    if(m<=0) return '<span style="font-size:13px;color:rgba(255,150,80,.9)">已截止</span>';
+    const now=new Date();
+    // Calculate actual days if ≤100 days
+    const c=m<=1?'#e74c3c':m<=3?'#e8c96a':'var(--gold)';
+    if(m<=3){
+      const days=Math.round(m*30.4);
+      if(days<=100){
+        return `<span style="color:${c}">${days}<span style="font-size:13px">天</span></span>`;
+      }
+    }
+    return `<span style="color:${c}">${m}<span style="font-size:13px">月</span></span>`;
+  }
+  const countdownHtml=`<div style="background:var(--navy);border-radius:var(--r);padding:13px 15px;margin-bottom:12px;display:flex;gap:0;flex-wrap:wrap;border:1px solid rgba(255,200,80,.2)">
+    <div style="flex:1;min-width:90px;text-align:center;padding:4px 8px;border-right:1px solid rgba(255,255,255,.12)">
+      <div style="font-family:'Noto Serif SC',serif;font-size:22px;font-weight:600">${fmtMonths(monthsToUKEarly)}</div>
+      <div style="font-size:9px;color:rgba(255,255,255,.55);margin-top:2px;line-height:1.5">G5截止<br>${ukEarlyDeadline}</div>
+    </div>
+    <div style="flex:1;min-width:90px;text-align:center;padding:4px 8px;border-right:1px solid rgba(255,255,255,.12)">
+      <div style="font-family:'Noto Serif SC',serif;font-size:22px;font-weight:600">${fmtMonths(monthsToUKMain)}</div>
+      <div style="font-size:9px;color:rgba(255,255,255,.55);margin-top:2px;line-height:1.5">普通截止<br>${ukMainDeadline}</div>
+    </div>
+    <div style="flex:1;min-width:90px;text-align:center;padding:4px 8px">
+      <div style="font-family:'Noto Serif SC',serif;font-size:22px;color:var(--gold2);font-weight:600">${monthsToEnroll>0?monthsToEnroll:'<1'}个月</div>
+      <div style="font-size:9px;color:rgba(255,255,255,.55);margin-top:2px;line-height:1.5">距入学<br>${enrollStr.split('（')[0]}</div>
+    </div>
+  </div>`;
+
+  document.getElementById('timeline-list').innerHTML=
+    countdownHtml+
+    phases.map(t=>`<div class="timeline-card ${t.p}">
+      <div class="tl-head"><span class="tl-phase">${t.phase}</span><span class="tl-time">${t.time}</span></div>
+      <div class="tl-title">${t.title}</div>
+      <div class="tl-body">${t.body}</div>
+    </div>`).join('');
+}
+
+function buildVA(langScore,acScore){
+  const noLang=langScore===0;
+  const lsRaw=parseFloat(S.langScore)||0;
+  const langLow=noLang||(lsRaw>0&&((S.lang.includes('雅思')&&lsRaw<6.5)||(S.lang.includes('托福')&&lsRaw<90)));
+  const noActivities=!S.activities;
+  const maj=S.targetMajor||'您的目标专业';
+  const services=[];
+
+  if(langLow){
+    const gap=noLang?1.5:S.lang.includes('雅思')?(6.5-lsRaw):S.lang.includes('托福')?(90-lsRaw)/10:1;
+    const months=gap<=0.5?'1-2个月':gap<=1?'2-3个月':'3-5个月';
+    const lessons=gap<=0.5?30:gap<=1?50:70;
+    const price=lessons>=50?800:1200;
+    const total=(lessons*price).toLocaleString();
+    const origTotal=(lessons*1200).toLocaleString();
+    const langName=noLang?'雅思':S.lang.split(' ')[0];
+    services.push({
+      icon:'📝',title:`${langName}冲刺辅导`,hot:true,tag:'优先推荐',bg:'#fff8e8',
+      desc:'资深中教1对1，针对薄弱项精准突破，绝非刷题',
+      reason:`语言是申请的硬性门槛，${noLang?'当前无成绩意味着所有申请通道关闭':'距达线仍差'+gap.toFixed(1)+'分，差距是客观存在的'}。`,
+      outcomes:[
+        `完课后${langName}平均提升：0.5-1.0分（基于过往学员数据）`,
+        `配套模拟考+批改，考前状态稳定`,
+        `${months}课程周期，匹配您的申请时间线`,
+      ],
+      priceHtml:lessons>=50?`<span class="va-price">¥${total}</span><span class="va-orig">¥${origTotal}</span><span class="va-save">50节以上¥800/课时</span>`:`<span class="va-price">¥${total}</span><span style="font-size:10px;color:var(--muted);margin-left:4px">¥1,200/课时</span>`,
+    });
+  }
+
+  services.push({
+    icon:'🔬',title:'海外教授科研项目',hot:noActivities||acScore<72,tag:noActivities?'背景缺口':'',bg:'#f0f4ff',
+    desc:`对接英澳知名高校在读教授，${maj}方向真实课题，3-6个月`,
+    reason:`${noActivities?'您当前没有可描述的科研背景，这在顶校申请中是明显短板。':'顶校文书需要具体的学术探索经历，泛泛的"对专业感兴趣"无法说服招生官。'}这不是"水科研"——我们对接的是真实在研课题，你的参与有实际产出。`,
+    outcomes:[
+      '可产出一篇署名课题报告或会议论文（视项目而定）',
+      '获得海外教授的亲笔推荐信（区别于机构代写）',
+      '文书中有具体研究经历可描述，提升文书可信度',
+      `顾问为您从科研库中匹配3个与${maj}最相关的项目供选择`,
+    ],
+    priceHtml:'<span class="va-price">¥36,800</span>',
+  });
+
+  services.push({
+    icon:'🏢',title:'名企定向实习',hot:false,tag:'',bg:'#fff0f8',
+    desc:'对接国内外知名企业，获得可写入文书的真实实习经历',
+    reason:`${maj.includes('商科')||maj.includes('金融')?'商科/金融顶校申请中，相关实习是准标配。LSE/华威招生官明确表示"relevant work experience"是差异化因素。':maj.includes('传媒')?'传媒类院校评估作品集时，真实工作环境中的项目比课堂作业更有说服力。':'企业实习经历让你的文书从"我想做XXX"变成"我已经在做XXX"，可信度差异显著。'}`,
+    outcomes:[
+      '获得知名企业实习证明（可直接写入简历和文书）',
+      '积累文书中的真实场景素材（具体项目、遇到的问题、你的解法）',
+      `顾问根据${maj}方向精准匹配，不是随机对接`,
+    ],
+    priceHtml:'<span class="va-price">¥16,800</span>',
+  });
+
+  document.getElementById('va-list').innerHTML=services.filter(s=>s.hot||true).map(s=>`
+    <div class="va-card ${s.hot?'featured':''}">
+      ${s.tag?`<div class="va-badge">${s.tag}</div>`:''}
+      <div class="va-top"><div class="va-icon" style="background:${s.bg}">${s.icon}</div><div><div class="va-title">${s.title}</div><div class="va-desc">${s.desc}</div></div></div>
+      <div class="va-reason">${s.reason}</div>
+      <div style="margin-bottom:8px">
+        <div style="font-size:10px;font-weight:500;color:var(--muted);margin-bottom:4px">📋 具体产出</div>
+        <ul style="list-style:none;padding:0">${s.outcomes.map(o=>`<li style="font-size:11px;color:#3a3228;padding:2px 0;display:flex;gap:5px"><span style="color:var(--green2);flex-shrink:0;font-size:12px">✓</span>${o}</li>`).join('')}</ul>
+      </div>
+      <div class="va-price-area">${s.priceHtml}</div>
+    </div>`).join('');
+}
+
+function analyzeAlevelSubjects(alevelSubjects, specialty, acTier){
+  // Returns {needMore: bool, reason: string, suggestedSubjects: []} or null
+  if(!alevelSubjects||alevelSubjects.length===0) return null;
+  const subCount = alevelSubjects.length;
+  const subs = alevelSubjects.map(s=>s.toLowerCase());
+  const hasMath = subs.some(s=>s.includes('math'));
+  const hasPhysics = subs.some(s=>s.includes('physics'));
+  const hasChem = subs.some(s=>s.includes('chem'));
+  const hasBio = subs.some(s=>s.includes('bio'));
+  const hasCS = subs.some(s=>s.includes('computer'));
+  const hasEcon = subs.some(s=>s.includes('econ'));
+  const hasBusiness = subs.some(s=>s.includes('business'));
+  const hasFurtherMath = subs.some(s=>s.includes('further'));
+
+  // If already 4+ subjects, don't recommend more (warn instead)
+  if(subCount>=4) return {needMore:false,warn:true,reason:`您已选修${subCount}门A-Level科目，无需再加修。大学不要求超过3门，当前重点应确保每门成绩优异，分数比数量更重要。`};
+
+  const suggestions=[];
+  let reason='';
+
+  if((specialty==='计算机/IT'||specialty==='工程')&&!hasMath){
+    suggestions.push('Mathematics');reason='数学是CS/工程类专业的硬性前置科目，所有目标院校均强制要求。';
+  }
+  if(specialty==='工程'&&!hasPhysics&&hasMath){
+    suggestions.push('Physics');reason+=(reason?' ':'')+'工程专业通常同时要求数学和物理，缺少物理将直接影响院校资格。';
+  }
+  if((specialty==='计算机/IT')&&!hasPhysics&&!hasCS&&hasMath){
+    suggestions.push('Physics or Computer Science');reason+=(reason?' ':'')+'CS方向物理或CS二选一作为第二理科，有助于满足帝国/UCL等顶校要求。';
+  }
+  if((specialty==='商科/金融'||specialty==='理科')&&!hasMath&&acTier<=2){
+    suggestions.push('Mathematics');reason='顶级商学院（LSE/华威/爱丁堡）强烈建议或事实性要求数学A级，缺少数学会显著降低进入G5梯队的竞争力。';
+  }
+  if(specialty==='理科'&&subCount===3&&hasMath&&!hasFurtherMath&&acTier<=1){
+    suggestions.push('Further Mathematics（EPQ亦可）');reason='目标G5理科的同学，Further Maths或EPQ（扩展项目资质）能在牛剑申请中显著加分，当前3门基础够用但G5竞争中有提升空间。';
+  }
+
+  if(suggestions.length===0) return {needMore:false,reason:`您当前${subCount}门科目组合合理，无需加修。建议专注提升现有科目成绩，尤其是${specialty==='商科/金融'&&hasMath?'数学':'核心科目'}的最终等级。`};
+  return {needMore:true,reason,suggested:suggestions};
+}
+
+function renderRightsCard(){
+  const hasG5=S._hasG5||false;
+  const wrap=document.getElementById('rights-card-wrap');
+  if(!wrap) return;
+  if(hasG5){
+    wrap.innerHTML=`
+    <div style="border-radius:var(--r);overflow:hidden;margin-bottom:12px">
+      <!-- G5 part -->
+      <div style="background:linear-gradient(135deg,#3d2b00,#6b4a00);padding:14px 18px;border-bottom:1px solid rgba(255,200,0,.2)">
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px">
+          <span style="font-size:16px">👑</span>
+          <div style="font-family:'Noto Serif SC',serif;font-size:13px;color:var(--gold2);font-weight:600">G5 顶尖院校申请</div>
+          <span style="font-size:10px;padding:2px 8px;background:rgba(201,168,76,.25);color:var(--gold2);border-radius:10px;border:1px solid rgba(201,168,76,.4)">专属服务</span>
+        </div>
+        <div style="display:flex;align-items:baseline;gap:8px;margin-bottom:8px">
+          <span style="font-family:'Noto Serif SC',serif;font-size:22px;color:var(--gold);font-weight:600">¥30,000</span>
+          <span style="font-size:11px;color:rgba(255,255,255,.4);text-decoration:line-through">原价 ¥88,000</span>
+          <span style="font-size:10px;color:#52b788;font-weight:500">节省 ¥58,000</span>
+        </div>
+        <ul style="list-style:none;padding:0">
+          <li style="font-size:11px;color:rgba(255,220,100,.85);padding:2px 0;display:flex;gap:5px"><span style="color:#f0c040;flex-shrink:0">✦</span>G5院校（牛津/剑桥/帝国/LSE/UCL）申请全流程</li>
+          <li style="font-size:11px;color:rgba(255,220,100,.85);padding:2px 0;display:flex;gap:5px"><span style="color:#f0c040;flex-shrink:0">✦</span>G5专属顾问团队 1对1 深度服务</li>
+          <li style="font-size:11px;color:rgba(255,220,100,.85);padding:2px 0;display:flex;gap:5px"><span style="color:#f0c040;flex-shrink:0">✦</span>笔试/面试专项备考辅导（TSA/LNAT/MAT等）</li>
+          <li style="font-size:11px;color:rgba(255,220,100,.85);padding:2px 0;display:flex;gap:5px"><span style="color:#f0c040;flex-shrink:0">✦</span>文书深度定制，结合G5录取逻辑打磨</li>
+        </ul>
+      </div>
+      <!-- Non-G5 part -->
+      <div style="background:linear-gradient(135deg,var(--navy),var(--navy2));padding:14px 18px">
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px">
+          <span style="font-size:14px">🎁</span>
+          <div style="font-family:'Noto Serif SC',serif;font-size:13px;color:#fff;font-weight:600">非G5院校申请</div>
+          <span style="font-size:10px;padding:2px 8px;background:rgba(82,183,136,.2);color:var(--green2);border-radius:10px;border:1px solid rgba(82,183,136,.3)">客户专享权益</span>
+        </div>
+        <div style="display:flex;align-items:baseline;gap:8px;margin-bottom:8px">
+          <span style="font-family:'Noto Serif SC',serif;font-size:22px;color:var(--green2);font-weight:600">¥0</span>
+          <span style="font-size:11px;color:rgba(255,255,255,.4);text-decoration:line-through">市场价 ¥58,000</span>
+          <span style="font-size:10px;color:var(--green2);font-weight:500">完全免费</span>
+        </div>
+        <ul style="list-style:none;padding:0">
+          <li style="font-size:11px;color:rgba(255,255,255,.8);padding:2px 0;display:flex;gap:5px"><span style="color:var(--green2);flex-shrink:0">✓</span>非G5全部院校申请服务，服务费全免</li>
+          <li style="font-size:11px;color:rgba(255,255,255,.8);padding:2px 0;display:flex;gap:5px"><span style="color:var(--green2);flex-shrink:0">✓</span>专属顾问 1对1 全程跟进至录取</li>
+          <li style="font-size:11px;color:rgba(255,255,255,.8);padding:2px 0;display:flex;gap:5px"><span style="color:var(--green2);flex-shrink:0">✓</span>院校评估报告 + 30分钟 1对1 解读会</li>
+          <li style="font-size:11px;color:rgba(255,255,255,.8);padding:2px 0;display:flex;gap:5px"><span style="color:var(--green2);flex-shrink:0">✓</span>申请材料审核与提交 + 全程节点通报</li>
+        </ul>
+        <div style="font-size:10px;color:rgba(255,255,255,.35);margin-top:8px">院校官方申请费由客户自付（每所约¥300-1,000）</div>
+      </div>
+    </div>`;
+  } else {
+    wrap.innerHTML=`
+    <div class="included-card">
+      <div class="inc-title">✦ 高净值客户专享申请权益</div>
+      <div class="inc-price-row">
+        <span class="inc-free">¥0</span>
+        <span class="inc-orig">市场价值 ¥58,000</span>
+        <span style="font-size:11px;color:var(--green2);font-weight:500;margin-left:4px">完全免费</span>
+      </div>
+      <ul class="inc-list">
+        <li>全英国非G5 + 澳洲院校申请全流程服务（服务费全免）</li>
+        <li>专属顾问 1对1 全程跟进，直至录取</li>
+        <li>院校背景评估报告 + 30分钟 1对1 解读会</li>
+        <li>个人陈述（PS）框架指导与材料审核</li>
+        <li>申请节点全程跟踪通报</li>
+        <li>Offer条件核实与录取确认指导</li>
+      </ul>
+      <div class="inc-note">院校官方申请费由客户自付，通常每所300-1,000元人民币</div>
+    </div>`;
+  }
+}
+
+async function fetchSummary(){
+  document.getElementById('ai-summary').innerHTML='<span class="cursor"></span>';
+  const langInfo=S.lang==='暂无'?'尚未持有语言成绩':`${S.lang} ${S.langScore||''}`;
+  const tierDesc=['学术实力顶尖（A*AA以上水平）','学术实力优秀（AAA-AAB水平）','学术实力中等（ABB-BBB水平）','学术背景基础（BBC及以下）'][S._acTier-1]||'中等水平';
+  const isCurrent=S._isCurrent!==false;
+  const actsForPrompt=(S.activities&&S.activities.length>0)
+    ?S.activities.map(a=>`${a.type}·${a.name}${a.result?' ('+a.result+')':''}${a.year?' '+a.year:''}`).join('、')
+    :'无课外活动记录';
+  const targetSchoolsStr=S.targetSchoolNames&&S.targetSchoolNames.length>0?S.targetSchoolNames.join('、'):'未指定';
+
+  const prompt=isCurrent
+    ?`你是瑞仕途教育的专业留学顾问，根据以下信息，用约220字生成专业、有针对性的留学申请评估点评。语气专业亲切，结合具体信息给出实质性建议，不要泛泛而谈。不要提及AI。直接输出正文，无需标题。
+
+学生：${S.name||'该学生'}，${S.grade||S.edu}，就读：${S.school}（${S.city||''}）
+目标：${S.country} ${S.targetMajor||'留学'}，入学：${S.enroll}（当季申请）
+学术水平：${tierDesc}，GPA：${S.gpa}（${S.gpaType}）
+语言：${langInfo}
+活动背景：${actsForPrompt}
+预科选项：${S.pathway}`
+    :`你是瑞仕途教育的专业留学顾问，根据以下信息，用约220字生成专业的长期留学规划建议。重点：①现在与目标院校的差距；②分阶段背景提升路径；③语言和学术成绩具体目标。语气专业亲切，不要泛泛而谈。不要提及AI。直接输出正文，无需标题。
+
+学生：${S.name||'该学生'}，${S.grade||S.edu}，就读：${S.school}（${S.city||''}）
+目标入学：${S.enroll}（长期规划，非当季）
+目标院校：${targetSchoolsStr}
+目标专业：${S.targetMajor||'未指定'}
+当前学术：${tierDesc}，GPA：${S.gpa}（${S.gpaType}）
+语言：${langInfo}
+活动背景：${actsForPrompt}`;
+  // Show fallback immediately so user sees content right away
+  streamText('ai-summary',getFallback());
+  // Try to enhance with API response (8s hard timeout via Promise.race)
+  try{
+    const apiPromise=fetch('https://api.deepseek.com/chat/completions',{
+      method:'POST',
+      headers:{'Content-Type':'application/json','Authorization':'Bearer sk-50b9e756ed2b42b288000dc64c6c6d62'},
+      body:JSON.stringify({model:'deepseek-chat',max_tokens:450,messages:[{role:'user',content:prompt}]})
+    }).then(r=>r.json()).then(d=>({content:[{text:d.choices?.[0]?.message?.content||''}]}));
+    const timeoutPromise=new Promise((_,reject)=>setTimeout(()=>reject(new Error('timeout')),8000));
+    const d=await Promise.race([apiPromise,timeoutPromise]);
+    if(d.content?.[0]?.text){
+      // API succeeded - update with real response
+      streamText('ai-summary',d.content[0].text);
+    }
+  }catch(e){
+    // API failed or timed out - fallback already shown, nothing to do
+  }
+}
+
+function getFallback(){
+  const n=S.name||'同学';const maj=S.targetMajor||'目标专业';
+  const tierMap={1:`您的学术实力处于申请方阵的顶尖区间，在${maj}方向具备冲击爱丁堡、华威等顶级院校的条件`,2:`您的学术背景扎实，在${maj}方向具备冲击曼彻斯特、伯明翰等强校的竞争力`,3:`您的学术背景处于匹配区间，${maj}方向诺丁汉、谢菲尔德等院校是现实的目标`,4:`当前背景在${maj}方向适合以稳健院校为核心，同时通过预科路径向上突破`};
+  return `${n}同学，${tierMap[S._acTier||3]}。${S.lang==='暂无'?'目前尚未持有语言成绩，这是申请最紧迫的突破口，建议立即启动备考。':'语言成绩'+S.langScore+'分，'+((parseFloat(S.langScore)||0)<6.5?'距主流院校要求仍有提升空间，建议优先集中突破语言。':'已接近主流院校要求，继续保持。')}${maj.includes('商科')||maj.includes('金融')?'商科/金融方向顶校普遍重视数学背景，建议在PS中着重呈现量化能力。':maj.includes('工程')||maj.includes('计算机')?'理工科方向数学与物理是强制前置，顾问将逐一核查各院校具体要求。':maj.includes('法律')?'法律专业语言要求为IELTS 7.0，语言达标是首要任务。':maj.includes('教育')?'教育专业语言要求极高（各项7.0起），请务必将语言提升列为最优先事项。':''}${S.pathway==='接受预科'?'接受预科是进入高排名院校的有效路径，性价比突出，建议作为重要备选方案。':''}`;
+}
+
+function streamText(id,text){
+  const el=document.getElementById(id);el.innerHTML='<span class="cursor"></span>';
+  let i=0;const iv=setInterval(()=>{if(i<text.length){el.innerHTML=text.slice(0,++i)+'<span class="cursor"></span>';}else{el.innerHTML=text;clearInterval(iv);}},18);
+}
+
+async function finalSubmit(){
+  const orderNo = genOrderNo(benefitCode);
+  document.getElementById('order-no').textContent=orderNo;
+  const doneCode=document.getElementById('done-code');
+  const doneInst=document.getElementById('done-institution');
+  if(doneCode) doneCode.textContent=benefitCode;
+  if(doneInst) doneInst.textContent=codeInstitution;
+  
+  // Show done page immediately
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.getElementById('page5').classList.add('active');
+  updateProgress(4);window.scrollTo(0,0);
+  
+  // Build report summary (first 300 chars of ai-summary)
+  const summaryEl = document.getElementById('ai-summary');
+  const reportSummary = summaryEl ? (summaryEl.textContent||'').slice(0,300) : '';
+  
+  // Push to Feishu in background
+  const token = await getFeishuToken();
+  if(token){
+    const clientData = {
+      '权益码': benefitCode,
+      '订单号': orderNo,
+      '机构名称': codeInstitution,
+      '提交时间': new Date().toLocaleString('zh-CN'),
+      '客户姓名': S.name||'',
+      '手机号码': document.getElementById('phone')?.value||'',
+      '所在城市': S.city||'',
+      '就读学校': S.school||'',
+      '年级': S.grade||S.edu||'',
+      '目标国家': S.country||'',
+      '目标专业': S.targetMajor||'',
+      '入学时间': S.enroll||'',
+      'GPA': S.gpa+' ('+S.gpaType+')',
+      '语言成绩': S.lang+' '+(S.langScore||''),
+      '活动背景': S.activitiesText||'',
+      '当季或长期': S._isCurrent?'当季申请':'长期规划',
+      '目标院校': (S.targetSchoolNames||[]).join('、'),
+      '报告摘要': reportSummary,
+    };
+    // Write to bitable
+    await writeClientData(token, clientData);
+    // Mark code as used
+    await markCodeUsed(token, codeRecordId, S.name||'', orderNo);
+  }
+  
+  // Send notification regardless of token (webhook doesn't need auth)
+  await sendFeishuNotification({
+    orderNo, code:benefitCode, institution:codeInstitution,
+    name:S.name||'', phone:document.getElementById('phone')?.value||'',
+    city:S.city||'', country:S.country||'', major:S.targetMajor||'',
+    enroll:S.enroll||'', school:S.school||'', grade:S.grade||'',
+    gpa:S.gpa, gpaType:S.gpaType, lang:S.lang, langScore:S.langScore||'',
+    activities:S.activities, activitiesText:S.activitiesText||'',
+    isCurrent:S._isCurrent
+  });
+}
+</script>
+</body>
+</html>
