@@ -646,28 +646,31 @@ async function validateCode(code){
 
   if(!token) return {valid:false, msg:'获取授权失败，请检查App ID和Secret'};
 
-  // Step 2: Search for code
+  // Step 2: List records and find matching code
   try{
-    const url=`/open-apis/bitable/v1/apps/${FEISHU_CONFIG.BITABLE_TOKEN}/tables/${FEISHU_CONFIG.CODE_TABLE_ID}/records/search`;
+    const url=`/open-apis/bitable/v1/apps/${FEISHU_CONFIG.BITABLE_TOKEN}/tables/${FEISHU_CONFIG.CODE_TABLE_ID}/records?page_size=500`;
     const r = await feishuFetch(url,{
-      method:'POST',
+      method:'GET',
       headers:{'Content-Type':'application/json','Authorization':'Bearer '+token},
-      body:JSON.stringify({
-        filter:{conjunction:'AND',conditions:[{field_name:'权益码',operator:'contains',value:[code]}]},
-        page_size:1
-      })
     });
     const d = await r.json();
-    console.log('Search result:', d);
-    if(d.code!==0) return {valid:false, msg:'查询失败('+d.msg+')'};
-    if(!d.data?.items?.length) return {valid:false, msg:'权益码无效，请确认后重新输入'};
-    const record = d.data.items[0];
+    console.log('List result:', d);
+    if(d.code!==0) return {valid:false, msg:'查询失败('+d.code+':'+d.msg+')'};
+    const items = d.data?.items||[];
+    // Find record matching the code
+    const record = items.find(item=>{
+      const f = item.fields;
+      const codeField = f['权益码'];
+      const codeVal = Array.isArray(codeField)?codeField[0]?.text:codeField;
+      return codeVal && codeVal.trim().toUpperCase() === code.trim().toUpperCase();
+    });
+    if(!record) return {valid:false, msg:'权益码无效，请确认后重新输入'};
     const fields = record.fields;
     const used = fields['是否已用'];
     const isUsed = used===true||(Array.isArray(used)&&used[0]?.text==='是');
     if(isUsed) return {valid:false, msg:'该权益码已被使用，每个权益码仅限使用一次'};
     const instField = fields['机构名称'];
-    const institution = Array.isArray(instField)?instField[0]?.text:(instField||'未知机构');
+    const institution = Array.isArray(instField)?instField[0]?.text:(typeof instField==='string'?instField:'未知机构');
     return {valid:true, recordId:record.record_id, institution, token};
   }catch(e){
     console.error('Search error:',e);
@@ -2534,5 +2537,6 @@ async function finalSubmit(){
   });
 }
 </script>
+<div style="position:fixed;bottom:6px;right:10px;font-size:10px;color:rgba(0,0,0,.18);font-family:monospace;pointer-events:none;z-index:9999;letter-spacing:.05em">v8.1</div>
 </body>
 </html>
