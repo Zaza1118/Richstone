@@ -611,94 +611,98 @@ async function getFeishuToken(){
 
 // 查询权益码是否有效（存在且未使用）
 async function validateCode(code){
+  // Use CORS proxy to bypass cross-origin restriction
+  const PROXY = 'https://corsproxy.io/?';
+  const BASE = 'https://open.feishu.cn';
+
+  async function feishuFetch(path, options){
+    // Try direct first, fall back to proxy
+    const urls = [BASE+path, PROXY+encodeURIComponent(BASE+path)];
+    for(const url of urls){
+      try{
+        const r = await Promise.race([
+          fetch(url, {...options, mode:'cors'}),
+          new Promise((_,rej)=>setTimeout(()=>rej(new Error('timeout')),10000))
+        ]);
+        if(r.ok || r.status < 500) return r;
+      }catch(e){ continue; }
+    }
+    throw new Error('所有请求方式均失败');
+  }
+
   // Step 1: Get token
   let token = null;
   try{
-    const tr = await Promise.race([
-      fetch('https://open.feishu.cn/open-apis/auth/v3/tenant_access_token/internal',{
-        method:'POST',
-        mode:'cors',
-        headers:{'Content-Type':'application/json'},
-        body:JSON.stringify({app_id:FEISHU_CONFIG.APP_ID, app_secret:FEISHU_CONFIG.APP_SECRET})
-      }),
-      new Promise((_,rej)=>setTimeout(()=>rej(new Error('timeout')),10000))
-    ]);
+    const tr = await feishuFetch('/open-apis/auth/v3/tenant_access_token/internal',{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({app_id:FEISHU_CONFIG.APP_ID, app_secret:FEISHU_CONFIG.APP_SECRET})
+    });
     const td = await tr.json();
-    console.log('Token response:',td);
+    console.log('Token:', td);
     token = td.tenant_access_token;
   }catch(e){
-    console.error('Token fetch failed:',e);
-    return {valid:false, msg:'网络连接异常（'+e.message+'），请检查网络后重试'};
+    console.error('Token error:',e);
+    return {valid:false, msg:'网络连接异常（'+e.message+'），请检查网络'};
   }
-  
-  if(!token) return {valid:false, msg:'获取授权失败，请检查App ID和Secret是否正确'};
-  
+
+  if(!token) return {valid:false, msg:'获取授权失败，请检查App ID和Secret'};
+
   // Step 2: Search for code
   try{
-    const url=`https://open.feishu.cn/open-apis/bitable/v1/apps/${FEISHU_CONFIG.BITABLE_TOKEN}/tables/${FEISHU_CONFIG.CODE_TABLE_ID}/records/search`;
-    console.log('Searching URL:',url);
-    const r = await Promise.race([
-      fetch(url,{
-        method:'POST',
-        mode:'cors',
-        headers:{'Content-Type':'application/json','Authorization':'Bearer '+token},
-        body:JSON.stringify({
-          filter:{
-            conjunction:'AND',
-            conditions:[{field_name:'权益码',operator:'is',value:[code]}]
-          },
-          page_size:1
-        })
-      }),
-      new Promise((_,rej)=>setTimeout(()=>rej(new Error('timeout')),10000))
-    ]);
+    const url=`/open-apis/bitable/v1/apps/${FEISHU_CONFIG.BITABLE_TOKEN}/tables/${FEISHU_CONFIG.CODE_TABLE_ID}/records/search`;
+    const r = await feishuFetch(url,{
+      method:'POST',
+      headers:{'Content-Type':'application/json','Authorization':'Bearer '+token},
+      body:JSON.stringify({
+        filter:{conjunction:'AND',conditions:[{field_name:'权益码',operator:'is',value:[code]}]},
+        page_size:1
+      })
+    });
     const d = await r.json();
-    console.log('Search response:',d);
-    if(d.code!==0) return {valid:false, msg:'查询失败('+d.msg+')，请确认多维表格已开启互联网访问'};
-    if(!d.data||!d.data.items||d.data.items.length===0){
-      return {valid:false, msg:'权益码无效，请确认后重新输入'};
-    }
-    const record=d.data.items[0];
-    const fields=record.fields;
-    const used=fields['是否已用'];
-    const isUsed=used===true||(Array.isArray(used)&&used[0]?.text==='是');
+    console.log('Search result:', d);
+    if(d.code!==0) return {valid:false, msg:'查询失败('+d.msg+')'};
+    if(!d.data?.items?.length) return {valid:false, msg:'权益码无效，请确认后重新输入'};
+    const record = d.data.items[0];
+    const fields = record.fields;
+    const used = fields['是否已用'];
+    const isUsed = used===true||(Array.isArray(used)&&used[0]?.text==='是');
     if(isUsed) return {valid:false, msg:'该权益码已被使用，每个权益码仅限使用一次'};
-    const instField=fields['机构名称'];
-    const institution=Array.isArray(instField)?instField[0]?.text:instField||'未知机构';
-    return {valid:true, recordId:record.record_id, institution};
+    const instField = fields['机构名称'];
+    const institution = Array.isArray(instField)?instField[0]?.text:(instField||'未知机构');
+    return {valid:true, recordId:record.record_id, institution, token};
   }catch(e){
-    console.error('Search failed:',e);
-    return {valid:false, msg:'查询异常（'+e.message+'），请稍后重试'};
+    console.error('Search error:',e);
+    return {valid:false, msg:'查询异常（'+e.message+'）'};
   }
 }
 
 // 标记权益码为已使用
 async function markCodeUsed(token, recordId, clientName, orderNo){
-  try{
-    await fetch(`https://open.feishu.cn/open-apis/bitable/v1/apps/${FEISHU_CONFIG.BITABLE_TOKEN}/tables/${FEISHU_CONFIG.CODE_TABLE_ID}/records/${recordId}`,{
-      method:'PUT',
-      headers:{'Content-Type':'application/json','Authorization':'Bearer '+token},
-      body:JSON.stringify({
-        fields:{
-          '是否已用': true,
-          '使用时间': new Date().toLocaleString('zh-CN'),
-          '客户姓名': clientName,
-          '订单号': orderNo
-        }
-      })
-    });
-  }catch(e){}
+  const urls=[
+    `https://open.feishu.cn/open-apis/bitable/v1/apps/${FEISHU_CONFIG.BITABLE_TOKEN}/tables/${FEISHU_CONFIG.CODE_TABLE_ID}/records/${recordId}`,
+    `https://corsproxy.io/?`+encodeURIComponent(`https://open.feishu.cn/open-apis/bitable/v1/apps/${FEISHU_CONFIG.BITABLE_TOKEN}/tables/${FEISHU_CONFIG.CODE_TABLE_ID}/records/${recordId}`)
+  ];
+  for(const url of urls){
+    try{
+      await fetch(url,{method:'PUT',headers:{'Content-Type':'application/json','Authorization':'Bearer '+token},body:JSON.stringify({'是否已用':true,'使用时间':new Date().toLocaleString('zh-CN'),'客户姓名':clientName,'订单号':orderNo})});
+      break;
+    }catch(e){}
+  }
 }
 
 // 写入客户数据到Sheet2
 async function writeClientData(token, data){
-  try{
-    await fetch(`https://open.feishu.cn/open-apis/bitable/v1/apps/${FEISHU_CONFIG.BITABLE_TOKEN}/tables/${FEISHU_CONFIG.DATA_TABLE_ID}/records`,{
-      method:'POST',
-      headers:{'Content-Type':'application/json','Authorization':'Bearer '+token},
-      body:JSON.stringify({fields: data})
-    });
-  }catch(e){}
+  const urls=[
+    `https://open.feishu.cn/open-apis/bitable/v1/apps/${FEISHU_CONFIG.BITABLE_TOKEN}/tables/${FEISHU_CONFIG.DATA_TABLE_ID}/records`,
+    `https://corsproxy.io/?`+encodeURIComponent(`https://open.feishu.cn/open-apis/bitable/v1/apps/${FEISHU_CONFIG.BITABLE_TOKEN}/tables/${FEISHU_CONFIG.DATA_TABLE_ID}/records`)
+  ];
+  for(const url of urls){
+    try{
+      const r=await fetch(url,{method:'POST',headers:{'Content-Type':'application/json','Authorization':'Bearer '+token},body:JSON.stringify({fields:data})});
+      if(r.ok) break;
+    }catch(e){}
+  }
 }
 
 // 推送飞书机器人通知
